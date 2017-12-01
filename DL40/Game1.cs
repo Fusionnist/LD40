@@ -11,6 +11,7 @@ namespace DL40
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        TextureDrawer td;
         
         public Game1()
         {
@@ -39,7 +40,14 @@ namespace DL40
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            td = new TextureDrawer(Content.Load<Texture2D>("sheet"),
+                new Rectangle[] {
+                    new Rectangle(0,0,64,64),
+                    new Rectangle(72, 8, 48, 48),
+                    new Rectangle(144, 16, 32, 32),
+                    new Rectangle(216, 24, 16, 16), },
+                new Point[] { new Point(32,32), new Point(24, 24), new Point(16, 16), new Point(8, 8), },
+                1f, 4, true);
             // TODO: use this.Content to load your game content here
         }
 
@@ -61,7 +69,8 @@ namespace DL40
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            float es = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            td.Update(es);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -74,7 +83,9 @@ namespace DL40
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin();
+            td.Draw(spriteBatch, new Vector2(200,200));
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

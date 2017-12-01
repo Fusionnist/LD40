@@ -3,10 +3,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace DL40
 {
-    class TextureDrawer
+    public class TextureDrawer
     {
+        Texture2D src;
+        Rectangle c_sourceRect;
+        Point c_center;
+        //anim values
+        Rectangle[] sourceRects;
+        Point[] centers;
+        float frameTime, frameTimer; int frameCount, frameCounter;
+        bool loops, anim;
+
+        public TextureDrawer(Texture2D src_, Rectangle sourceRect_, Point center_) //no anim
+        {
+            src = src_;
+            c_sourceRect = sourceRect_;
+            c_center = center_;
+        }
+
+        public TextureDrawer(Texture2D src_, Rectangle[] sourceRects_, Point[] centers_, float frameTime_, int frameCount_,bool loops_) //yes anim
+        {
+            anim = true;
+            loops = loops_;
+            src = src_;
+            sourceRects = sourceRects_;
+            centers = centers_;
+            c_sourceRect = sourceRects[0];
+            c_center = centers[0];
+            frameTime = frameTime_;
+            frameTimer = frameTime_;
+            frameCount = frameCount_;
+            frameCounter = 0;
+        }
+
+        public void Update(float es_)
+        {
+            if (anim)
+            {
+                frameTimer -= es_;
+                if (frameTimer < 0)
+                {
+                    frameTimer = frameTime;
+                    frameCounter++;
+                    if (frameCounter >= frameCount)
+                    {
+                        if (loops) { frameCounter = 0; }
+                        else { frameCounter = frameCount - 1; }
+                    }
+                }
+                c_center = centers[frameCounter];
+                c_sourceRect = sourceRects[frameCounter];
+            }            
+        }
+
+        public void Draw(SpriteBatch sb_, Vector2 pos_, bool flip = false)
+        {
+            SpriteEffects se = SpriteEffects.None;
+            sb_.Draw(src,position: pos_ - c_center.ToVector2(),sourceRectangle: c_sourceRect, effects: se);
+        }
+
+        public bool Ended()
+        {
+            if (loops)
+            {
+                return frameCounter == frameCount - 1;
+            }
+            return false;
+        }
     }
 }
