@@ -187,7 +187,7 @@ namespace DL40
                         if(player.pos.Y < e.pos.Y)
                         {
                             player.mov.Y -= inter.Y;
-                            e.onground = true;
+                            player.onground = true;
                         }
                         else
                         {
