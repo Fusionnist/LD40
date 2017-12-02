@@ -22,9 +22,12 @@ namespace DL40
             texes = texes_;
             currentTex = texes[0];
         }
-        public void Move(Vector2? input = null)
+        public void Move(Vector2? input = null, Vector2? extmov=null)
         {
-
+            if(extmov != null)
+            {
+                mov += (Vector2)extmov;
+            }        
         }
 
         public void SelectTex(string name_)
