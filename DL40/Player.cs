@@ -76,6 +76,16 @@ namespace DL40
             return new Rectangle((int)(pos.X - 16 + mov.X), (int)(pos.Y - 16 + mov.Y), 32, 32);
         }
 
+        public override Rectangle GetHBafterX()
+        {
+            return new Rectangle((int)(pos.X - 16 + mov.X), (int)pos.Y - 16, 32, 32);
+        }
+
+        public override Rectangle GetHBafterY()
+        {
+            return new Rectangle((int)pos.X - 16, (int)(pos.Y - 16 + mov.Y), 32, 32);
+        }
+
         public override void Draw(SpriteBatch sb_)
         {
             if ((invinTimer * 10) % 2 < 1)
