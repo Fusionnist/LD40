@@ -120,7 +120,9 @@
     <None Include="Content\TestTilemap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Tilemap2.tmx" />
+    <None Include="Content\Tilemap2.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Menu.png" />
