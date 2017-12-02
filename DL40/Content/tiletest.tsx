@@ -11,7 +11,7 @@
  <tile id="3">
   <objectgroup draworder="index">
    <properties>
-    <property name="solid" type="bool" value="true"/>
+    <property name="solid" type="bool" value="false"/>
    </properties>
   </objectgroup>
  </tile>
