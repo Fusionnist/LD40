@@ -40,8 +40,8 @@ namespace DL40
         {
             virtualDims = new Point(640, 320);
 
-            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1);
-            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1);
+            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1.5);
+            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1.5);
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -218,15 +218,20 @@ namespace DL40
                 }
                 if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
                 {
-                    searchPos.X -= 1;
+                    searchPos.X += 1;
                 }
                 if (player.GetHBAfterMov().Y < map.GetBounds().Y)
                 {
-                    searchPos.X -= 1;
+                    searchPos.Y -= 1;
                 }
                 if (player.GetHBAfterMov().Y > map.GetBounds().Y+map.GetBounds().Height)
                 {
-                    searchPos.X -= 1;
+                    searchPos.Y += 1;
+                }
+
+                foreach(Tilemap tm in maps)
+                {
+                    if(tm.vpos == searchPos) { map = tm; }
                 }
             }
         }
