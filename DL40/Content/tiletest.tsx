@@ -27,8 +27,8 @@
  <tile id="10">
   <objectgroup draworder="index">
    <properties>
-    <property name="activate" type="int" value="1"/>
     <property name="debuff" value="doublejump"/>
+    <property name="pool" type="int" value="1"/>
     <property name="treasure" type="bool" value="true"/>
    </properties>
   </objectgroup>
