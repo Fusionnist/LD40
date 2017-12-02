@@ -167,7 +167,6 @@ namespace DL40
                     }
                 }
             }
-
             return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips);
         }
         //UPDATE
@@ -252,6 +251,7 @@ namespace DL40
         void DoCollisions()
         {
             player.onground = false;
+            player.slipping = false;
             foreach (Tile e in map.tiles)
             {
                 if (player.GetHBAfterMov().Intersects(e.GetHB()))
@@ -288,11 +288,15 @@ namespace DL40
                             {
                                 player.mov.X += inter.X;
                             }
+                            if (!player.onground) { player.canWJump = true; }
                         }
                     }
                     
                     if (e.isHurty)
                         player.TakeDamage(1);
+
+                    if (e.isSlippery)
+                        player.slipping=true;
                 }
             }
         }
