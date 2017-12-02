@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DL40
 {
-    class Bouncie : Entity
+    public class Bouncie : Entity
     {
         public bool isOnWall;
 
