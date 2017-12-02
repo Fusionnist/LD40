@@ -24,7 +24,7 @@ namespace DL40
             Vector2 vinput = (Vector2)input;
             if (vinput.Y == -1 && onground)
             {
-                Yvel += 15;
+                Yvel -= 15;
             }
         }
     }
