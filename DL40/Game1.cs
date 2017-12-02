@@ -199,6 +199,7 @@ namespace DL40
             bool[] door = new bool[count];
             int[] pool = new int[count];
             string[] actived = new string[count];
+            bool[] slimeball = new bool[count];
             foreach (XElement tile in doc_.Element("tileset").Elements("tile"))//PROPERTIES!
             {
                 foreach (XElement prop in tile.Element("objectgroup").Element("properties").Elements("property"))//PROPERTIES!
@@ -227,9 +228,13 @@ namespace DL40
                     {
                         actived[int.Parse(tile.Attribute("id").Value)] = (prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "slimeball")
+                    {
+                        slimeball[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
+                    }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball);
         }
         //UPDATE
         protected override void Update(GameTime gameTime)

@@ -21,11 +21,13 @@ namespace DL40
         bool[] slips;
         bool[] door;
         int[] pool;
+        bool[] slimeball;
         string[] actived;
         int columns;
 
-        public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_, bool[] slips_, bool[] door_,int[] pool_,string[] actived_)
+        public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_, bool[] slips_, bool[] door_,int[] pool_,string[] actived_,bool[] slimeball_)
         {
+            slimeball = slimeball_;
             actived = actived_;
             pool = pool_;
             door = door_;
