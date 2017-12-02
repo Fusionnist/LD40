@@ -8,10 +8,28 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="2">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="1"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
  <tile id="3">
   <objectgroup draworder="index">
    <properties>
     <property name="solid" type="bool" value="false"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="10">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="activate" type="int" value="1"/>
+    <property name="debuff" value="doublejump"/>
+    <property name="treasure" type="bool" value="true"/>
    </properties>
   </objectgroup>
  </tile>

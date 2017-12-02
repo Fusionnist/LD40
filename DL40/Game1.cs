@@ -149,6 +149,8 @@ namespace DL40
             bool[] solid = new bool[count];
             bool[] hurtsmyass = new bool[count];
             bool[] slips = new bool[count];
+            bool[] door = new bool[count];
+            int[] pool = new int[count];
             foreach (XElement tile in doc_.Element("tileset").Elements("tile"))//PROPERTIES!
             {
                 foreach (XElement prop in tile.Element("objectgroup").Element("properties").Elements("property"))//PROPERTIES!
@@ -165,9 +167,17 @@ namespace DL40
                     {
                         slips[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "door")
+                    {
+                        door[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
+                    }
+                    if (prop.Attribute("name").Value == "pool")
+                    {
+                        pool[int.Parse(tile.Attribute("id").Value)] = int.Parse(prop.Attribute("value").Value);
+                    }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool);
         }
         //UPDATE
         protected override void Update(GameTime gameTime)
@@ -251,7 +261,7 @@ namespace DL40
         void DoCollisions()
         {
             player.onground = false;
-            player.slipping = false;
+            
             foreach (Tile e in map.tiles)
             {
                 Rectangle r = player.GetHBAfterMov();
@@ -263,6 +273,8 @@ namespace DL40
 
                     if (e.isSlippery)
                         player.slipping = true;
+                    else if(e.isSolid)
+                        player.slipping = false;
                 }
                 if (player.GetHBAfterMov().Intersects(e.GetHB()))
                 {                 
