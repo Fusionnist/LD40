@@ -187,7 +187,8 @@ namespace DL40
             player.Move(extmov: mover);
             //PRE-UPDATE
             player.PreUpdate(es);
-
+            //COLLISIONS
+            DoCollisions();
             //UPDATE
             player.Update(es);
 
