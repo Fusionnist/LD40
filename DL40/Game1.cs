@@ -220,18 +220,22 @@ namespace DL40
                 if(player.GetHBAfterMov().X < map.GetBounds().X)
                 {
                     searchPos.X -= 1;
+                    player.pos.X += 640;
                 }
-                if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
+                else if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
                 {
                     searchPos.X += 1;
+                    player.pos.X -= 640;
                 }
-                if (player.GetHBAfterMov().Y < map.GetBounds().Y)
+                else if (player.GetHBAfterMov().Y < map.GetBounds().Y)
                 {
                     searchPos.Y -= 1;
+                    player.pos.Y += 320;
                 }
-                if (player.GetHBAfterMov().Y > map.GetBounds().Y+map.GetBounds().Height)
+                else if (player.GetHBAfterMov().Y > map.GetBounds().Y+map.GetBounds().Height)
                 {
                     searchPos.Y += 1;
+                    player.pos.Y -= 320;
                 }
 
                 foreach(Tilemap tm in maps)
@@ -245,39 +249,43 @@ namespace DL40
             player.onground = false;
             foreach (Tile e in map.tiles)
             {
-                if (e.isSolid && player.GetHBAfterMov().Intersects(e.GetHB()))
+                if (player.GetHBAfterMov().Intersects(e.GetHB()))
                 {
-                    Vector2 inter = Vector2.Zero;
-                    if (player.pos.X < e.pos.X) { inter.X = player.GetHBAfterMov().Width + player.GetHBAfterMov().X - e.pos.X; }
-                    else { inter.X = e.GetHB().Width + e.GetHB().X - player.GetHBAfterMov().X; }
-                    if (player.pos.Y < e.pos.Y) { inter.Y = player.GetHBAfterMov().Height + player.GetHBAfterMov().Y - e.pos.Y; }
-                    else { inter.Y = e.GetHB().Height + e.GetHB().Y - player.GetHBAfterMov().Y; }
-                    //calc best option
-                    if (inter.X > inter.Y)
+                    if (e.isSolid)
                     {
+                        Vector2 inter = Vector2.Zero;
+                        if (player.pos.X < e.pos.X) { inter.X = player.GetHBAfterMov().Width + player.GetHBAfterMov().X - e.pos.X; }
+                        else { inter.X = e.GetHB().Width + e.GetHB().X - player.GetHBAfterMov().X; }
+                        if (player.pos.Y < e.pos.Y) { inter.Y = player.GetHBAfterMov().Height + player.GetHBAfterMov().Y - e.pos.Y; }
+                        else { inter.Y = e.GetHB().Height + e.GetHB().Y - player.GetHBAfterMov().Y; }
+                        //calc best option
+                        if (inter.X > inter.Y)
+                        {
 
-                        if (player.pos.Y < e.pos.Y)
-                        {
-                            player.mov.Y -= inter.Y;
-                            player.onground = true;
+                            if (player.pos.Y < e.pos.Y)
+                            {
+                                player.mov.Y -= inter.Y;
+                                player.onground = true;
+                            }
+                            else
+                            {
+                                player.mov.Y += inter.Y;
+                            }
+                            player.Yvel = 0;
                         }
                         else
                         {
-                            player.mov.Y += inter.Y;
-                        }
-                        player.Yvel = 0;
-                    }
-                    else
-                    {
-                        if (player.pos.X < e.pos.X)
-                        {
-                            player.mov.X -= inter.X;
-                        }
-                        else
-                        {
-                            player.mov.X += inter.X;
+                            if (player.pos.X < e.pos.X)
+                            {
+                                player.mov.X -= inter.X;
+                            }
+                            else
+                            {
+                                player.mov.X += inter.X;
+                            }
                         }
                     }
+                    
                     if (e.isHurty)
                         player.TakeDamage(1);
                 }
