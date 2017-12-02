@@ -209,9 +209,9 @@ namespace DL40
             Vector2 mover = Vector2.Zero;
             Vector2 input = Vector2.Zero;
             if (ipp.Pressed("left"))
-            { mover.X -= 150; }
+            { input.X -= 1; }
             if (ipp.Pressed("right"))
-            { mover.X += 150; }
+            { input.X += 1; }
             if (ipp.Pressed("up"))
             { input.Y -= 1; }
             if (ipp.Pressed("down"))
@@ -295,11 +295,11 @@ namespace DL40
 
                             if (player.pos.Y < e.pos.Y)
                             {
-                                player.mov.Y -= inter.Y;                              
+                                player.mov.Y -= inter.Y + 0.5f;                              
                             }
                             else
                             {
-                                player.mov.Y += inter.Y;
+                                player.mov.Y += inter.Y + 0.5f;
                             }
                             player.Yvel = 0f;
                         }
@@ -307,11 +307,11 @@ namespace DL40
                         {
                             if (player.pos.X < e.pos.X)
                             {
-                                player.mov.X -= inter.X;
+                                player.mov.X -= inter.X + 0.5f;
                             }
                             else
                             {
-                                player.mov.X += inter.X;
+                                player.mov.X += inter.X + 0.5f;
                             }      
                             if (!player.onground) { player.canWJump = true; }
                         }
