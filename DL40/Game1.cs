@@ -170,7 +170,7 @@ namespace DL40
         }
         void DoCollisions()
         {
-            e.onground = false;
+            player.onground = false;
             foreach (Entity e in map.tiles)
             {
                 if (e.isSolid && player.GetHBAfterMov().Intersects(e.GetHB()))
