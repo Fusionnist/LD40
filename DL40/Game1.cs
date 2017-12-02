@@ -9,9 +9,6 @@ using System.Xml;
 using System.Xml.Linq;
 namespace DL40
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -56,16 +53,9 @@ namespace DL40
             textTarget = new RenderTarget2D(GraphicsDevice, virtualDims.X, virtualDims.Y);
             overlayTarget = new RenderTarget2D(GraphicsDevice, virtualDims.X, virtualDims.Y);
         }
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             InitGraphics();
-            // TODO: Add your initialization logic here
             soundManager = new SoundManager();
             fd = new FontDrawer();
 
@@ -79,15 +69,9 @@ namespace DL40
             base.Initialize();
 
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             map = getTilemap(XDocument.Load("Content/TestTilemap.tmx"));
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             td = new TextureDrawer(Content.Load<Texture2D>("sheet"),
                 new Rectangle[] {
@@ -108,7 +92,6 @@ namespace DL40
             fd.fonts.Add(f);
 
             player = new Entity(new TextureDrawer[] { td }, new Vector2(100, 100));
-            // TODO: use this.Content to load your game content here
         }
         Tilemap getTilemap(XDocument doc_)
         {
@@ -154,20 +137,10 @@ namespace DL40
             
             return new Tileset(dims, src, columns, count, solid);
         }
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            Content.Unload();           
         }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             //LOGIC
@@ -176,13 +149,13 @@ namespace DL40
             float es = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ipp.Update(Keyboard.GetState(),GamePad.GetState(0));
             Vector2 mover = Vector2.Zero;
-            if (ipp.JustPressed("left"))
+            if (ipp.Pressed("left"))
             { mover.X -= 100; }
-            if (ipp.JustPressed("right"))
+            if (ipp.Pressed("right"))
             { mover.X += 100; }
-            if (ipp.JustPressed("up"))
+            if (ipp.Pressed("up"))
             { mover.Y -= 100; }
-            if (ipp.JustPressed("down"))
+            if (ipp.Pressed("down"))
             { mover.Y += 100; }
             player.Move(extmov: mover);
             //PRE-UPDATE
@@ -198,13 +171,12 @@ namespace DL40
         {
             foreach (Entity e in map.tiles)
             {
-
+                if (/*intersects*/true)
+                {
+                    //calc best option
+                }
             }
         }
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             //TEXT DRAW
