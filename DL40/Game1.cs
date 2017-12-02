@@ -182,6 +182,7 @@ namespace DL40
                     //calc best option
                     if (inter.X > inter.Y)
                     {
+                        e.onground = false;
                         if(player.pos.Y < e.pos.Y)
                         {
                             player.mov.Y -= inter.Y;
