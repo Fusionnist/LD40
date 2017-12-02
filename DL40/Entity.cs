@@ -81,9 +81,14 @@ namespace DL40
             }
         }
 
-        public void Draw(SpriteBatch sb_)
+        public virtual void Draw(SpriteBatch sb_)
         {
             currentTex.Draw(sb_,pos);
+        }
+
+        public virtual void TakeDamage(int dmg_)
+        {
+            hp -= dmg_;
         }
     }
 }
