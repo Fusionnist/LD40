@@ -78,6 +78,10 @@ namespace DL40
             mov.Y += Yvel;
             if (!slipping)
                 Xvel = 0;
+            else if (Xvel > 4 && dashTimer <= 0)
+                Xvel = 4;
+            else if (Xvel < -4 && dashTimer <= 0)
+                Xvel = -4;
         }
 
         public override void TakeDamage(int dmg_)
