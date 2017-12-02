@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 namespace DL40
 {
     /// <summary>
@@ -12,7 +13,10 @@ namespace DL40
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         TextureDrawer td;
-        
+        SoundManager soundManager;
+        FontDrawer fd;
+        float timer;
+        bool toecutter;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -28,8 +32,10 @@ namespace DL40
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            soundManager = new SoundManager();
+            fd = new FontDrawer();
             base.Initialize();
+
         }
 
         /// <summary>
@@ -47,10 +53,20 @@ namespace DL40
                     new Rectangle(144, 16, 32, 32),
                     new Rectangle(216, 24, 16, 16), },
                 new Point[] { new Point(32,32), new Point(24, 24), new Point(16, 16), new Point(8, 8), },
-                1f, 4, true);
+                1f, 4, true,"test");
+
+            Texture2D src = Content.Load<Texture2D>("Original");
+            Font f = new Font(new TextureDrawer[] {
+                new TextureDrawer(src,new Rectangle(0,0,5,9),Point.Zero,"!"),
+                new TextureDrawer(src,new Rectangle(5,0,8,9),Point.Zero,"o"),
+                new TextureDrawer(src,new Rectangle(13,0,10,9),Point.Zero," ")
+                },
+                "font");
+            fd.fonts.Add(f);
             // TODO: use this.Content to load your game content here
         }
 
+        
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -70,9 +86,9 @@ namespace DL40
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             float es = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            td.Update(es);
             // TODO: Add your update logic here
-
+            timer -= es;
+            
             base.Update(gameTime);
         }
 
@@ -84,7 +100,6 @@ namespace DL40
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            td.Draw(spriteBatch, new Vector2(200,200));
             spriteBatch.End();
             // TODO: Add your drawing code here
 

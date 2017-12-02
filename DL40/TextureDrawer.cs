@@ -12,23 +12,26 @@ namespace DL40
     public class TextureDrawer
     {
         Texture2D src;
-        Rectangle c_sourceRect;
+        public Rectangle c_sourceRect;
         Point c_center;
+        public string name;
         //anim values
         Rectangle[] sourceRects;
         Point[] centers;
         float frameTime, frameTimer; int frameCount, frameCounter;
         bool loops, anim;
 
-        public TextureDrawer(Texture2D src_, Rectangle sourceRect_, Point center_) //no anim
+        public TextureDrawer(Texture2D src_, Rectangle sourceRect_, Point center_, string name_) //no anim
         {
+            name = name_;
             src = src_;
             c_sourceRect = sourceRect_;
             c_center = center_;
         }
 
-        public TextureDrawer(Texture2D src_, Rectangle[] sourceRects_, Point[] centers_, float frameTime_, int frameCount_,bool loops_) //yes anim
+        public TextureDrawer(Texture2D src_, Rectangle[] sourceRects_, Point[] centers_, float frameTime_, int frameCount_,bool loops_, string name_) //yes anim
         {
+            name = name_;
             anim = true;
             loops = loops_;
             src = src_;
