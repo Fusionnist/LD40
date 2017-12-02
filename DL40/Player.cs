@@ -31,15 +31,17 @@ namespace DL40
             Vector2 vinput = (Vector2)input;
             if (!isDead)
             {
+                base.Move(input, extmov);
+                if (vinput.Y == -1 && onground)
+                    Yvel = -250;
+                else if (vinput.Y == 1 && Yvel < 0)
+                    Yvel = 0;
+                else if (vinput.Y == -1 && canDJump && releasedUp)
+                { Yvel = -250; canDJump = false; }
                 if (vinput.Y == -1)
                     releasedUp = false;
                 else
                     releasedUp = true;
-                base.Move(input, extmov);
-                if (vinput.Y == -1 && onground )
-                    Yvel = -250;
-                else if (vinput.Y == 1 && Yvel < 0)
-                    Yvel = 0;
             }
             mov.Y += Yvel;
             if (!slipping)
