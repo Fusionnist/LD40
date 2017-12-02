@@ -11,8 +11,8 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin, canDJump, canWJump, releasedUp;
-        public float invinTime, invinTimer;
+        public bool isInvin, canDJump, canWJump, releasedUp, releasedL, releasedR;
+        public float invinTime, invinTimer, dashInputTime, dashInputTimer;
 
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
         {
@@ -23,6 +23,10 @@ namespace DL40
             canDJump = false;
             canWJump = false;
             releasedUp = false;
+            releasedL = false;
+            releasedR = false;
+            dashInputTime = 0.5f;
+            dashInputTimer = 0.5f;
             speed = 150;
         }
 
@@ -43,6 +47,10 @@ namespace DL40
                     releasedUp = false;
                 else
                     releasedUp = true;
+                if (vinput.X == -1)
+                    releasedL = false;
+                else if (vinput.X == 1)
+                    releasedR = false;
             }
             mov.Y += Yvel;
             if (!slipping)
