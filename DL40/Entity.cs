@@ -25,14 +25,12 @@ namespace DL40
             Yvel = 0;
             onground = true;
         }
-        public void Move(Vector2? input = null, Vector2? extmov=null)
+        public virtual void Move(Vector2? input = null, Vector2? extmov=null)
         {
             if(extmov != null)
             {
                 mov += (Vector2)extmov;
-            }
-            Yvel += 1;
-            mov.Y += Yvel;        
+            }       
         }
 
         public virtual Rectangle GetHB()

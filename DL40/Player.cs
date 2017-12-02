@@ -15,5 +15,17 @@ namespace DL40
         {
 
         }
+
+        public override void Move(Vector2? input = null, Vector2? extmov = null)
+        {
+            base.Move(input, extmov);
+            Yvel += 1;
+            mov.Y += Yvel;
+            Vector2 vinput = (Vector2)input;
+            if (vinput.Y == -1 && onground)
+            {
+                Yvel += 15;
+            }
+        }
     }
 }
