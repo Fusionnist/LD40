@@ -47,7 +47,6 @@
     <Compile Include="Font.cs" />
     <Compile Include="FontDrawer.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="HurtyTile.cs" />
     <Compile Include="InputProfile.cs" />
     <Compile Include="KeyManager.cs" />
     <Compile Include="Player.cs" />

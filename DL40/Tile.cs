@@ -11,9 +11,12 @@ namespace DL40
 {
     class Tile : Entity
     {
-        public Tile(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
+        public bool isHurty;
+
+        public Tile(TextureDrawer[] texes_, Vector2 pos_, bool a_isHurty): base(texes_, pos_)
         {
             isSolid = true;
+            isHurty = a_isHurty;
         }
     }
 }
