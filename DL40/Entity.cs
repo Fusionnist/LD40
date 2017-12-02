@@ -13,8 +13,9 @@ namespace DL40
         TextureDrawer[] texes;
         TextureDrawer currentTex;
         public Vector2 pos, prevPos, mov, prevMov;
-        public bool isSolid, onground;
+        public bool isSolid, onground, isDead;
         public float Yvel;
+        public int hp;
 
         public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_ = false)
         {
@@ -24,6 +25,8 @@ namespace DL40
             currentTex = texes[0];
             Yvel = 0;
             onground = false;
+            hp = 1;
+            isDead = false;
         }
         public virtual void Move(Vector2? input = null, Vector2? extmov=null)
         {
@@ -67,10 +70,12 @@ namespace DL40
         {
             mov *= es_;
         }
-        public void Update(float es_)
+        public virtual void Update(float es_)
         {
             currentTex.Update(es_);
             pos += mov;
+            if (hp <= 0)
+                isDead = true;
         }
 
         public void Draw(SpriteBatch sb_)
