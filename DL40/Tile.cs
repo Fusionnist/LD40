@@ -14,11 +14,11 @@ namespace DL40
         public bool isHurty;
         public bool isSlippery;
 
-        public Tile(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_, bool a_isHurty): base(texes_, pos_)
+        public Tile(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_, bool a_isHurty, bool isSlippy_): base(texes_, pos_)
         {
             isSolid = isSolid_;
             isHurty = a_isHurty;
-            isSlippery = false;
+            isSlippery = isSlippy_;
         }
     }
 }
