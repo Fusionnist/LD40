@@ -51,6 +51,8 @@ namespace DL40
                     releasedL = false;
                 else if (vinput.X == 1)
                     releasedR = false;
+                else
+                { releasedL = true; releasedR = true; }
             }
             mov.Y += Yvel;
             if (!slipping)
