@@ -9,6 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 namespace DL40
 {
+    enum GamePhase { }
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -193,7 +194,7 @@ namespace DL40
                         {
                             player.mov.Y += inter.Y;
                         }
-                        e.Yvel = 0;                        
+                        player.Yvel = 0;                        
                     }
                     else
                     {
