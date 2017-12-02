@@ -13,8 +13,8 @@ namespace DL40
         TextureDrawer[] texes;
         TextureDrawer currentTex;
         public Vector2 pos, prevPos, mov, prevMov;
-        public bool isSolid, onground, isDead;
-        public float Yvel;
+        public bool isSolid, onground, isDead, slipping;
+        public float Yvel, Xvel;
         public int hp;
 
         public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_ = false)
@@ -24,6 +24,7 @@ namespace DL40
             texes = texes_;
             currentTex = texes[0];
             Yvel = 0;
+            Xvel = 0;
             onground = false;
             hp = 1;
             isDead = false;

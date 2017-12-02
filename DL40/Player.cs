@@ -35,6 +35,10 @@ namespace DL40
                     Yvel = 0;
             }
             mov.Y += Yvel;
+            if (slipping)
+            { Xvel += mov.X; mov.X = Xvel; }
+            else
+                Xvel += 0;
         }
 
         public override void TakeDamage(int dmg_)
