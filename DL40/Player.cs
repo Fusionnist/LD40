@@ -23,12 +23,13 @@ namespace DL40
             canDJump = false;
             canWJump = false;
             releasedUp = false;
+            speed = 150;
         }
 
         public override void Move(Vector2? input = null, Vector2? extmov = null)
         {
-            Yvel += 5;
             Vector2 vinput = (Vector2)input;
+            Yvel += 5;
             if (!isDead)
             {
                 base.Move(input, extmov);

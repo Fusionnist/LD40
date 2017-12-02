@@ -14,7 +14,7 @@ namespace DL40
         TextureDrawer currentTex;
         public Vector2 pos, prevPos, mov, prevMov;
         public bool isSolid, onground, isDead, slipping;
-        public float Yvel, Xvel;
+        public float Yvel, Xvel, speed;
         public int hp;
 
         public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_ = false)
@@ -28,12 +28,17 @@ namespace DL40
             onground = false;
             hp = 1;
             isDead = false;
+            speed = 1;
         }
         public virtual void Move(Vector2? input = null, Vector2? extmov=null)
         {
-            if(extmov != null && !isDead)
+            Vector2 vinput = (Vector2)input;
+            if (!isDead)
             {
-                mov += (Vector2)extmov;
+                if (vinput.X == -1)
+                    mov.X -= speed;
+                else if (vinput.X == 1)
+                    mov.X += speed;
             }       
         }
 
