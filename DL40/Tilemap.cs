@@ -17,8 +17,9 @@ namespace DL40
         public Point vpos;
         public List<Tile> tiles;
         public List<Bouncie> bouncies;
-        public Tilemap(List<Tile> tiles_, Point dims_,Point vpos_)
+        public Tilemap(List<Tile> tiles_, List<Bouncie> bouncies_, Point dims_,Point vpos_)
         {
+            bouncies = bouncies_;
             vpos = vpos_;
             dims = dims_;
             tiles = tiles_;
