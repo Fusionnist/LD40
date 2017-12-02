@@ -29,7 +29,9 @@ namespace DL40
             if(extmov != null)
             {
                 mov += (Vector2)extmov;
-            }        
+            }
+            Yvel += 1;
+            mov.Y += Yvel;        
         }
 
         public virtual Rectangle GetHB()
