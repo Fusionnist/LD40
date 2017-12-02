@@ -36,7 +36,7 @@ namespace DL40
                 else
                     releasedUp = true;
                 base.Move(input, extmov);
-                if (vinput.Y == -1 && (onground || canDJump))
+                if (vinput.Y == -1 && onground )
                     Yvel = -250;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
@@ -44,8 +44,6 @@ namespace DL40
             mov.Y += Yvel;
             if (!slipping)
                 Xvel = 0;
-            if (slipping)
-            { Xvel += mov.X; mov.X = Xvel; }
         }
 
         public override void TakeDamage(int dmg_)
@@ -57,6 +55,16 @@ namespace DL40
             }
         }
 
+        public override Rectangle GetHB()
+        {
+            return new Rectangle((int)pos.X - 16, (int)pos.Y - 16, 32, 32);
+        }
+
+        public override Rectangle GetHBAfterMov()
+        {
+            return new Rectangle((int)(pos.X - 16 + mov.X), (int)(pos.Y - 16 + mov.Y), 32, 32);
+        }
+
         public override void Draw(SpriteBatch sb_)
         {
             if ((invinTimer * 10) % 2 < 1)
@@ -65,6 +73,8 @@ namespace DL40
 
         public override void Update(float es_)
         {
+            if (slipping)
+            { Xvel += mov.X / 15 ; mov.X = Xvel; }
             base.Update(es_);
             if (onground)
                 canDJump = true;
