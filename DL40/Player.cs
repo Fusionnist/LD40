@@ -28,7 +28,7 @@ namespace DL40
             dashRight = true;
             dashInputTime = 0.15f;
             dashInputTimer = 0;
-            dashTime = 0.3f;
+            dashTime = 0.2f;
             dashTimer = 0;
             speed = 150;
         }
@@ -44,9 +44,9 @@ namespace DL40
                 else
                 {
                     if (dashRight)
-                        mov.X = 500;
+                        mov.X = 750;
                     else
-                        mov.X = -500;
+                        mov.X = -750;
                 }
                 if (vinput.Y == -1 && onground)
                     Yvel = -250;
@@ -73,6 +73,8 @@ namespace DL40
                 else
                 { releasedL = true; releasedR = true; }
             }
+            if (dashTimer > 0)
+                Yvel = 0;
             mov.Y += Yvel;
             if (!slipping)
                 Xvel = 0;
