@@ -36,8 +36,8 @@ namespace DL40
         {
             virtualDims = new Point(640, 320);
 
-            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1);
-            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1);
+            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1.1);
+            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1.1);
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -155,7 +155,7 @@ namespace DL40
             if (ipp.Pressed("right"))
             { mover.X += 100; }
             if (ipp.Pressed("up"))
-            { mover.Y -= 100; input.Y -= 1; }
+            { input.Y -= 1; }
             if (ipp.Pressed("down"))
             { mover.Y += 100; }
             player.Move(input: input, extmov: mover);
@@ -182,11 +182,11 @@ namespace DL40
                     //calc best option
                     if (inter.X > inter.Y)
                     {
-                        e.onground = false;
+                        player.onground = false;
                         if(player.pos.Y < e.pos.Y)
                         {
                             player.mov.Y -= inter.Y;
-                            e.onground = true;
+                            player.onground = true;
                         }
                         else
                         {

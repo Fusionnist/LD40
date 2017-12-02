@@ -23,7 +23,7 @@ namespace DL40
             texes = texes_;
             currentTex = texes[0];
             Yvel = 0;
-            onground = true;
+            onground = false;
         }
         public virtual void Move(Vector2? input = null, Vector2? extmov=null)
         {
