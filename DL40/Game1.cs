@@ -268,6 +268,10 @@ namespace DL40
                 r.Y += 1;
                 if (r.Intersects(e.GetHB()))
                 {
+                    if (e.isSolid)
+                    {
+                        player.onground = true;
+                    }
                     if (e.isHurty)
                         player.TakeDamage(1);
 
@@ -286,13 +290,12 @@ namespace DL40
                         if (player.pos.Y < e.pos.Y) { inter.Y = player.GetHBAfterMov().Height + player.GetHBAfterMov().Y - e.pos.Y; }
                         else { inter.Y = e.GetHB().Height + e.GetHB().Y - player.GetHBAfterMov().Y; }
                         //calc best option
-                        if (inter.X > inter.Y)
+                        if (inter.X > inter.Y )
                         {
 
                             if (player.pos.Y < e.pos.Y)
                             {
-                                player.mov.Y -= inter.Y;
-                                player.onground = true;
+                                player.mov.Y -= inter.Y;                              
                             }
                             else
                             {
@@ -309,7 +312,7 @@ namespace DL40
                             else
                             {
                                 player.mov.X += inter.X;
-                            }
+                            }      
                             if (!player.onground) { player.canWJump = true; }
                         }
                     }            
