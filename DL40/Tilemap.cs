@@ -14,7 +14,7 @@ namespace DL40
     public class Tilemap
     {
         Point dims;
-        List<Entity> tiles;
+        public List<Entity> tiles;
 
         public Tilemap(List<Entity> tiles_, Point dims_)
         {
