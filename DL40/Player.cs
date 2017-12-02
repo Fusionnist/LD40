@@ -11,7 +11,7 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin, canDJump, canWJump, releasedUp, releasedL, releasedR, dashRight;
+        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
 
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
@@ -21,7 +21,7 @@ namespace DL40
             invinTime = 3;
             invinTimer = invinTime;
             canDJump = false;
-            canWJump = false;
+            isOnWall = false;
             releasedUp = false;
             releasedL = false;
             releasedR = false;
@@ -52,6 +52,8 @@ namespace DL40
                     Yvel = -250;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
+                else if (vinput.Y == -1 && isOnWall && releasedUp)
+                    Yvel = -250;
                 else if (vinput.Y == -1 && canDJump && releasedUp)
                 { Yvel = -250; canDJump = false; }
                 if (vinput.Y == -1)

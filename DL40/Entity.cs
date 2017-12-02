@@ -13,7 +13,7 @@ namespace DL40
         TextureDrawer[] texes;
         TextureDrawer currentTex;
         public Vector2 pos, prevPos, mov, prevMov;
-        public bool isSolid, onground, isDead, slipping;
+        public bool isSolid, onground, isDead, slipping, isOnWall;
         public float Yvel, Xvel, speed;
         public int hp;
 
@@ -29,6 +29,7 @@ namespace DL40
             hp = 1;
             isDead = false;
             speed = 1;
+            isOnWall = false;
         }
         public virtual void Move(Vector2? input = null, Vector2? extmov=null)
         {
