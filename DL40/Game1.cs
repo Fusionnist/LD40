@@ -211,21 +211,22 @@ namespace DL40
             {
                 //switch maps
                 Point currentpos = map.vpos;
+                Point searchPos = map.vpos;
                 if(player.GetHBAfterMov().X < map.GetBounds().X)
                 {
-
+                    searchPos.X -= 1;
                 }
                 if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
                 {
-
+                    searchPos.X -= 1;
                 }
                 if (player.GetHBAfterMov().Y < map.GetBounds().Y)
                 {
-
+                    searchPos.X -= 1;
                 }
                 if (player.GetHBAfterMov().Y > map.GetBounds().Y+map.GetBounds().Height)
                 {
-
+                    searchPos.X -= 1;
                 }
             }
         }
@@ -268,7 +269,7 @@ namespace DL40
                         }
                     }
                     if (e.isHurty)
-                        player.hp -= 1;
+                        player.TakeDamage(1);
                 }
             }
         }
