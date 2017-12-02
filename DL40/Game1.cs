@@ -29,6 +29,8 @@ namespace DL40
         Player player;
         TextureDrawer menu;
         List<Tilemap> maps;
+        TextureDrawer fullheart, emptyheart;
+        float lastInter;
 
         public Game1()
         {
@@ -82,14 +84,7 @@ namespace DL40
             menu = new TextureDrawer(Content.Load<Texture2D>("Menu"));
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            td = new TextureDrawer(Content.Load<Texture2D>("sheet"),
-                new Rectangle[] {
-                    new Rectangle(0,0,64,64),
-                    new Rectangle(0,0,64,64),
-                    new Rectangle(0,0,64,64),
-                    new Rectangle(0,0,64,64),},
-                new Point[] { new Point(32, 32), new Point(32, 32), new Point(32, 32), new Point(32, 32), },
-                1f, 4, true, "test");
+            
 
             Texture2D src = Content.Load<Texture2D>("Original");
             Font f = new Font(new TextureDrawer[] {
@@ -149,7 +144,45 @@ namespace DL40
             maps.Add(getTilemap(XDocument.Load("Content/TestTilemap.tmx"), Point.Zero));
             maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-1,0)));
             map = maps[0];
-            player = new Player(new TextureDrawer[] { td }, new Vector2(100, 150));
+
+            TextureDrawer walk = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                new Rectangle[] {
+                    new Rectangle(0,0,32,32),
+                    new Rectangle(16,0,32,32), },
+                new Point[] { new Point(16, 16), new Point(16, 16), },
+                0.1f, 2, true, "walk");
+            TextureDrawer jump = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                new Rectangle[] {
+                    new Rectangle(0,0,32,32),
+                    new Rectangle(32,0,32,32), },
+                new Point[] { new Point(16, 16), new Point(16, 16), },
+                0.1f, 2, true, "jump");
+            TextureDrawer fall = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                new Rectangle[] {
+                    new Rectangle(0,0,32,32),
+                    new Rectangle(48,0,32,32), },
+                new Point[] { new Point(16, 16), new Point(16, 16), },
+                0.1f, 2, true, "fall");
+            TextureDrawer wallclimb = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                new Rectangle[] {
+                    new Rectangle(0,0,32,32),
+                    new Rectangle(0,16,32,32), },
+                new Point[] { new Point(16, 16), new Point(16, 16), },
+                0.1f, 2, true, "wallclimb");
+            TextureDrawer ground = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                new Rectangle[] {
+                    new Rectangle(0,0,32,32),
+                    new Rectangle(0,32,32,32), },
+                new Point[] { new Point(16, 16), new Point(16, 16), },
+                0.1f, 2, true, "ground");
+            TextureDrawer dead = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                new Rectangle[] {
+                    new Rectangle(16,0,32,32),
+                    new Rectangle(16,0,32,32), },
+                new Point[] { new Point(16, 16), new Point(16, 16), },
+                0.1f, 2, true, "dead");
+
+            player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150));
             mapPos = map.vpos;
         }
         //UTILS
@@ -347,20 +380,8 @@ namespace DL40
                     else { inter.X = t.GetHB().Width + t.GetHB().X - ent.GetHBAfterMov().X; }
                     if (ent.pos.Y < t.pos.Y) { inter.Y = ent.GetHBAfterMov().Height + ent.GetHBAfterMov().Y - t.pos.Y; }
                     else { inter.Y = t.GetHB().Height + t.GetHB().Y - ent.GetHBAfterMov().Y; }
-                    //calc best ent
-                    if (inter.X > inter.Y)
-                    {
-                        if (ent.pos.Y < t.pos.Y)
-                        {
-                            ent.mov.Y -= inter.Y;
-                        }
-                        else
-                        {
-                            ent.mov.Y += inter.Y;
-                        }
-                        ent.Yvel = 0f;
-                    }
-                    else
+                    //calc best         
+                    if (ent.GetHBafterX().Intersects(t.GetHB()))
                     {
                         if (ent.pos.X < t.pos.X)
                         {
@@ -370,10 +391,27 @@ namespace DL40
                         {
                             ent.mov.X += inter.X;
                         }
-                         ent.isOnWall = true;
+                        ent.isOnWall = true;
                     }
+                    else if (ent.GetHBafterY().Intersects(t.GetHB()))
+                    {
+
+                        if (ent.pos.Y < t.pos.Y)
+                        {
+                            ent.mov.Y -= inter.Y;
+                        }
+                        else
+                        {
+                            ent.mov.Y += inter.Y;
+                        }
+                        ent.Yvel = 0f;
+                    }                                         
                 }
             }
+        }
+        void EvaluateInter()
+        {
+
         }
         void DoCollisions()
         {
@@ -397,15 +435,16 @@ namespace DL40
             {
                 foreach (Tile e in map.tiles)
                 {
-                    if (e.actived != null)
+                    if (e.actived != null && e.GetHB().Intersects(player.GetHBAfterMov()) && e.isDead == false)
                     {
                         //debuff
                         int id = e.activID;
-                        foreach(Tilemap mapp in maps)
+                        e.isDead = true;
+                        foreach (Tilemap mapp in maps)
                         {
                             foreach(Tile t in mapp.tiles)
                             {
-                                if (t.activID == id) { t.Activate(); }
+                                if (!t.isDead && t.activID == id ) { t.Activate(); }
                             }
                         }
                     }
@@ -428,7 +467,7 @@ namespace DL40
             spriteBatch.Begin();
             
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
-            else { fd.DrawText("font", "hp "+player.hp, new Rectangle(0, 0, 640, 320), spriteBatch); }
+            else { fd.DrawText("font", lastInter.ToString(), new Rectangle(0, 0, 640, 320), spriteBatch); }
             spriteBatch.End();
 
             //GAME DRAW

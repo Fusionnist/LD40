@@ -78,6 +78,7 @@ namespace DL40
         public void Draw(SpriteBatch sb_, Vector2 pos_, bool flip = false)
         {
             SpriteEffects se = SpriteEffects.None;
+            if (flip) { se = SpriteEffects.FlipHorizontally; }
             sb_.Draw(src,position: pos_.ToPoint().ToVector2() - c_center.ToVector2(),sourceRectangle: c_sourceRect, effects: se);
         }
 

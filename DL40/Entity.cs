@@ -16,7 +16,7 @@ namespace DL40
         public bool isSolid, onground, isDead, slipping, isOnWall, isHurty;
         public float Yvel, Xvel, speed;
         public int hp;
-        bool facesLeft;
+        public bool facesLeft;
 
         protected Vector2 prevmov, prevInput;
 
@@ -83,7 +83,7 @@ namespace DL40
         }
         public virtual void Update(float es_)
         {
-            prevMov = mov;
+            prevmov = mov;
             
             currentTex.Update(es_);
             pos += mov;
@@ -101,15 +101,24 @@ namespace DL40
         }
         void SelectTexWow()
         {
-            if (prevmov.X < 0) { facesLeft = true; }
-            if (prevmov.X > 0) { facesLeft = false; }
-            
-            if (prevmov.Y < 0) { SelectTex("jump"); }
+            if (prevmov.X < 0)
+            { facesLeft = true; }
+            if (prevmov.X > 0)
+            { facesLeft = false; }
+
+            if (prevInput.X < 0)
+            { facesLeft = true; }
+            if (prevInput.X > 0)
+            { facesLeft = false; }
+
+            if (prevmov.Y < 0)
+            { SelectTex("jump"); }
             else if (isOnWall)
             {
                 SelectTex("wallclimb");
             }
-            else { SelectTex("fall"); }
+            else
+            { SelectTex("fall"); }
 
             if (onground)
             {

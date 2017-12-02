@@ -34,5 +34,14 @@ namespace DL40
                 isSolid = !isSolid;
             }
         }
+
+        public override void Draw(SpriteBatch sb_)
+        {          
+            if (actived != null)
+            {
+                if (!isDead) { base.Draw(sb_); }
+            }
+            else { base.Draw(sb_); }
+        }
     }
 }
