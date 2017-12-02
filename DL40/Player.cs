@@ -17,7 +17,7 @@ namespace DL40
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
         {
             hp = 5;
-            isInvin = true;
+            isInvin = false;
             invinTime = 3;
             invinTimer = invinTime;
         }
