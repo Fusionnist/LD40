@@ -70,7 +70,8 @@ namespace DL40
                 new KeyManager(Keys.Right,"right"),
                 new KeyManager(Keys.Up,"up"),
                 new KeyManager(Keys.Down,"down"),
-                new KeyManager(Keys.Space,"space")
+                new KeyManager(Keys.Space,"space"),
+                new KeyManager(Keys.R,"restart")
             };
             ipp = new InputProfile(kms);
             base.Initialize();
@@ -157,18 +158,28 @@ namespace DL40
             Point dims = new Point(int.Parse(doc_.Element("map").Attribute("width").Value), int.Parse(doc_.Element("map").Attribute("height").Value));
             Point tdims = new Point(int.Parse(doc_.Element("map").Attribute("tilewidth").Value), int.Parse(doc_.Element("map").Attribute("tileheight").Value));
             int count = dims.X * dims.Y;
-            string raw = doc_.Element("map").Element("layer").Element("data").Value;
             List<Tile> tiles = new List<Tile>();
             Tileset ts = getTileset(XDocument.Load("Content/" + doc_.Element("map").Element("tileset").Attribute("source").Value));
-            string[] split = raw.Split(',');
 
-            for (int x = 0; x < dims.X; x++)
+            foreach(XElement layer in doc_.Element("map").Elements("layer"))
             {
-                for (int y = 0; y < dims.Y; y++)
+                string raw = layer.Element("data").Value;
+
+
+                string[] split = raw.Split(',');
+
+                for (int x = 0; x < dims.X; x++)
                 {
-                    tiles.Add(ts.getTile(int.Parse(split[x + dims.X * y]) - 1, new Vector2(x * tdims.X, y * tdims.Y)));
+                    for (int y = 0; y < dims.Y; y++)
+                    {
+                        if (int.Parse(split[x + dims.X * y]) != 0)                    
+                        {
+                            tiles.Add(ts.getTile(int.Parse(split[x + dims.X * y]) - 1, new Vector2(x * tdims.X, y * tdims.Y)));
+                        }
+                    }
                 }
             }
+            
 
 
             return new Tilemap(tiles, dims,vpos_);
@@ -187,6 +198,7 @@ namespace DL40
             bool[] slips = new bool[count];
             bool[] door = new bool[count];
             int[] pool = new int[count];
+            string[] actived = new string[count];
             foreach (XElement tile in doc_.Element("tileset").Elements("tile"))//PROPERTIES!
             {
                 foreach (XElement prop in tile.Element("objectgroup").Element("properties").Elements("property"))//PROPERTIES!
@@ -211,9 +223,13 @@ namespace DL40
                     {
                         pool[int.Parse(tile.Attribute("id").Value)] = int.Parse(prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "debuff")
+                    {
+                        actived[int.Parse(tile.Attribute("id").Value)] = (prop.Attribute("value").Value);
+                    }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived);
         }
         //UPDATE
         protected override void Update(GameTime gameTime)
@@ -287,6 +303,7 @@ namespace DL40
                     { map = tm; mapPos = tm.vpos; }
                 }
             }
+            if (ipp.JustPressed("restart")) { GoToNewGame(); }
         }
         void DoCollisions()
         {
@@ -295,7 +312,18 @@ namespace DL40
             {
                 foreach (Tile e in map.tiles)
                 {
-                    int searchfor = 0;
+                    if (e.actived != null)
+                    {
+                        //debuff
+                        int id = e.activID;
+                        foreach(Tilemap mapp in maps)
+                        {
+                            foreach(Tile t in mapp.tiles)
+                            {
+                                if (t.activID == id) { t.Activate(); }
+                            }
+                        }
+                    }
                 }
             }
             foreach (Tile e in map.tiles)
