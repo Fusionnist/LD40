@@ -13,6 +13,7 @@ namespace DL40
     {
         public bool isHurty, isSlippery, isDoory;
         public int activID;
+        public string actived;
 
         public Tile(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_, bool a_isHurty, bool isSlippy_, bool isDoory_, int activID_, string activated = null): base(texes_, pos_)
         {
@@ -21,12 +22,19 @@ namespace DL40
             isSlippery = isSlippy_;
             isDoory = isDoory_;
             activID = activID_;
+            actived = activated;
             speed = 0;
         }
 
         public virtual void Activate()
         {
-
+            if (isDoory)
+            {
+                if (isSolid)
+                    isSolid = false;
+                else
+                    isSolid = true;
+            }
         }
     }
 }
