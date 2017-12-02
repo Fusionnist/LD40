@@ -9,23 +9,24 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DL40
 {
-    class Player : Entity
+    public class Player : Entity
     {
+
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
         {
-
+            hp = 5;
         }
 
         public override void Move(Vector2? input = null, Vector2? extmov = null)
         {
             base.Move(input, extmov);
-            Yvel += 1;
-            mov.Y += Yvel;
             Vector2 vinput = (Vector2)input;
+            Yvel += 5;
             if (vinput.Y == -1 && onground)
-            {
-                Yvel -= 15;
-            }
+                Yvel = -250;
+            else if (vinput.Y == 1 && Yvel < 0)
+                Yvel = 0;
+            mov.Y += Yvel;
         }
     }
 }
