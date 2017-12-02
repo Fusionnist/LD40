@@ -254,8 +254,18 @@ namespace DL40
             player.slipping = false;
             foreach (Tile e in map.tiles)
             {
-                if (player.GetHBAfterMov().Intersects(e.GetHB()))
+                Rectangle r = player.GetHBAfterMov();
+                r.Y += 1;
+                if (r.Intersects(e.GetHB()))
                 {
+                    if (e.isHurty)
+                        player.TakeDamage(1);
+
+                    if (e.isSlippery)
+                        player.slipping = true;
+                }
+                if (player.GetHBAfterMov().Intersects(e.GetHB()))
+                {                 
                     if (e.isSolid)
                     {
                         Vector2 inter = Vector2.Zero;
@@ -276,7 +286,7 @@ namespace DL40
                             {
                                 player.mov.Y += inter.Y;
                             }
-                            player.Yvel = 0;
+                            player.Yvel = 0f;
                         }
                         else
                         {
@@ -290,13 +300,7 @@ namespace DL40
                             }
                             if (!player.onground) { player.canWJump = true; }
                         }
-                    }
-                    
-                    if (e.isHurty)
-                        player.TakeDamage(1);
-
-                    if (e.isSlippery)
-                        player.slipping=true;
+                    }            
                 }
             }
         }
