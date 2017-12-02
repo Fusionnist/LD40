@@ -66,7 +66,8 @@ namespace DL40
                 new KeyManager(Keys.Left,"left"),
                 new KeyManager(Keys.Right,"right"),
                 new KeyManager(Keys.Up,"up"),
-                new KeyManager(Keys.Down,"down")
+                new KeyManager(Keys.Down,"down"),
+                new KeyManager(Keys.Space,"space")
             };
             ipp = new InputProfile(kms);
             base.Initialize();
@@ -75,7 +76,7 @@ namespace DL40
         protected override void LoadContent()
         {
             menu = new TextureDrawer(Content.Load<Texture2D>("Menu"));
-            map = getTilemap(XDocument.Load("Content/TestTilemap.tmx"));
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
             td = new TextureDrawer(Content.Load<Texture2D>("sheet"),
                 new Rectangle[] {
@@ -95,7 +96,7 @@ namespace DL40
                 "font");
             fd.fonts.Add(f);
 
-            player = new Player(new TextureDrawer[] { td }, new Vector2(100, 150));
+           
         }
         protected override void UnloadContent()
         {
@@ -104,6 +105,8 @@ namespace DL40
         void GoToNewGame()
         {
             gp = GamePhase.Game;
+            map = getTilemap(XDocument.Load("Content/TestTilemap.tmx"));
+            player = new Player(new TextureDrawer[] { td }, new Vector2(100, 150));
         }
         //UTILS
         Tilemap getTilemap(XDocument doc_)
@@ -170,7 +173,7 @@ namespace DL40
         }
         void UpdateMenu(float es_)
         {
-            if (ipp.Pressed("up"))
+            if (ipp.Pressed("space"))
             {
                 GoToNewGame();
             }
@@ -194,6 +197,11 @@ namespace DL40
             DoCollisions();
             //UPDATE
             player.Update(es_);
+
+            if (ipp.Pressed("space"))
+            {
+                GoToNewGame();
+            }
         }
         void DoCollisions()
         {
@@ -259,7 +267,7 @@ namespace DL40
             GraphicsDevice.SetRenderTarget(gameTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            DrawGameElements();
+            if (gp == GamePhase.Game) { DrawGameElements(); }
             spriteBatch.End();
 
             //DEFINITIVE DRAW
