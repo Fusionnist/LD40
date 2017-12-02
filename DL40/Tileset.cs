@@ -28,10 +28,10 @@ namespace DL40
             solid = solid_;
         }
 
-        public Entity getTile(int id,Vector2 pos_)
+        public Tile getTile(int id,Vector2 pos_)
         {
             TextureDrawer td = new TextureDrawer(src,new Rectangle((id%columns)*tileDims.X,(id/columns)*tileDims.Y,tileDims.X,tileDims.Y),Point.Zero,"imatile");
-            return new Entity(new TextureDrawer[] { td }, pos_, solid[id]);
+            return new Tile(new TextureDrawer[] { td }, pos_, solid[id]);
         }
     }
 }
