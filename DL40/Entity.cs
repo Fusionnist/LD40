@@ -32,17 +32,22 @@ namespace DL40
 
         public virtual Rectangle GetHB()
         {
-            return new Rectangle(currentTex.c_sourceRect.X + (int)mov.X, currentTex.c_sourceRect.Y, currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
+            return new Rectangle((int)pos.X - currentTex.c_center.X, (int)pos.Y - currentTex.c_center.Y, currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
         }
 
         public virtual Rectangle GetHBafterX()
         {
-            return new Rectangle(currentTex.c_sourceRect.X + (int)mov.X, currentTex.c_sourceRect.Y, currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
+            return new Rectangle((int)(pos.X - currentTex.c_center.X + mov.X), (int)pos.Y - currentTex.c_center.Y, currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
         }
 
         public virtual Rectangle GetHBafterY()
         {
-            return new Rectangle(currentTex.c_sourceRect.X, currentTex.c_sourceRect.Y + (int)mov.Y, currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
+            return new Rectangle((int)pos.X - currentTex.c_center.X, (int)(pos.Y - currentTex.c_center.Y + mov.Y), currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
+        }
+
+        public virtual Rectangle GetHBAfterMov()
+        {
+            return new Rectangle((int)(pos.X - currentTex.c_center.X + mov.X), (int)(pos.Y - currentTex.c_center.Y + mov.Y), currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
         }
 
         public void SelectTex(string name_)

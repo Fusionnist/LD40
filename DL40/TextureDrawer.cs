@@ -13,7 +13,7 @@ namespace DL40
     {
         Texture2D src;
         public Rectangle c_sourceRect;
-        Point c_center;
+        public Point c_center;
         public string name;
         //anim values
         Rectangle[] sourceRects;
