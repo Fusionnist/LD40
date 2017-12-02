@@ -26,6 +26,7 @@
   <objectgroup draworder="index">
    <properties>
     <property name="slippery" type="bool" value="true"/>
+    <property name="solid" type="bool" value="true"/>
    </properties>
   </objectgroup>
  </tile>
