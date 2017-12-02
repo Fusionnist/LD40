@@ -11,8 +11,8 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin, canDJump, canWJump, releasedUp, releasedL, releasedR;
-        public float invinTime, invinTimer, dashInputTime, dashInputTimer;
+        public bool isInvin, canDJump, canWJump, releasedUp, releasedL, releasedR, dashRight;
+        public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
 
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
         {
@@ -25,8 +25,11 @@ namespace DL40
             releasedUp = false;
             releasedL = false;
             releasedR = false;
-            dashInputTime = 0.5f;
-            dashInputTimer = 0.5f;
+            dashRight = true;
+            dashInputTime = 0.15f;
+            dashInputTimer = 0;
+            dashTime = 0.3f;
+            dashTimer = 0;
             speed = 150;
         }
 
@@ -36,7 +39,15 @@ namespace DL40
             Yvel += 5;
             if (!isDead)
             {
-                base.Move(input, extmov);
+                if (dashTimer <= 0)
+                    base.Move(input, extmov);
+                else
+                {
+                    if (dashRight)
+                        mov.X = 500;
+                    else
+                        mov.X = -500;
+                }
                 if (vinput.Y == -1 && onground)
                     Yvel = -250;
                 else if (vinput.Y == 1 && Yvel < 0)
@@ -48,9 +59,17 @@ namespace DL40
                 else
                     releasedUp = true;
                 if (vinput.X == -1)
+                {
+                    if (releasedL && dashInputTimer > 0 && !dashRight)
+                    { dashTimer = dashTime; dashInputTimer = 0; }
                     releasedL = false;
+                }
                 else if (vinput.X == 1)
+                {
+                    if (releasedR && dashInputTimer > 0 && dashRight)
+                    { dashTimer = dashTime; dashInputTimer = 0; }
                     releasedR = false;
+                }
                 else
                 { releasedL = true; releasedR = true; }
             }
@@ -110,6 +129,16 @@ namespace DL40
                     invinTimer = invinTime;
                 }
             }
+            if (dashTimer <= 0)
+            {
+                if (releasedL && releasedR)
+                    dashInputTimer -= es_;
+                else if (releasedL)
+                { dashRight = true; dashInputTimer = dashInputTime; }
+                else if (releasedR)
+                { dashRight = false; dashInputTimer = dashInputTime; }
+            }
+            dashTimer -= es_;
         }
     }
 }
