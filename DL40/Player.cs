@@ -122,7 +122,11 @@ namespace DL40
         public override void Update(float es_)
         {
             if (slipping)
-            { Xvel += mov.X / 15 ; mov.X = Xvel; }
+            {
+                Xvel += mov.X / 15 ;
+                if (dashTimer <= 0)
+                    mov.X = Xvel;
+            }
             base.Update(es_);
             if (onground)
                 canDJump = true;
