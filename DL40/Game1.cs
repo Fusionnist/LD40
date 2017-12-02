@@ -92,9 +92,45 @@ namespace DL40
 
             Texture2D src = Content.Load<Texture2D>("Original");
             Font f = new Font(new TextureDrawer[] {
-                new TextureDrawer(src,new Rectangle(0,0,5,9),Point.Zero,"!"),
-                new TextureDrawer(src,new Rectangle(5,0,8,9),Point.Zero,"o"),
-                new TextureDrawer(src,new Rectangle(13,0,10,9),Point.Zero," ")
+                new TextureDrawer(src,new Rectangle(0,27,9,9),Point.Zero,"a"),
+                new TextureDrawer(src,new Rectangle(9,27,9,9),Point.Zero,"b"),
+                new TextureDrawer(src,new Rectangle(18,27,9,9),Point.Zero,"c"),
+                new TextureDrawer(src,new Rectangle(27,27,9,9),Point.Zero,"d"),
+                new TextureDrawer(src,new Rectangle(36,27,9,9),Point.Zero,"e"),
+                new TextureDrawer(src,new Rectangle(45,27,9,9),Point.Zero,"f"),
+                new TextureDrawer(src,new Rectangle(54,27,9,9),Point.Zero,"g"),
+                new TextureDrawer(src,new Rectangle(63,27,9,9),Point.Zero,"h"),
+                new TextureDrawer(src,new Rectangle(72,27,9,9),Point.Zero,"i"),
+                new TextureDrawer(src,new Rectangle(81,27,9,9),Point.Zero,"j"),
+                new TextureDrawer(src,new Rectangle(90,27,9,9),Point.Zero,"k"),
+                new TextureDrawer(src,new Rectangle(99,27,9,9),Point.Zero,"l"),
+                new TextureDrawer(src,new Rectangle(108,27,9,9),Point.Zero,"m"),
+
+                new TextureDrawer(src,new Rectangle(0,36,9,9),Point.Zero,"n"),
+                new TextureDrawer(src,new Rectangle(9,36,9,9),Point.Zero,"o"),
+                new TextureDrawer(src,new Rectangle(18,36,9,9),Point.Zero,"p"),
+                new TextureDrawer(src,new Rectangle(27,36,9,9),Point.Zero,"q"),
+                new TextureDrawer(src,new Rectangle(36,36,9,9),Point.Zero,"r"),
+                new TextureDrawer(src,new Rectangle(45,36,9,9),Point.Zero,"s"),
+                new TextureDrawer(src,new Rectangle(54,36,9,9),Point.Zero,"t"),
+                new TextureDrawer(src,new Rectangle(63,36,9,9),Point.Zero,"u"),
+                new TextureDrawer(src,new Rectangle(72,36,9,9),Point.Zero,"v"),
+                new TextureDrawer(src,new Rectangle(81,36,9,9),Point.Zero,"w"),
+                new TextureDrawer(src,new Rectangle(90,36,9,9),Point.Zero,"x"),
+                new TextureDrawer(src,new Rectangle(99,36,9,9),Point.Zero,"y"),
+                new TextureDrawer(src,new Rectangle(108,36,9,9),Point.Zero,"z"),
+
+                new TextureDrawer(src,new Rectangle(0,9,8,9),Point.Zero,"0"),
+                new TextureDrawer(src,new Rectangle(8,9,8,9),Point.Zero,"1"),
+                new TextureDrawer(src,new Rectangle(16,9,8,9),Point.Zero,"2"),
+                new TextureDrawer(src,new Rectangle(24,9,8,9),Point.Zero,"3"),
+                new TextureDrawer(src,new Rectangle(32,9,8,9),Point.Zero,"4"),
+                new TextureDrawer(src,new Rectangle(40,9,8,9),Point.Zero,"5"),
+                new TextureDrawer(src,new Rectangle(48,9,8,9),Point.Zero,"6"),
+                new TextureDrawer(src,new Rectangle(56,9,8,9),Point.Zero,"7"),
+                new TextureDrawer(src,new Rectangle(64,9,8,9),Point.Zero,"8"),
+                new TextureDrawer(src,new Rectangle(72,9,8,9),Point.Zero,"9"),
+                new TextureDrawer(src,new Rectangle(80,9,8,9),Point.Zero," "),
                 },
                 "font");
             fd.fonts.Add(f);
@@ -292,14 +328,13 @@ namespace DL40
                         //calc best option
                         if (inter.X > inter.Y)
                         {
-
                             if (player.pos.Y < e.pos.Y)
                             {
-                                player.mov.Y -= inter.Y + 0.5f;                              
+                                player.mov.Y -= inter.Y;                              
                             }
                             else
                             {
-                                player.mov.Y += inter.Y + 0.5f;
+                                player.mov.Y += inter.Y;
                             }
                             player.Yvel = 0f;
                         }
@@ -307,11 +342,11 @@ namespace DL40
                         {
                             if (player.pos.X < e.pos.X)
                             {
-                                player.mov.X -= inter.X + 0.5f;
+                                player.mov.X -= inter.X;
                             }
                             else
                             {
-                                player.mov.X += inter.X + 0.5f;
+                                player.mov.X += inter.X;
                             }      
                             if (!player.onground) { player.canWJump = true; }
                         }
@@ -333,7 +368,9 @@ namespace DL40
             GraphicsDevice.SetRenderTarget(overlayTarget);
             GraphicsDevice.Clear(Color.TransparentBlack);
             spriteBatch.Begin();
+            
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
+            else { fd.DrawText("font", player.onground.ToString(), new Rectangle(0, 0, 640, 320), spriteBatch); }
             spriteBatch.End();
 
             //GAME DRAW

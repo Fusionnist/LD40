@@ -25,7 +25,7 @@ namespace DL40
             {
                 if (td.name == name_.ToString()) { return td; }
             }
-            return null;
+            return characters[0];
         }
 
         public void Update(float es_)
