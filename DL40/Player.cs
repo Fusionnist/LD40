@@ -11,7 +11,7 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin;
+        public bool isInvin, canDJump, canWJump, releasedUp;
         public float invinTime, invinTimer;
 
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
@@ -20,6 +20,9 @@ namespace DL40
             isInvin = false;
             invinTime = 3;
             invinTimer = invinTime;
+            canDJump = false;
+            canWJump = false;
+            releasedUp = false;
         }
 
         public override void Move(Vector2? input = null, Vector2? extmov = null)
@@ -59,6 +62,8 @@ namespace DL40
         public override void Update(float es_)
         {
             base.Update(es_);
+            if (onground)
+                canDJump = true;
             if (isInvin)
             {
                 invinTimer -= es_;
