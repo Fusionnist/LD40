@@ -42,7 +42,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Door.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="FontDrawer.cs" />

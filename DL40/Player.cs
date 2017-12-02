@@ -55,6 +55,16 @@ namespace DL40
             }
         }
 
+        public override Rectangle GetHB()
+        {
+            return new Rectangle((int)pos.X - 16, (int)pos.Y - 16, 32, 32);
+        }
+
+        public override Rectangle GetHBAfterMov()
+        {
+            return new Rectangle((int)(pos.X - 16 + mov.X), (int)(pos.Y - 16 + mov.Y), 32, 32);
+        }
+
         public override void Draw(SpriteBatch sb_)
         {
             if ((invinTimer * 10) % 2 < 1)
