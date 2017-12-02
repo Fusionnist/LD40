@@ -15,7 +15,7 @@ namespace DL40
         Vector2 pos, prevPos, mov, prevMov;
         public bool isSolid;
 
-        public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_=false)
+        public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_ = false)
         {
             isSolid = isSolid_;
             pos = pos_;
