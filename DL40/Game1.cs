@@ -27,6 +27,7 @@ namespace DL40
         InputProfile ipp;
         Player player;
         TextureDrawer menu;
+        List<Tilemap> maps;
 
         public Game1()
         {
@@ -105,11 +106,14 @@ namespace DL40
         void GoToNewGame()
         {
             gp = GamePhase.Game;
-            map = getTilemap(XDocument.Load("Content/TestTilemap.tmx"));
+            maps = new List<Tilemap>();
+            maps.Add(getTilemap(XDocument.Load("Content/TestTilemap.tmx"), Point.Zero));
+            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-1,0)));
+            map = maps[0];
             player = new Player(new TextureDrawer[] { td }, new Vector2(100, 150));
         }
         //UTILS
-        Tilemap getTilemap(XDocument doc_)
+        Tilemap getTilemap(XDocument doc_, Point vpos_)
         {
             Point dims = new Point(int.Parse(doc_.Element("map").Attribute("width").Value), int.Parse(doc_.Element("map").Attribute("height").Value));
             Point tdims = new Point(int.Parse(doc_.Element("map").Attribute("tilewidth").Value), int.Parse(doc_.Element("map").Attribute("tileheight").Value));
@@ -128,7 +132,7 @@ namespace DL40
             }
 
 
-            return new Tilemap(tiles, dims);
+            return new Tilemap(tiles, dims,vpos_);
         }
         Tileset getTileset(XDocument doc_)
         {
@@ -201,6 +205,28 @@ namespace DL40
             if (ipp.Pressed("space"))
             {
                 GoToNewGame();
+            }
+
+            if (!player.GetHBAfterMov().Intersects(map.GetBounds()))
+            {
+                //switch maps
+                Point currentpos = map.vpos;
+                if(player.GetHBAfterMov().X < map.GetBounds().X)
+                {
+
+                }
+                if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
+                {
+
+                }
+                if (player.GetHBAfterMov().Y < map.GetBounds().Y)
+                {
+
+                }
+                if (player.GetHBAfterMov().Y > map.GetBounds().Y+map.GetBounds().Height)
+                {
+
+                }
             }
         }
         void DoCollisions()
