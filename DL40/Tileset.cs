@@ -17,10 +17,12 @@ namespace DL40
         Texture2D src;
         int count;
         bool[] solid;
+        bool[] hurtmyass;
         int columns;
 
-        public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_)
+        public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_)
         {
+            hurtsmyass_ = hurtsmyass_;
             count = count_;
             tileDims = tileDims_;
             src = src_;
@@ -31,7 +33,7 @@ namespace DL40
         public Tile getTile(int id,Vector2 pos_)
         {
             TextureDrawer td = new TextureDrawer(src,new Rectangle((id%columns)*tileDims.X,(id/columns)*tileDims.Y,tileDims.X,tileDims.Y),Point.Zero,"imatile");
-            return new Tile(new TextureDrawer[] { td }, pos_, solid[id]);
+            return new Tile(new TextureDrawer[] { td }, pos_, solid[id], hurtmyass[id]);
         }
     }
 }
