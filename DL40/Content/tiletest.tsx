@@ -8,4 +8,18 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="3">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="13">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="hurty" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
 </tileset>
