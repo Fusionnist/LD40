@@ -36,8 +36,8 @@ namespace DL40
         {
             virtualDims = new Point(640, 320);
 
-            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1.5);
-            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1.5);
+            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1);
+            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1);
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -184,11 +184,14 @@ namespace DL40
                         if(player.pos.Y < e.pos.Y)
                         {
                             player.mov.Y -= inter.Y;
+                            e.onground = true;
                         }
                         else
                         {
                             player.mov.Y += inter.Y;
                         }
+                        e.Yvel = 0;
+                        
                     }
                     else
                     {
