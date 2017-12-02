@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DL40
 {
-    class Tile : Entity
+    public class Tile : Entity
     {
         public bool isHurty;
 
