@@ -22,4 +22,11 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="14">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="slippery" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
 </tileset>

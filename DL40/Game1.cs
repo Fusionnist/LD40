@@ -148,6 +148,7 @@ namespace DL40
             int count = int.Parse(doc_.Element("tileset").Attribute("tilecount").Value);
             bool[] solid = new bool[count];
             bool[] hurtsmyass = new bool[count];
+            bool[] slips = new bool[count];
             foreach (XElement tile in doc_.Element("tileset").Elements("tile"))//PROPERTIES!
             {
                 foreach (XElement prop in tile.Element("objectgroup").Element("properties").Elements("property"))//PROPERTIES!
@@ -160,10 +161,14 @@ namespace DL40
                     {
                         hurtsmyass[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "slippery")
+                    {
+                        slips[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
+                    }
                 }
             }
 
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips);
         }
         //UPDATE
         protected override void Update(GameTime gameTime)
