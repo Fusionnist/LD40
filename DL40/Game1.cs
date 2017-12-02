@@ -25,7 +25,7 @@ namespace DL40
         Tilemap map;
 
         InputProfile ipp;
-        Entity player;
+        Player player;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -91,7 +91,7 @@ namespace DL40
                 "font");
             fd.fonts.Add(f);
 
-            player = new Entity(new TextureDrawer[] { td }, new Vector2(100, 150));
+            player = new Player(new TextureDrawer[] { td }, new Vector2(100, 150));
         }
         Tilemap getTilemap(XDocument doc_)
         {
@@ -149,15 +149,16 @@ namespace DL40
             float es = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ipp.Update(Keyboard.GetState(),GamePad.GetState(0));
             Vector2 mover = Vector2.Zero;
+            Vector2 input = Vector2.Zero;
             if (ipp.Pressed("left"))
             { mover.X -= 100; }
             if (ipp.Pressed("right"))
             { mover.X += 100; }
             if (ipp.Pressed("up"))
-            { mover.Y -= 100; }
+            { mover.Y -= 100; input.Y -= 1; }
             if (ipp.Pressed("down"))
             { mover.Y += 100; }
-            player.Move(extmov: mover);
+            player.Move(input: input, extmov: mover);
             //PRE-UPDATE
             player.PreUpdate(es);
             //COLLISIONS
