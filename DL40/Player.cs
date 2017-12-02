@@ -36,6 +36,7 @@ namespace DL40
         public override void Move(Vector2? input = null, Vector2? extmov = null)
         {
             Vector2 vinput = (Vector2)input;
+            prevInput = vinput;
             Yvel += 5;
             if (!isDead)
             {
@@ -117,7 +118,7 @@ namespace DL40
 
         public override void Draw(SpriteBatch sb_)
         {
-            if ((invinTimer * 10) % 2 < 1)
+            if ((invinTimer * 10) % 2 < 1 && !isDead)
                 base.Draw(sb_);
         }
 

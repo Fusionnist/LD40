@@ -85,10 +85,10 @@ namespace DL40
             td = new TextureDrawer(Content.Load<Texture2D>("sheet"),
                 new Rectangle[] {
                     new Rectangle(0,0,64,64),
-                    new Rectangle(72, 8, 48, 48),
-                    new Rectangle(144, 16, 32, 32),
-                    new Rectangle(216, 24, 16, 16), },
-                new Point[] { new Point(32, 32), new Point(24, 24), new Point(16, 16), new Point(8, 8), },
+                    new Rectangle(0,0,64,64),
+                    new Rectangle(0,0,64,64),
+                    new Rectangle(0,0,64,64),},
+                new Point[] { new Point(32, 32), new Point(32, 32), new Point(32, 32), new Point(32, 32), },
                 1f, 4, true, "test");
 
             Texture2D src = Content.Load<Texture2D>("Original");
@@ -282,12 +282,12 @@ namespace DL40
             foreach (Entity e in map.bouncies) { e.Move(); }
             //PRE-UPDATE
             player.PreUpdate(es_);
-            foreach(Entity e in map.bouncies) { e.PreUpdate(es_); }
+            map.PreUpdate(es_);
             //COLLISIONS
             DoCollisions();
             //UPDATE
             player.Update(es_);
-            foreach (Entity e in map.bouncies) { e.Update(es_); }
+            map.Update(es_);
 
             if (!player.GetHBAfterMov().Intersects(map.GetBounds()))
             {
@@ -321,6 +321,7 @@ namespace DL40
         }
         void Collide(Entity ent, Tile t)
         {
+            
             Rectangle r = ent.GetHBafterY();
             r.Y += 1;
             if (r.Intersects(t.GetHB()))
@@ -377,12 +378,22 @@ namespace DL40
         void DoCollisions()
         {
             player.onground = false;
+            player.isOnWall = false;
+            foreach(Entity b in map.bouncies)
+            {
+                b.onground = false;
+                b.isOnWall = false;
+            }
             foreach (Tile t in map.tiles)
             {
-                foreach (Entity e in map.bouncies) { Collide(e, t); }
+                foreach (Entity e in map.bouncies)
+                {
+                    Collide(e, t);
+                    if (e.GetHBAfterMov().Intersects(player.GetHBAfterMov())) { player.TakeDamage(1); }
+                }
                 Collide(player, t);
             }                   
-            if (ipp.Pressed("space"))
+            if (ipp.JustPressed("space"))
             {
                 foreach (Tile e in map.tiles)
                 {
@@ -417,7 +428,7 @@ namespace DL40
             spriteBatch.Begin();
             
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
-            else { fd.DrawText("font", player.onground.ToString(), new Rectangle(0, 0, 640, 320), spriteBatch); }
+            else { fd.DrawText("font", "hp "+player.hp, new Rectangle(0, 0, 640, 320), spriteBatch); }
             spriteBatch.End();
 
             //GAME DRAW

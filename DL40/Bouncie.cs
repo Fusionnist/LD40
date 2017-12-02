@@ -11,18 +11,27 @@ namespace DL40
 {
     public class Bouncie : Entity
     {
+        bool left;
         public Bouncie(TextureDrawer[] texes_, Vector2 pos_, float baseXvel): base(texes_, pos_, false)
         {
             Xvel = baseXvel;
+            isHurty = true;
         }
 
         public override void Move(Vector2? input = default(Vector2?), Vector2? extmov = default(Vector2?))
         {
             if (onground)
-                Yvel = -Yvel;
+                Yvel = -100;
             else
-                Yvel += 5;
-            mov.X += Xvel;
+                Yvel += 4;
+
+            if (isOnWall)
+                left = !left;
+
+            if(left)
+                mov.X -= Xvel;
+            else
+                mov.X += Xvel;
             mov.Y += Yvel;
         }
     }

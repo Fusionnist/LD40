@@ -11,7 +11,7 @@ namespace DL40
 {
     public class Tile : Entity
     {
-        public bool isHurty, isSlippery, isDoory, activated;
+        public bool isSlippery, isDoory, activated;
         public int activID;
         public string actived;
 
@@ -31,10 +31,7 @@ namespace DL40
         {
             if (isDoory)
             {
-                if (isSolid)
-                    isSolid = false;
-                else
-                    isSolid = true;
+                isSolid = !isSolid;
             }
         }
     }

@@ -71,7 +71,10 @@ namespace DL40
                 c_sourceRect = sourceRects[frameCounter];
             }            
         }
-
+        public void Reset()
+        {
+            frameCounter = 0;
+        }
         public void Draw(SpriteBatch sb_, Vector2 pos_, bool flip = false)
         {
             SpriteEffects se = SpriteEffects.None;

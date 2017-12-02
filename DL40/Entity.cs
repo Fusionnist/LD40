@@ -13,9 +13,12 @@ namespace DL40
         TextureDrawer[] texes;
         TextureDrawer currentTex;
         public Vector2 pos, prevPos, mov, prevMov;
-        public bool isSolid, onground, isDead, slipping, isOnWall;
+        public bool isSolid, onground, isDead, slipping, isOnWall, isHurty;
         public float Yvel, Xvel, speed;
         public int hp;
+        bool facesLeft;
+
+        protected Vector2 prevmov, prevInput;
 
         public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_ = false)
         {
@@ -34,6 +37,7 @@ namespace DL40
         public virtual void Move(Vector2? input = null, Vector2? extmov=null)
         {
             Vector2 vinput = (Vector2)input;
+            prevInput = vinput;
             if (!isDead)
             {
                 if (vinput.X == -1)
@@ -79,18 +83,46 @@ namespace DL40
         }
         public virtual void Update(float es_)
         {
+            prevMov = mov;
+            
             currentTex.Update(es_);
             pos += mov;
-            if (hp <= 0 && !isDead)
+            mov = Vector2.Zero;
+            if (hp <= 0)
             {
-                isDead = true;
-                isSolid = false;
-            }
+                hp = 0;
+                if (!isDead)
+                {
+                    isDead = true;
+                    isSolid = false;
+                    
+                }
+            }         
         }
+        void SelectTexWow()
+        {
+            if (prevmov.X < 0) { facesLeft = true; }
+            if (prevmov.X > 0) { facesLeft = false; }
+            
+            if (prevmov.Y < 0) { SelectTex("jump"); }
+            else if (isOnWall)
+            {
+                SelectTex("wallclimb");
+            }
+            else { SelectTex("fall"); }
 
+            if (onground)
+            {
+                SelectTex("ground");
+                if (prevmov.X != 0) { SelectTex("walk"); }
+            }
+
+            if (isDead) { SelectTex("dead"); }
+        }
         public virtual void Draw(SpriteBatch sb_)
         {
-            currentTex.Draw(sb_,pos);
+            SelectTexWow();
+            currentTex.Draw(sb_,pos,facesLeft);
         }
 
         public virtual void TakeDamage(int dmg_)
