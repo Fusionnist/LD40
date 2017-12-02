@@ -11,7 +11,7 @@ namespace DL40
 {
     class Door : Tile
     {
-        public Door(TextureDrawer[] texes_, Vector2 pos_) : base(texes_, pos_)
+        public Door(TextureDrawer[] texes_, Vector2 pos_) : base(texes_, pos_, false)
         {
             
         }
