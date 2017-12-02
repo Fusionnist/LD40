@@ -20,5 +20,10 @@ namespace DL40
             isHurty = a_isHurty;
             isSlippery = isSlippy_;
         }
+
+        public virtual void Activate()
+        {
+
+        }
     }
 }
