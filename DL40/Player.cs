@@ -28,20 +28,22 @@ namespace DL40
         public override void Move(Vector2? input = null, Vector2? extmov = null)
         {
             Yvel += 5;
+            Vector2 vinput = (Vector2)input;
             if (!isDead)
             {
+                if (vinput.Y == -1)
+                    releasedUp = false;
+                else
+                    releasedUp = true;
                 base.Move(input, extmov);
-                Vector2 vinput = (Vector2)input;
                 if (vinput.Y == -1 && (onground || canDJump))
                     Yvel = -250;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
             }
             mov.Y += Yvel;
-            if (slipping)
-            { Xvel += mov.X; mov.X = Xvel; }
-            else
-                Xvel += 0;
+            if (!slipping)
+                Xvel = 0;
         }
 
         public override void TakeDamage(int dmg_)
@@ -61,6 +63,8 @@ namespace DL40
 
         public override void Update(float es_)
         {
+            if (slipping)
+            { Xvel += mov.X; mov.X = Xvel; }
             base.Update(es_);
             if (onground)
                 canDJump = true;
