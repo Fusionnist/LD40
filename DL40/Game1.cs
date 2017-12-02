@@ -91,7 +91,7 @@ namespace DL40
                 "font");
             fd.fonts.Add(f);
 
-            player = new Entity(new TextureDrawer[] { td }, new Vector2(100, 100));
+            player = new Entity(new TextureDrawer[] { td }, new Vector2(100, 150));
         }
         Tilemap getTilemap(XDocument doc_)
         {
@@ -171,9 +171,36 @@ namespace DL40
         {
             foreach (Entity e in map.tiles)
             {
-                if (/*intersects*/true)
+                if (e.isSolid && player.GetHBAfterMov().Intersects(e.GetHB()))
                 {
+                    Vector2 inter = Vector2.Zero;
+                    if(player.pos.X < e.pos.X) { inter.X = player.GetHBAfterMov().Width + player.GetHBAfterMov().X - e.pos.X; }
+                    else { inter.X = e.GetHB().Width + e.GetHB().X - player.GetHBAfterMov().X; }
+                    if (player.pos.Y < e.pos.Y) { inter.Y = player.GetHBAfterMov().Height + player.GetHBAfterMov().Y - e.pos.Y; }
+                    else { inter.Y = e.GetHB().Height + e.GetHB().Y - player.GetHBAfterMov().Y; }
                     //calc best option
+                    if (inter.X > inter.Y)
+                    {
+                        if(player.pos.Y < e.pos.Y)
+                        {
+                            player.mov.Y -= inter.Y;
+                        }
+                        else
+                        {
+                            player.mov.Y += inter.Y;
+                        }
+                    }
+                    else
+                    {
+                        if (player.pos.X < e.pos.X)
+                        {
+                            player.mov.X -= inter.X;
+                        }
+                        else
+                        {
+                            player.mov.X += inter.X;
+                        }
+                    }
                 }
             }
         }
