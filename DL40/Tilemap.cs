@@ -14,9 +14,9 @@ namespace DL40
     public class Tilemap
     {
         Point dims;
-        public List<Entity> tiles;
+        public List<Tile> tiles;
 
-        public Tilemap(List<Entity> tiles_, Point dims_)
+        public Tilemap(List<Tile> tiles_, Point dims_)
         {
             dims = dims_;
             tiles = tiles_;
@@ -24,7 +24,7 @@ namespace DL40
 
         public void Draw(SpriteBatch sb_)
         {
-            foreach(Entity t in tiles)
+            foreach(Tile t in tiles)
             {
                 t.Draw(sb_);
             }
@@ -32,7 +32,7 @@ namespace DL40
 
         public void Update(float es_)
         {
-            foreach (Entity t in tiles)
+            foreach (Tile t in tiles)
             {
                 t.Update(es_);
             }

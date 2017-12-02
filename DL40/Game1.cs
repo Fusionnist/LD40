@@ -115,7 +115,7 @@ namespace DL40
             Point tdims = new Point(int.Parse(doc_.Element("map").Attribute("tilewidth").Value), int.Parse(doc_.Element("map").Attribute("tileheight").Value));
             int count = dims.X * dims.Y;
             string raw = doc_.Element("map").Element("layer").Element("data").Value;
-            List<Entity> tiles = new List<Entity>();
+            List<Tile> tiles = new List<Tile>();
             Tileset ts = getTileset(XDocument.Load("Content/" + doc_.Element("map").Element("tileset").Attribute("source").Value));
             string[] split = raw.Split(',');
 
@@ -206,7 +206,7 @@ namespace DL40
         void DoCollisions()
         {
             player.onground = false;
-            foreach (Entity e in map.tiles)
+            foreach (Tile e in map.tiles)
             {
                 if (e.isSolid && player.GetHBAfterMov().Intersects(e.GetHB()))
                 {
@@ -241,7 +241,7 @@ namespace DL40
                             player.mov.X += inter.X;
                         }
                     }
-                    if (e.GetType() == typeof(HurtyTile))
+                    if (e.isHurty)
                         player.hp -= 1;
                 }
             }
