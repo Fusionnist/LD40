@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 namespace DL40
 {
-    enum GamePhase { }
+    enum GamePhase { Menu, Game }
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -22,17 +22,19 @@ namespace DL40
         float scale;
         Point virtualDims, targetPos;
         float timer;
-        bool toecutter;
         Tilemap map;
-
+        GamePhase gp;
         InputProfile ipp;
         Player player;
+        TextureDrawer menu;
+
         public Game1()
         {
+            gp = GamePhase.Menu;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";  
         }
-
+        //LOAD+INIT
         void InitGraphics()
         {
             virtualDims = new Point(640, 320);
@@ -44,7 +46,7 @@ namespace DL40
 
             float xscale = (float)GraphicsDevice.Viewport.Width / virtualDims.X;
             float yscale = (float)GraphicsDevice.Viewport.Height / virtualDims.Y;
-            scale = (float)Math.Round(Math.Min(xscale, yscale),1);
+            scale = (float)Math.Round(Math.Min(xscale, yscale), 1);
             if (scale < 1) { scale = 1; }
             targetPos = new Point(
                 (GraphicsDevice.Viewport.Width - (int)(virtualDims.X * scale)) / 2,
@@ -72,6 +74,7 @@ namespace DL40
         }
         protected override void LoadContent()
         {
+            menu = new TextureDrawer(Content.Load<Texture2D>("Menu"));
             map = getTilemap(XDocument.Load("Content/TestTilemap.tmx"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
             td = new TextureDrawer(Content.Load<Texture2D>("sheet"),
@@ -80,8 +83,8 @@ namespace DL40
                     new Rectangle(72, 8, 48, 48),
                     new Rectangle(144, 16, 32, 32),
                     new Rectangle(216, 24, 16, 16), },
-                new Point[] { new Point(32,32), new Point(24, 24), new Point(16, 16), new Point(8, 8), },
-                1f, 4, true,"test");
+                new Point[] { new Point(32, 32), new Point(24, 24), new Point(16, 16), new Point(8, 8), },
+                1f, 4, true, "test");
 
             Texture2D src = Content.Load<Texture2D>("Original");
             Font f = new Font(new TextureDrawer[] {
@@ -94,6 +97,15 @@ namespace DL40
 
             player = new Player(new TextureDrawer[] { td }, new Vector2(100, 150));
         }
+        protected override void UnloadContent()
+        {
+            Content.Unload();
+        }
+        void GoToNewGame()
+        {
+            gp = GamePhase.Game;
+        }
+        //UTILS
         Tilemap getTilemap(XDocument doc_)
         {
             Point dims = new Point(int.Parse(doc_.Element("map").Attribute("width").Value), int.Parse(doc_.Element("map").Attribute("height").Value));
@@ -101,54 +113,70 @@ namespace DL40
             int count = dims.X * dims.Y;
             string raw = doc_.Element("map").Element("layer").Element("data").Value;
             List<Entity> tiles = new List<Entity>();
-            Tileset ts = getTileset(XDocument.Load("Content/"+doc_.Element("map").Element("tileset").Attribute("source").Value));
+            Tileset ts = getTileset(XDocument.Load("Content/" + doc_.Element("map").Element("tileset").Attribute("source").Value));
             string[] split = raw.Split(',');
-            
-            for(int x=0; x < dims.X; x++)
+
+            for (int x = 0; x < dims.X; x++)
             {
                 for (int y = 0; y < dims.Y; y++)
                 {
-                    tiles.Add(ts.getTile(int.Parse(split[x + dims.X * y])-1,new Vector2(x*tdims.X,y*tdims.Y)));
+                    tiles.Add(ts.getTile(int.Parse(split[x + dims.X * y]) - 1, new Vector2(x * tdims.X, y * tdims.Y)));
                 }
             }
 
-           
+
             return new Tilemap(tiles, dims);
         }
         Tileset getTileset(XDocument doc_)
         {
-            
+
             Point dims = new Point(int.Parse(doc_.Element("tileset").Attribute("tilewidth").Value), int.Parse(doc_.Element("tileset").Attribute("tileheight").Value));
             string path = doc_.Element("tileset").Element("image").Attribute("source").Value;
-            path=path.Remove(path.Length - 4, 4);
+            path = path.Remove(path.Length - 4, 4);
             Texture2D src = Content.Load<Texture2D>(path);
-            int columns= int.Parse(doc_.Element("tileset").Attribute("columns").Value);
-            int count= int.Parse(doc_.Element("tileset").Attribute("tilecount").Value);
+            int columns = int.Parse(doc_.Element("tileset").Attribute("columns").Value);
+            int count = int.Parse(doc_.Element("tileset").Attribute("tilecount").Value);
             bool[] solid = new bool[count];
-            foreach(XElement tile in doc_.Element("tileset").Elements("tile"))//PROPERTIES!
+            foreach (XElement tile in doc_.Element("tileset").Elements("tile"))//PROPERTIES!
             {
                 foreach (XElement prop in tile.Element("objectgroup").Element("properties").Elements("property"))//PROPERTIES!
                 {
-                    if(prop.Attribute("name").Value == "solid")
+                    if (prop.Attribute("name").Value == "solid")
                     {
                         solid[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
                     }
                 }
             }
-            
+
             return new Tileset(dims, src, columns, count, solid);
         }
-        protected override void UnloadContent()
-        {
-            Content.Unload();           
-        }
+        //UPDATE
         protected override void Update(GameTime gameTime)
         {
             //LOGIC
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             float es = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            ipp.Update(Keyboard.GetState(),GamePad.GetState(0));
+            ipp.Update(Keyboard.GetState(), GamePad.GetState(0));
+            if(gp == GamePhase.Menu)
+            {
+                UpdateMenu(es);
+            }
+            if (gp == GamePhase.Game)
+            {
+                UpdateGame(es);
+            }
+            base.Update(gameTime);
+        }
+        void UpdateMenu(float es_)
+        {
+            if (ipp.Pressed("up"))
+            {
+                GoToNewGame();
+            }
+        }
+        void UpdateGame(float es_)
+        {
             Vector2 mover = Vector2.Zero;
             Vector2 input = Vector2.Zero;
             if (ipp.Pressed("left"))
@@ -161,13 +189,11 @@ namespace DL40
             { mover.Y += 100; }
             player.Move(input: input, extmov: mover);
             //PRE-UPDATE
-            player.PreUpdate(es);
+            player.PreUpdate(es_);
             //COLLISIONS
             DoCollisions();
             //UPDATE
-            player.Update(es);
-
-            base.Update(gameTime);
+            player.Update(es_);
         }
         void DoCollisions()
         {
@@ -177,15 +203,15 @@ namespace DL40
                 if (e.isSolid && player.GetHBAfterMov().Intersects(e.GetHB()))
                 {
                     Vector2 inter = Vector2.Zero;
-                    if(player.pos.X < e.pos.X) { inter.X = player.GetHBAfterMov().Width + player.GetHBAfterMov().X - e.pos.X; }
+                    if (player.pos.X < e.pos.X) { inter.X = player.GetHBAfterMov().Width + player.GetHBAfterMov().X - e.pos.X; }
                     else { inter.X = e.GetHB().Width + e.GetHB().X - player.GetHBAfterMov().X; }
                     if (player.pos.Y < e.pos.Y) { inter.Y = player.GetHBAfterMov().Height + player.GetHBAfterMov().Y - e.pos.Y; }
                     else { inter.Y = e.GetHB().Height + e.GetHB().Y - player.GetHBAfterMov().Y; }
                     //calc best option
                     if (inter.X > inter.Y)
                     {
-                        
-                        if(player.pos.Y < e.pos.Y)
+
+                        if (player.pos.Y < e.pos.Y)
                         {
                             player.mov.Y -= inter.Y;
                             player.onground = true;
@@ -194,7 +220,7 @@ namespace DL40
                         {
                             player.mov.Y += inter.Y;
                         }
-                        player.Yvel = 0;                        
+                        player.Yvel = 0;
                     }
                     else
                     {
@@ -210,36 +236,35 @@ namespace DL40
                 }
             }
         }
+        //DRAW
         protected override void Draw(GameTime gameTime)
         {
             //TEXT DRAW
             GraphicsDevice.SetRenderTarget(textTarget);
             GraphicsDevice.Clear(Color.TransparentBlack);
             spriteBatch.Begin();
-           
+
             spriteBatch.End();
 
             //OVERLAY DRAW
             GraphicsDevice.SetRenderTarget(overlayTarget);
             GraphicsDevice.Clear(Color.TransparentBlack);
             spriteBatch.Begin();
-            
+            if (gp == GamePhase.Menu) { DrawMenuElements(); }
             spriteBatch.End();
 
             //GAME DRAW
             GraphicsDevice.SetRenderTarget(gameTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            map.Draw(spriteBatch);
-            player.Draw(spriteBatch);
-           
+            DrawGameElements();
             spriteBatch.End();
 
             //DEFINITIVE DRAW
             Matrix scaleMatrix = Matrix.CreateScale(scale);
             GraphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin(samplerState:SamplerState.PointWrap,sortMode:SpriteSortMode.Immediate);
-            Rectangle dest = new Rectangle (targetPos.X, targetPos.Y, (int)(virtualDims.X * scale), (int)(virtualDims.Y * scale));
+            spriteBatch.Begin(samplerState: SamplerState.PointWrap, sortMode: SpriteSortMode.Immediate);
+            Rectangle dest = new Rectangle(targetPos.X, targetPos.Y, (int)(virtualDims.X * scale), (int)(virtualDims.Y * scale));
             spriteBatch.Draw(gameTarget, destinationRectangle: dest);
             spriteBatch.Draw(textTarget, destinationRectangle: dest);
             spriteBatch.Draw(overlayTarget, destinationRectangle: dest);
@@ -247,6 +272,15 @@ namespace DL40
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+        void DrawGameElements()
+        {
+            map.Draw(spriteBatch);
+            player.Draw(spriteBatch);
+        }
+        void DrawMenuElements()
+        {
+            menu.Draw(spriteBatch,Vector2.Zero);
         }
     }
 }

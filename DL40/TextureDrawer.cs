@@ -21,6 +21,13 @@ namespace DL40
         float frameTime, frameTimer; int frameCount, frameCounter;
         bool loops, anim;
 
+        public TextureDrawer(Texture2D src_)
+        {
+            src = src_;
+            c_sourceRect = new Rectangle(0, 0, src_.Width, src_.Height);
+            c_center = Point.Zero;
+        }
+
         public TextureDrawer(Texture2D src_, Rectangle sourceRect_, Point center_, string name_) //no anim
         {
             name = name_;
