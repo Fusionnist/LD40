@@ -45,5 +45,18 @@ namespace DL40
             TextureDrawer td = new TextureDrawer(src,new Rectangle((id%columns)*tileDims.X,(id/columns)*tileDims.Y,tileDims.X,tileDims.Y),Point.Zero,"imatile");
             return new Tile(new TextureDrawer[] { td }, pos_, solid[id], hurtsmyass[id],slips[id],door[id],pool[id],actived[id]);
         }
+        public Entity GetEntity(int id,Vector2 pos_)
+        {
+            TextureDrawer td = new TextureDrawer(src, new Rectangle((id % columns) * tileDims.X, (id / columns) * tileDims.Y, tileDims.X, tileDims.Y), Point.Zero, "imatile");
+            if (slimeball[id])
+                return new Bouncie(new TextureDrawer[] { td }, pos_, 100);
+            else
+                return null;
+        }
+        public bool isEntity(int id)
+        {
+            return slimeball[id];
+        }
+
     }
 }

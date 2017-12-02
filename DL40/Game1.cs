@@ -159,6 +159,7 @@ namespace DL40
             Point tdims = new Point(int.Parse(doc_.Element("map").Attribute("tilewidth").Value), int.Parse(doc_.Element("map").Attribute("tileheight").Value));
             int count = dims.X * dims.Y;
             List<Tile> tiles = new List<Tile>();
+            List<Entity> ents = new List<Entity>();
             Tileset ts = getTileset(XDocument.Load("Content/" + doc_.Element("map").Element("tileset").Attribute("source").Value));
 
             foreach(XElement layer in doc_.Element("map").Elements("layer"))
@@ -174,7 +175,11 @@ namespace DL40
                     {
                         if (int.Parse(split[x + dims.X * y]) != 0)                    
                         {
-                            tiles.Add(ts.getTile(int.Parse(split[x + dims.X * y]) - 1, new Vector2(x * tdims.X, y * tdims.Y)));
+                            int id = int.Parse(split[x + dims.X * y]) - 1;
+                            if (ts.isEntity(id))
+                                ents.Add(ts.GetEntity(id, new Vector2(x * tdims.X, y * tdims.Y)));
+                            else
+                                tiles.Add(ts.getTile(id, new Vector2(x * tdims.X, y * tdims.Y)));
                         }
                     }
                 }
@@ -182,7 +187,7 @@ namespace DL40
             
 
 
-            return new Tilemap(tiles, dims,vpos_);
+            return new Tilemap(tiles,ents, dims,vpos_);
         }
         Tileset getTileset(XDocument doc_)
         {
@@ -274,12 +279,16 @@ namespace DL40
             if (ipp.Pressed("down"))
             { input.Y += 1; }
             player.Move(input: input, extmov: mover);
+            foreach (Entity e in map.bouncies) { e.Move(); }
             //PRE-UPDATE
             player.PreUpdate(es_);
+            foreach(Entity e in map.bouncies) { e.PreUpdate(es_); }
             //COLLISIONS
             DoCollisions();
             //UPDATE
             player.Update(es_);
+            foreach (Entity e in map.bouncies) { e.Update(es_); }
+
             if (!player.GetHBAfterMov().Intersects(map.GetBounds()))
             {
                 //switch maps
@@ -310,9 +319,69 @@ namespace DL40
             }
             if (ipp.JustPressed("restart")) { GoToNewGame(); }
         }
+        void Collide(Entity ent, Tile t)
+        {
+            Rectangle r = ent.GetHBafterY();
+            r.Y += 1;
+            if (r.Intersects(t.GetHB()))
+            {
+                if (t.isSolid && ent.pos.Y < t.pos.Y)
+                {
+                    ent.onground = true;
+                }
+                if (t.isHurty)
+                    ent.TakeDamage(1);
+
+                if (t.isSlippery)
+                    ent.slipping = true;
+                else if (t.isSolid)
+                    ent.slipping = false;
+            }
+            if (player.GetHBAfterMov().Intersects(t.GetHB()))
+            {
+                if (t.isSolid)
+                {
+                    Vector2 inter = Vector2.Zero;
+                    if (ent.pos.X < t.pos.X) { inter.X = ent.GetHBAfterMov().Width + ent.GetHBAfterMov().X - t.pos.X; }
+                    else { inter.X = t.GetHB().Width + t.GetHB().X - ent.GetHBAfterMov().X; }
+                    if (ent.pos.Y < t.pos.Y) { inter.Y = ent.GetHBAfterMov().Height + ent.GetHBAfterMov().Y - t.pos.Y; }
+                    else { inter.Y = t.GetHB().Height + t.GetHB().Y - ent.GetHBAfterMov().Y; }
+                    //calc best ent
+                    if (inter.X > inter.Y)
+                    {
+                        if (ent.pos.Y < t.pos.Y)
+                        {
+                            ent.mov.Y -= inter.Y;
+                        }
+                        else
+                        {
+                            ent.mov.Y += inter.Y;
+                        }
+                        ent.Yvel = 0f;
+                    }
+                    else
+                    {
+                        if (ent.pos.X < t.pos.X)
+                        {
+                            ent.mov.X -= inter.X;
+                        }
+                        else
+                        {
+                            ent.mov.X += inter.X;
+                        }
+                        if (!ent.onground) { ent.isOnWall = true; }
+                    }
+                }
+            }
+        }
         void DoCollisions()
         {
             player.onground = false;
+            foreach (Tile t in map.tiles)
+            {
+                foreach (Entity e in map.bouncies) { Collide(e, t); }
+                Collide(player, t);
+            }                   
             if (ipp.Pressed("space"))
             {
                 foreach (Tile e in map.tiles)
@@ -329,61 +398,6 @@ namespace DL40
                             }
                         }
                     }
-                }
-            }
-            foreach (Tile e in map.tiles)
-            {
-                Rectangle r = player.GetHBafterY();
-                r.Y += 1;
-                if (r.Intersects(e.GetHB()))
-                {
-                    if (e.isSolid && player.pos.Y < e.pos.Y)
-                    {
-                        player.onground = true;
-                    }
-                    if (e.isHurty)
-                        player.TakeDamage(1);
-
-                    if (e.isSlippery)
-                        player.slipping = true;
-                    else if(e.isSolid)
-                        player.slipping = false;
-                }
-                if (player.GetHBAfterMov().Intersects(e.GetHB()))
-                {                 
-                    if (e.isSolid)
-                    {
-                        Vector2 inter = Vector2.Zero;
-                        if (player.pos.X < e.pos.X) { inter.X = player.GetHBAfterMov().Width + player.GetHBAfterMov().X - e.pos.X; }
-                        else { inter.X = e.GetHB().Width + e.GetHB().X - player.GetHBAfterMov().X; }
-                        if (player.pos.Y < e.pos.Y) { inter.Y = player.GetHBAfterMov().Height + player.GetHBAfterMov().Y - e.pos.Y; }
-                        else { inter.Y = e.GetHB().Height + e.GetHB().Y - player.GetHBAfterMov().Y; }
-                        //calc best option
-                        if (inter.X > inter.Y)
-                        {
-                            if (player.pos.Y < e.pos.Y)
-                            {
-                                player.mov.Y -= inter.Y;                              
-                            }
-                            else
-                            {
-                                player.mov.Y += inter.Y;
-                            }
-                            player.Yvel = 0f;
-                        }
-                        else
-                        {
-                            if (player.pos.X < e.pos.X)
-                            {
-                                player.mov.X -= inter.X;
-                            }
-                            else
-                            {
-                                player.mov.X += inter.X;
-                            }      
-                            if (!player.onground) { player.canWJump = true; }
-                        }
-                    }            
                 }
             }
         }
