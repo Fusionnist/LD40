@@ -149,12 +149,13 @@ namespace DL40
             float es = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ipp.Update(Keyboard.GetState(),GamePad.GetState(0));
             Vector2 mover = Vector2.Zero;
+            Vector2 input = Vector2.Zero;
             if (ipp.Pressed("left"))
             { mover.X -= 100; }
             if (ipp.Pressed("right"))
             { mover.X += 100; }
             if (ipp.Pressed("up"))
-            { mover.Y -= 100; }
+            { mover.Y -= 100; input.Y -= 1; }
             if (ipp.Pressed("down"))
             { mover.Y += 100; }
             player.Move(extmov: mover);
