@@ -13,9 +13,11 @@ namespace DL40
         TextureDrawer[] texes;
         TextureDrawer currentTex;
         Vector2 pos, prevPos, mov, prevMov;
+        public bool isSolid;
 
-        public Entity(TextureDrawer[] texes_, Vector2 pos_)
+        public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_=false)
         {
+            isSolid = isSolid_;
             pos = pos_;
             texes = texes_;
             currentTex = texes[0];
