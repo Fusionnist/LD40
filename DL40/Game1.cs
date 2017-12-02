@@ -170,6 +170,7 @@ namespace DL40
         }
         void DoCollisions()
         {
+            e.onground = false;
             foreach (Entity e in map.tiles)
             {
                 if (e.isSolid && player.GetHBAfterMov().Intersects(e.GetHB()))
@@ -182,7 +183,7 @@ namespace DL40
                     //calc best option
                     if (inter.X > inter.Y)
                     {
-                        e.onground = false;
+                        
                         if(player.pos.Y < e.pos.Y)
                         {
                             player.mov.Y -= inter.Y;
@@ -192,8 +193,7 @@ namespace DL40
                         {
                             player.mov.Y += inter.Y;
                         }
-                        e.Yvel = 0;
-                        
+                        e.Yvel = 0;                        
                     }
                     else
                     {
