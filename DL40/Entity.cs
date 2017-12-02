@@ -32,7 +32,7 @@ namespace DL40
 
         public virtual Rectangle GetHB()
         {
-            return new Rectangle(currentTex.c_sourceRect.X + (int)mov.X, currentTex.c_sourceRect.Y, currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
+            return new Rectangle(pos.X - currentTex.c, currentTex.c_sourceRect.Y, currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
         }
 
         public virtual Rectangle GetHBafterX()
