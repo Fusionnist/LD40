@@ -39,8 +39,11 @@ namespace DL40
 
         public override void TakeDamage(int dmg_)
         {
-            base.TakeDamage(dmg_);
-            isInvin = true;
+            if (!isInvin)
+            {
+                base.TakeDamage(dmg_);
+                isInvin = true;
+            }
         }
 
         public override void Draw(SpriteBatch sb_)

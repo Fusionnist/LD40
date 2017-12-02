@@ -13,9 +13,9 @@ namespace DL40
     {
         public bool isHurty;
 
-        public Tile(TextureDrawer[] texes_, Vector2 pos_, bool a_isHurty): base(texes_, pos_)
+        public Tile(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_, bool a_isHurty): base(texes_, pos_)
         {
-            isSolid = true;
+            isSolid = isSolid_;
             isHurty = a_isHurty;
         }
     }
