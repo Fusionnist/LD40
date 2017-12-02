@@ -26,7 +26,13 @@ namespace DL40
 
         public virtual void Activate()
         {
-
+            if (isDoory)
+            {
+                if (isSolid)
+                    isSolid = false;
+                else
+                    isSolid = true;
+            }
         }
     }
 }
