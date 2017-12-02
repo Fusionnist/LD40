@@ -32,7 +32,7 @@ namespace DL40
             {
                 base.Move(input, extmov);
                 Vector2 vinput = (Vector2)input;
-                if (vinput.Y == -1 && onground)
+                if (vinput.Y == -1 && (onground || canDJump))
                     Yvel = -250;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
