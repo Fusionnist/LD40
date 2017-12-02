@@ -23,6 +23,7 @@ namespace DL40
         Point virtualDims, targetPos;
         float timer;
         Tilemap map;
+        Point mapPos;
         GamePhase gp;
         InputProfile ipp;
         Player player;
@@ -31,6 +32,7 @@ namespace DL40
 
         public Game1()
         {
+            mapPos = new Point(0, 0);
             gp = GamePhase.Menu;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";  
@@ -111,6 +113,7 @@ namespace DL40
             maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-1,0)));
             map = maps[0];
             player = new Player(new TextureDrawer[] { td }, new Vector2(100, 150));
+            mapPos = map.vpos;
         }
         //UTILS
         Tilemap getTilemap(XDocument doc_, Point vpos_)
@@ -219,28 +222,25 @@ namespace DL40
                 Point searchPos = map.vpos;
                 if(player.GetHBAfterMov().X < map.GetBounds().X)
                 {
-                    searchPos.X -= 1;
-                    player.pos.X += 640;
+                    searchPos.X -= 1;                   
                 }
                 else if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
                 {
-                    searchPos.X += 1;
-                    player.pos.X -= 640;
+                    searchPos.X += 1;                    
                 }
                 else if (player.GetHBAfterMov().Y < map.GetBounds().Y)
                 {
-                    searchPos.Y -= 1;
-                    player.pos.Y += 320;
+                    searchPos.Y -= 1;                   
                 }
                 else if (player.GetHBAfterMov().Y > map.GetBounds().Y+map.GetBounds().Height)
                 {
-                    searchPos.Y += 1;
-                    player.pos.Y -= 320;
+                    searchPos.Y += 1;                    
                 }
 
                 foreach(Tilemap tm in maps)
                 {
-                    if(tm.vpos == searchPos) { map = tm; }
+                    if(tm.vpos == searchPos)
+                    { map = tm; mapPos = tm.vpos; }
                 }
             }
         }
@@ -309,9 +309,10 @@ namespace DL40
             spriteBatch.End();
 
             //GAME DRAW
+            Matrix translation = Matrix.CreateTranslation(new Vector3(-mapPos.X * 640,- mapPos.Y * 320, 0));
             GraphicsDevice.SetRenderTarget(gameTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix:translation);
             if (gp == GamePhase.Game) { DrawGameElements(); }
             spriteBatch.End();
 
