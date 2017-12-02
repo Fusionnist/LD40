@@ -264,11 +264,11 @@ namespace DL40
             
             foreach (Tile e in map.tiles)
             {
-                Rectangle r = player.GetHBAfterMov();
+                Rectangle r = player.GetHBafterY();
                 r.Y += 1;
                 if (r.Intersects(e.GetHB()))
                 {
-                    if (e.isSolid)
+                    if (e.isSolid && player.pos.Y < e.pos.Y)
                     {
                         player.onground = true;
                     }
@@ -290,7 +290,7 @@ namespace DL40
                         if (player.pos.Y < e.pos.Y) { inter.Y = player.GetHBAfterMov().Height + player.GetHBAfterMov().Y - e.pos.Y; }
                         else { inter.Y = e.GetHB().Height + e.GetHB().Y - player.GetHBAfterMov().Y; }
                         //calc best option
-                        if (inter.X > inter.Y )
+                        if (inter.X > inter.Y)
                         {
 
                             if (player.pos.Y < e.pos.Y)
