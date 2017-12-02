@@ -11,6 +11,8 @@ namespace DL40
 {
     class Bouncie : Entity
     {
+        public bool isOnWall;
+
         public Bouncie(TextureDrawer[] texes_, Vector2 pos_, float baseXvel): base(texes_, pos_, false)
         {
             Xvel = baseXvel;
