@@ -259,12 +259,6 @@ namespace DL40
             DoCollisions();
             //UPDATE
             player.Update(es_);
-
-            if (ipp.Pressed("space"))
-            {
-                GoToNewGame();
-            }
-
             if (!player.GetHBAfterMov().Intersects(map.GetBounds()))
             {
                 //switch maps
@@ -297,7 +291,13 @@ namespace DL40
         void DoCollisions()
         {
             player.onground = false;
-            
+            if (ipp.Pressed("space"))
+            {
+                foreach (Tile e in map.tiles)
+                {
+                    int searchfor = 0;
+                }
+            }
             foreach (Tile e in map.tiles)
             {
                 Rectangle r = player.GetHBafterY();
