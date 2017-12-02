@@ -30,7 +30,7 @@ namespace DL40
         }
         public virtual void Move(Vector2? input = null, Vector2? extmov=null)
         {
-            if(extmov != null)
+            if(extmov != null && !isDead)
             {
                 mov += (Vector2)extmov;
             }       
@@ -74,8 +74,11 @@ namespace DL40
         {
             currentTex.Update(es_);
             pos += mov;
-            if (hp <= 0)
+            if (hp <= 0 && !isDead)
+            {
                 isDead = true;
+                isSolid = false;
+            }
         }
 
         public void Draw(SpriteBatch sb_)
