@@ -13,7 +13,7 @@ namespace DL40
         TextureDrawer[] texes;
         TextureDrawer currentTex;
         public Vector2 pos, prevPos, mov, prevMov;
-        public bool isSolid;
+        public bool isSolid, onground;
         public float Yvel;
 
         public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_ = false)
@@ -23,6 +23,7 @@ namespace DL40
             texes = texes_;
             currentTex = texes[0];
             Yvel = 0;
+            onground = true;
         }
         public void Move(Vector2? input = null, Vector2? extmov=null)
         {
