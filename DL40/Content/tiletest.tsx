@@ -33,6 +33,13 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="11">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="slimeball" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
  <tile id="13">
   <objectgroup draworder="index">
    <properties>

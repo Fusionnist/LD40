@@ -37,11 +37,30 @@ namespace DL40
             {
                 t.Draw(sb_);
             }
+            foreach (Entity t in bouncies)
+            {
+                t.Draw(sb_);
+            }
         }
+        public void PreUpdate(float es_)
+        {
 
+            foreach (Tile t in tiles)
+            {
+                t.PreUpdate(es_);
+            }
+            foreach (Entity t in bouncies)
+            {
+                t.PreUpdate(es_);
+            }
+        }
         public void Update(float es_)
         {
             foreach (Tile t in tiles)
+            {
+                t.Update(es_);
+            }
+            foreach (Entity t in bouncies)
             {
                 t.Update(es_);
             }

@@ -337,7 +337,7 @@ namespace DL40
                 else if (t.isSolid)
                     ent.slipping = false;
             }
-            if (player.GetHBAfterMov().Intersects(t.GetHB()))
+            if (ent.GetHBAfterMov().Intersects(t.GetHB()))
             {
                 if (t.isSolid)
                 {
@@ -369,7 +369,7 @@ namespace DL40
                         {
                             ent.mov.X += inter.X;
                         }
-                        if (!ent.onground) { ent.isOnWall = true; }
+                         ent.isOnWall = true;
                     }
                 }
             }
