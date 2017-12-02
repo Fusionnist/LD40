@@ -48,7 +48,7 @@ namespace DL40
 
         public override void Draw(SpriteBatch sb_)
         {
-            if ((invinTimer * 10) % 2 > 1)
+            if ((invinTimer * 10) % 2 < 1)
                 base.Draw(sb_);
         }
 
