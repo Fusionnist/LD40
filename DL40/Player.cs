@@ -12,7 +12,7 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, canClimbLadders, isOnLadder, collidesWLadder;
+        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, isLadderDeactived, isOnLadder, collidesWLadder;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
         public SoundManager sm;
 
@@ -35,7 +35,7 @@ namespace DL40
             touchedGroundForDash = true;
             isOnLadder = false;
             collidesWLadder = false;
-            canClimbLadders = true;
+            isLadderDeactived = false;
             dashInputTime = 0.15f;
             dashInputTimer = 0;
             dashTime = 0.12f;
@@ -60,9 +60,9 @@ namespace DL40
                     else
                         mov.X = -750;
                 }
-                if (vinput.Y == -1 && collidesWLadder && canClimbLadders)
+                if (vinput.Y == -1 && collidesWLadder && !isLadderDeactived)
                     isOnLadder = true;
-                if (!collidesWLadder || !canClimbLadders)
+                if (!collidesWLadder || isLadderDeactived)
                     isOnLadder = false;
                 if (vinput.Y == -1 && isOnLadder)
                     mov.Y -= 100;
