@@ -11,7 +11,7 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight;
+        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
 
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
@@ -26,6 +26,8 @@ namespace DL40
             releasedL = false;
             releasedR = false;
             dashRight = true;
+            isDJumpDeactived = false;
+            isDashDeactived = false;
             dashInputTime = 0.15f;
             dashInputTimer = 0;
             dashTime = 0.2f;
@@ -55,7 +57,7 @@ namespace DL40
                     Yvel = 0;
                 else if (vinput.Y == -1 && isOnWall && releasedUp)
                     Yvel = -250;
-                else if (vinput.Y == -1 && canDJump && releasedUp)
+                else if (vinput.Y == -1 && canDJump && releasedUp && !isDJumpDeactived)
                 { Yvel = -250; canDJump = false; }
                 if (vinput.Y == -1)
                     releasedUp = false;
@@ -63,13 +65,13 @@ namespace DL40
                     releasedUp = true;
                 if (vinput.X == -1)
                 {
-                    if (releasedL && dashInputTimer > 0 && !dashRight)
+                    if (releasedL && dashInputTimer > 0 && !dashRight && !isDashDeactived)
                     { dashTimer = dashTime; dashInputTimer = 0; }
                     releasedL = false;
                 }
                 else if (vinput.X == 1)
                 {
-                    if (releasedR && dashInputTimer > 0 && dashRight)
+                    if (releasedR && dashInputTimer > 0 && dashRight && !isDashDeactived)
                     { dashTimer = dashTime; dashInputTimer = 0; }
                     releasedR = false;
                 }
