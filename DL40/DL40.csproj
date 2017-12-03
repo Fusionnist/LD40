@@ -134,6 +134,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\arrow.png" />
+    <Content Include="Content\arrowd.png" />
+    <Content Include="Content\arrowu.png" />
     <Content Include="Content\emptyheart.png" />
     <Content Include="Content\fullheart.png" />
     <Content Include="Content\fullheart2.png" />
