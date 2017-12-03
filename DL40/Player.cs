@@ -11,7 +11,7 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight;
+        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
 
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
@@ -26,9 +26,12 @@ namespace DL40
             releasedL = false;
             releasedR = false;
             dashRight = true;
+            isDJumpDeactived = false;
+            isDashDeactived = false;
+            touchedGroundForDash = true;
             dashInputTime = 0.15f;
             dashInputTimer = 0;
-            dashTime = 0.2f;
+            dashTime = 0.12f;
             dashTimer = 0;
             speed = 150;
         }
@@ -37,7 +40,7 @@ namespace DL40
         {
             Vector2 vinput = (Vector2)input;
             prevInput = vinput;
-            Yvel += 5;
+            Yvel += 15f;
             if (!isDead)
             {
                 if (dashTimer <= 0)
@@ -50,27 +53,27 @@ namespace DL40
                         mov.X = -750;
                 }
                 if (vinput.Y == -1 && onground)
-                    Yvel = -250;
+                    Yvel = -375;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
                 else if (vinput.Y == -1 && isOnWall && releasedUp)
-                    Yvel = -250;
-                else if (vinput.Y == -1 && canDJump && releasedUp)
-                { Yvel = -250; canDJump = false; }
+                    Yvel = -375;
+                else if (vinput.Y == -1 && canDJump && releasedUp && !isDJumpDeactived)
+                { Yvel = -375; canDJump = false; }
                 if (vinput.Y == -1)
                     releasedUp = false;
                 else
                     releasedUp = true;
                 if (vinput.X == -1)
                 {
-                    if (releasedL && dashInputTimer > 0 && !dashRight)
-                    { dashTimer = dashTime; dashInputTimer = 0; }
+                    if (releasedL && dashInputTimer > 0 && !dashRight && !isDashDeactived && touchedGroundForDash)
+                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; }
                     releasedL = false;
                 }
                 else if (vinput.X == 1)
                 {
-                    if (releasedR && dashInputTimer > 0 && dashRight)
-                    { dashTimer = dashTime; dashInputTimer = 0; }
+                    if (releasedR && dashInputTimer > 0 && dashRight && !isDashDeactived && touchedGroundForDash)
+                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; }
                     releasedR = false;
                 }
                 else
@@ -136,7 +139,7 @@ namespace DL40
             }
             base.Update(es_);
             if (onground)
-                canDJump = true;
+            { canDJump = true; touchedGroundForDash = true; }
             if (isInvin)
             {
                 invinTimer -= es_;
