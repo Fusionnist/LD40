@@ -123,6 +123,8 @@
     <None Include="Content\00.tmx" />
     <None Include="Content\10.tmx" />
     <None Include="Content\20.tmx" />
+    <None Include="Content\21.tmx" />
+    <None Include="Content\22.tmx" />
     <None Include="Content\BigMap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
