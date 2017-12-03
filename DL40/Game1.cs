@@ -151,6 +151,7 @@ namespace DL40
             maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-3, 0)));
             maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-4, 0)));
             maps.Add(getTilemap(XDocument.Load("Content/BigMap.tmx"), new Point(-6, -1)));
+            maps.Add(getTilemap(XDocument.Load("Content/TopMap.tmx"), new Point(-1, -2)));
             map = maps[0];
 
             TextureDrawer walk = new TextureDrawer(Content.Load<Texture2D>("walk"),
