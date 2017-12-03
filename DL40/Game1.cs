@@ -287,6 +287,7 @@ namespace DL40
             string[] facing = new string[count];
             bool[] arrow = new bool[count];
             bool[] ladder = new bool[count];
+            bool[] flame = new bool[count];
             List<TextureDrawer>[] texes = new List<TextureDrawer>[count];
 
             for (int i = 0; i < count; i++)
@@ -342,9 +343,13 @@ namespace DL40
                     {
                         ladder[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "flame")
+                    {
+                        flame[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
+                    }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow,ladder);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow,ladder,flame);
         }
         //UPDATE
         TextureDrawer getTDXML(string name)
