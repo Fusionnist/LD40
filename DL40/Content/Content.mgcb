@@ -133,3 +133,9 @@
 /processorParam:TextureFormat=Color
 /build:lavaanim.png
 
+#begin jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:jump.wav
+

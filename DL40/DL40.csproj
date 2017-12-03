@@ -122,7 +122,6 @@
     <None Include="Content\BigMap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Content\jump" />
     <None Include="Content\TestTilemap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -137,6 +136,7 @@
     <Content Include="Content\emptyheart.png" />
     <Content Include="Content\fullheart.png" />
     <Content Include="Content\fullheart2.png" />
+    <Content Include="Content\jump.wav" />
     <Content Include="Content\lavaanim.png" />
     <Content Include="Content\Menu.png" />
     <Content Include="Content\Original.png" />
