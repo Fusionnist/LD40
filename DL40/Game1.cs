@@ -85,6 +85,9 @@ namespace DL40
         }
         protected override void LoadContent()
         {
+            soundManager.AddEffect(Content.Load<SoundEffect>("hurty"), "hurty");
+            soundManager.AddEffect(Content.Load<SoundEffect>("jump"), "jump");
+
             menu = new TextureDrawer(Content.Load<Texture2D>("Menu"));
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
