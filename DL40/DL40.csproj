@@ -140,17 +140,20 @@
     <Content Include="Content\arrow.png" />
     <Content Include="Content\arrowd.png" />
     <Content Include="Content\arrowu.png" />
+    <Content Include="Content\dash.png" />
     <Content Include="Content\emptyheart.png" />
     <Content Include="Content\fullheart.png" />
     <Content Include="Content\fullheart2.png" />
     <Content Include="Content\hurty.wav" />
-    <Content Include="Content\jump.wav" />
+    <Content Include="Content\jump.png" />
+    <Content Include="Content\jumpsf.wav" />
     <Content Include="Content\lavaanim.png" />
     <Content Include="Content\Menu.png" />
     <Content Include="Content\Original.png" />
     <Content Include="Content\otd.png" />
     <Content Include="Content\particle.png" />
     <Content Include="Content\sheet.png" />
+    <Content Include="Content\slip.png" />
     <Content Include="Content\Textures.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

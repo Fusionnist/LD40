@@ -15,7 +15,7 @@ namespace DL40
         public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, isLadderDeactived, isOnLadder, collidesWLadder;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
         public SoundManager sm;
-
+        float dashttimer;
         public Player(TextureDrawer[] texes_, Vector2 pos_, SoundManager seffects): base(texes_, pos_)
         {
             sm = seffects;
@@ -87,13 +87,13 @@ namespace DL40
                 if (vinput.X == -1)
                 {
                     if (releasedL && dashInputTimer > 0 && !dashRight && !isDashDeactived && touchedGroundForDash)
-                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; }
+                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; dashttimer = 0.2f; }
                     releasedL = false;
                 }
                 else if (vinput.X == 1)
                 {
                     if (releasedR && dashInputTimer > 0 && dashRight && !isDashDeactived && touchedGroundForDash)
-                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; }
+                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; dashttimer = 0.2f; }
                     releasedR = false;
                 }
                 else
@@ -179,6 +179,7 @@ namespace DL40
                 { dashRight = false; dashInputTimer = dashInputTime; }
             }
             dashTimer -= es_;
+            dashttimer -= es_;
         }
 
         protected override void SelectTexWow()
@@ -202,7 +203,12 @@ namespace DL40
                 SelectTex("ground");
                 if (prevmov.X != 0) { SelectTex("walk"); }
             }
-
+            if (isOnLadder)
+            {
+                SelectTex("ladder");
+            }
+            if (slipping) { SelectTex("slip"); }
+            if (dashttimer > 0) { SelectTex("dash"); }
             if (isDead) { SelectTex("dead"); }
         }
     }
