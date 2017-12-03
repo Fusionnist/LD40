@@ -12,11 +12,11 @@ namespace DL40
     public class Tile : Entity
     {
         public string facing;
-        public bool isSlippery, isDoory, activated, isLaddery, isFlameTrappy;
+        public bool isSlippery, isDoory, activated, isLaddery, isFlameTrappy, isHealthPickup;
         public int activID;
         public string actived;
         public bool arrow;
-        public Tile(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_, bool a_isHurty, bool isSlippy_, bool isDoory_, int activID_, string facing_, bool arrow_, bool isLaddery_, bool isFlameTrappy_, string activated_ = null) : base(texes_, pos_)
+        public Tile(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_, bool a_isHurty, bool isSlippy_, bool isDoory_, int activID_, string facing_, bool arrow_, bool isLaddery_, bool isFlameTrappy_, bool isHealthPickup_, string activated_ = null) : base(texes_, pos_)
         {
             arrow = arrow_;
             facing = facing_;
@@ -30,6 +30,7 @@ namespace DL40
             activated = false;
             isLaddery = isLaddery_;
             isFlameTrappy = isFlameTrappy_;
+            isHealthPickup = isHealthPickup_;
         }
 
         public virtual void Activate()

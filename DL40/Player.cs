@@ -63,19 +63,23 @@ namespace DL40
                 if (vinput.Y == -1 && collidesWLadder && !isLadderDeactived)
                 { isOnLadder = true; Yvel = 0; }
                 if (!collidesWLadder || isLadderDeactived)
+                {
+                    if (isOnLadder)
+                        Yvel = -300;
                     isOnLadder = false;
+                }
                 if (vinput.Y == -1 && isOnLadder)
                     mov.Y -= 200;
                 else if (vinput.Y == 1 && isOnLadder)
                     mov.Y += 200;
                 else if (vinput.Y == -1 && onground)
-                    Yvel = -375;
+                    Yvel = -350;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
                 else if (vinput.Y == -1 && isOnWall && releasedUp && !isWJumpDeactived)
-                    Yvel = -375;
+                    Yvel = -300;
                 else if (vinput.Y == -1 && canDJump && releasedUp && !isDJumpDeactived)
-                { Yvel = -375; canDJump = false; }
+                { Yvel = -300; canDJump = false; }
                 if (vinput.Y == -1)
                     releasedUp = false;
                 else
