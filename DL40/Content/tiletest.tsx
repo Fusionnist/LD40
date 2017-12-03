@@ -64,6 +64,24 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="18">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="facing" value="left"/>
+    <property name="flame" type="bool" value="true"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="19">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="facing" value="right"/>
+    <property name="flame" type="bool" value="true"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
  <tile id="51">
   <objectgroup draworder="index">
    <properties>
@@ -106,6 +124,24 @@
    <properties>
     <property name="arrow" type="bool" value="true"/>
     <property name="facing" value="down"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="58">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="facing" value="up"/>
+    <property name="flame" type="bool" value="true"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="59">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="facing" value="down"/>
+    <property name="flame" type="bool" value="true"/>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </objectgroup>

@@ -24,7 +24,7 @@ namespace DL40
 
         public override void Update(float es_)
         {
-            if (isOnWall)
+            if (isOnWall || onground)
             {
                 isDead = true;
                 dir = new Vector2(0, 1);

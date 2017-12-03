@@ -12,6 +12,7 @@ namespace DL40
     enum GamePhase { Menu, Game }
     public class Game1 : Game
     {
+        Particles pars;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         TextureDrawer td;
@@ -33,6 +34,7 @@ namespace DL40
         TextureDrawer fullheart, emptyheart;
         float lastInter;
         string currentStr;
+        Random r;
 
         public Game1()
         {
@@ -65,6 +67,7 @@ namespace DL40
         }
         protected override void Initialize()
         {
+            r = new Random();
             zoom = 1;
             InitGraphics();
             soundManager = new SoundManager();
@@ -153,7 +156,7 @@ namespace DL40
         }
         void GoToNewGame()
         {
-            
+            pars = new Particles(getTDXML("particle"));
             gp = GamePhase.Game;
             maps = new List<Tilemap>();
             maps.Add(getTilemap(XDocument.Load("Content/TestTilemap.tmx"), Point.Zero));
@@ -428,6 +431,7 @@ namespace DL40
         }
         void UpdateGame(float es_)
         {
+            pars.Update(es_);
             zoom = map.GetBounds().Width / 640;
             Vector2 mover = Vector2.Zero;
             Vector2 input = Vector2.Zero;
@@ -574,6 +578,7 @@ namespace DL40
         }
         void DoCollisions()
         {
+            foreach(Vector2 v in pars.pos) { if (player.GetHB().Contains(v)) { player.TakeDamage(1); } }
             player.onground = false;
             player.isOnWall = false;
             player.collidesWLadder = false;
@@ -587,7 +592,8 @@ namespace DL40
                 foreach (Entity e in map.bouncies)
                 {
                     Collide(e, t);
-                    if (e.GetHBAfterMov().Intersects(player.GetHBAfterMov()) && !e.isDead) { player.TakeDamage(1); }
+                    if (e.GetHBAfterMov().Intersects(player.GetHBAfterMov()) && !e.isDead)
+                    { player.TakeDamage(1); }
                 }
                 Collide(player, t);
 
@@ -657,6 +663,52 @@ namespace DL40
                         }
                     }
                     //}
+                }
+                if (t.isFlameTrappy)
+                {
+                    for(int x=0; x < 10; x++)
+                    {
+                        if (t.facing == "left")
+                        {
+                            if (player.pos.X < t.pos.X)
+                            {
+                                if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
+                                {
+                                    pars.AddPar(t.pos + new Vector2(-8, 16), new Vector2(-50*(float)r.NextDouble(),10*(float)r.NextDouble()));
+                                }
+                            }
+                        }
+                        if (t.facing == "right")
+                        {
+                            if (player.pos.X > t.pos.X)
+                            {
+                                if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
+                                {
+                                    pars.AddPar(t.pos + new Vector2(32, 16), new Vector2(50 * (float)r.NextDouble(), 10 * (float)r.NextDouble()));
+                                }
+                            }
+                        }
+                        if (t.facing == "up")
+                        {
+                            if (player.pos.Y < t.pos.Y)
+                            {
+                                if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
+                                {
+                                    pars.AddPar(t.pos + new Vector2(16, -8), new Vector2( 10 * (float)r.NextDouble(), -50 * (float)r.NextDouble()));
+                                }
+                            }
+                        }
+                        if (t.facing == "down")
+                        {
+                            if (player.pos.Y > t.pos.Y)
+                            {
+                                if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
+                                {
+                                    pars.AddPar(t.pos + new Vector2(16, 32), new Vector2( 10 * (float)r.NextDouble(), 50 * (float)r.NextDouble()));
+                                }
+                            }
+                        }
+                    }               
                 }
             }
             currentStr = "";
@@ -772,6 +824,7 @@ namespace DL40
         {
             map.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            pars.Draw(spriteBatch);
         }
         void DrawMenuElements()
         {

@@ -51,6 +51,7 @@
     <Compile Include="InputProfile.cs" />
     <Compile Include="KeyManager.cs" />
     <Compile Include="Lifebar.cs" />
+    <Compile Include="Particles.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,6 +146,7 @@
     <Content Include="Content\Menu.png" />
     <Content Include="Content\Original.png" />
     <Content Include="Content\otd.png" />
+    <Content Include="Content\particle.png" />
     <Content Include="Content\sheet.png" />
     <Content Include="Content\Textures.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
