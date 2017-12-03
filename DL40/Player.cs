@@ -61,13 +61,13 @@ namespace DL40
                         mov.X = -750;
                 }
                 if (vinput.Y == -1 && collidesWLadder && !isLadderDeactived)
-                    isOnLadder = true;
+                { isOnLadder = true; Yvel = 0; }
                 if (!collidesWLadder || isLadderDeactived)
                     isOnLadder = false;
                 if (vinput.Y == -1 && isOnLadder)
-                    mov.Y -= 100;
+                    mov.Y -= 200;
                 else if (vinput.Y == 1 && isOnLadder)
-                    mov.Y += 100;
+                    mov.Y += 200;
                 else if (vinput.Y == -1 && onground)
                     Yvel = -375;
                 else if (vinput.Y == 1 && Yvel < 0)
