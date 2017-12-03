@@ -128,6 +128,9 @@
     <None Include="Content\Tilemap2.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Content\TopMap.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\emptyheart.png" />
