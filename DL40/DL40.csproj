@@ -136,6 +136,7 @@
     <Content Include="Content\emptyheart.png" />
     <Content Include="Content\fullheart.png" />
     <Content Include="Content\fullheart2.png" />
+    <Content Include="Content\hurty.wav" />
     <Content Include="Content\jump.wav" />
     <Content Include="Content\lavaanim.png" />
     <Content Include="Content\Menu.png" />
