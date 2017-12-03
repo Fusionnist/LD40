@@ -11,7 +11,7 @@ namespace DL40
 {
     public class Player : Entity
     {
-        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash;
+        public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, canClimbLadders, isOnLadder, collidesWLadder;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
 
         public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
@@ -28,7 +28,11 @@ namespace DL40
             dashRight = true;
             isDJumpDeactived = false;
             isDashDeactived = false;
+            isWJumpDeactived = false;
             touchedGroundForDash = true;
+            isOnLadder = false;
+            collidesWLadder = false;
+            canClimbLadders = true;
             dashInputTime = 0.15f;
             dashInputTimer = 0;
             dashTime = 0.12f;
@@ -52,11 +56,19 @@ namespace DL40
                     else
                         mov.X = -750;
                 }
-                if (vinput.Y == -1 && onground)
+                if (vinput.Y == -1 && collidesWLadder && canClimbLadders)
+                    isOnLadder = true;
+                if (!collidesWLadder || !canClimbLadders)
+                    isOnLadder = false;
+                if (vinput.Y == -1 && isOnLadder)
+                    mov.Y -= 100;
+                else if (vinput.Y == 1 && isOnLadder)
+                    mov.Y += 100;
+                else if (vinput.Y == -1 && onground)
                     Yvel = -375;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
-                else if (vinput.Y == -1 && isOnWall && releasedUp)
+                else if (vinput.Y == -1 && isOnWall && releasedUp && !isWJumpDeactived)
                     Yvel = -375;
                 else if (vinput.Y == -1 && canDJump && releasedUp && !isDJumpDeactived)
                 { Yvel = -375; canDJump = false; }
