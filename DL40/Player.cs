@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace DL40
 {
@@ -13,8 +14,9 @@ namespace DL40
     {
         public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, canClimbLadders, isOnLadder, collidesWLadder;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
+        public SoundEffect[] seffects;
 
-        public Player(TextureDrawer[] texes_, Vector2 pos_): base(texes_, pos_)
+        public Player(TextureDrawer[] texes_, Vector2 pos_, SoundEffect[] seffects): base(texes_, pos_)
         {
             hp = 5;
             isInvin = false;
@@ -44,7 +46,8 @@ namespace DL40
         {
             Vector2 vinput = (Vector2)input;
             prevInput = vinput;
-            Yvel += 15f;
+            if (!isOnLadder)
+                Yvel += 15f;
             if (!isDead)
             {
                 if (dashTimer <= 0)
