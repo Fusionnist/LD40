@@ -122,6 +122,7 @@
     <None Include="app.manifest" />
     <None Include="Content\00.tmx" />
     <None Include="Content\10.tmx" />
+    <None Include="Content\11.tmx" />
     <None Include="Content\20.tmx" />
     <None Include="Content\21.tmx" />
     <None Include="Content\22.tmx" />
@@ -129,11 +130,13 @@
     <None Include="Content\24.tmx" />
     <None Include="Content\25.tmx" />
     <None Include="Content\33.tmx" />
+    <None Include="Content\34.tmx" />
     <None Include="Content\43.tmx" />
     <None Include="Content\53.tmx" />
     <None Include="Content\BigMap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Content\mapmap.tmx" />
     <None Include="Content\TestTilemap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
