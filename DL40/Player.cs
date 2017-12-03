@@ -14,10 +14,11 @@ namespace DL40
     {
         public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, canClimbLadders, isOnLadder, collidesWLadder;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
-        public SoundEffect[] seffects;
+        public SoundManager sm;
 
-        public Player(TextureDrawer[] texes_, Vector2 pos_, SoundEffect[] seffects): base(texes_, pos_)
+        public Player(TextureDrawer[] texes_, Vector2 pos_, SoundManager seffects): base(texes_, pos_)
         {
+            sm = seffects;
             hp = 5;
             isInvin = false;
             invinTime = 3;

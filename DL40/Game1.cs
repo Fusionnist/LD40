@@ -211,7 +211,7 @@ namespace DL40
                 new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
                 0.3f, 4, true, "dead");
 
-            player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150));
+            player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150),soundManager);
             mapPos = map.vpos;
 
            
@@ -610,6 +610,18 @@ namespace DL40
                     {
                         currentStr = "wow, shiny! pretty sure carrying this would prevent me from mid-air jumping though";
                     }
+                    if (e.actived == "ladder")
+                    {
+                        currentStr = "wow, shiny! pretty sure carrying this would prevent me from using ladders";
+                    }
+                    if (e.actived == "dash")
+                    {
+                        currentStr = "wow, shiny! pretty sure carrying this would prevent me from dashing";
+                    }
+                    if (e.actived == "walljump")
+                    {
+                        currentStr = "wow, shiny! pretty sure carrying this would prevent me from jumping from walls";
+                    }
 
                     if (ipp.JustPressed("space"))
                     {
@@ -620,7 +632,19 @@ namespace DL40
                         {
                             player.isDJumpDeactived = true;
                         }
-                            foreach (Tilemap mapp in maps)
+                        if (e.actived == "ladder")
+                        {
+                            player.canClimbLadders = true;
+                        }
+                        if (e.actived == "dash")
+                        {
+                            player.isDashDeactived = true;
+                        }
+                        if (e.actived == "walljump")
+                        {
+                            player.isWJumpDeactived = true;
+                        }
+                        foreach (Tilemap mapp in maps)
                         {
                             foreach (Tile t in mapp.tiles)
                             {
