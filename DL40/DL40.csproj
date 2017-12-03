@@ -118,6 +118,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
+    <None Include="Content\BigMap.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\TestTilemap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

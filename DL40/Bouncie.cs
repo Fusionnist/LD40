@@ -21,7 +21,7 @@ namespace DL40
         public override void Move(Vector2? input = default(Vector2?), Vector2? extmov = default(Vector2?))
         {
             if (onground)
-                Yvel = -100;
+                Yvel = -140;
             else
                 Yvel += 4;
 
