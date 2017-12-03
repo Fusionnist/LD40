@@ -563,7 +563,7 @@ namespace DL40
         {
             player.onground = false;
             player.isOnWall = false;
-            player.isOnLadder = false;
+            player.collidesWLadder = false;
             foreach (Entity b in map.bouncies)
             {
                 b.onground = false;
@@ -590,7 +590,7 @@ namespace DL40
                                 if (player.pos.Y - 20 < t.pos.Y && player.pos.Y + 20 > t.pos.Y)
                                 {
                                     if (t.activated) {
-                                    map.bouncies.Add(GetArrow(t.facing,t.pos - new Vector2(-16,0)));
+                                    map.bouncies.Add(GetArrow(t.facing,t.pos - new Vector2(-32,0)));
                                     t.activated = false;
                                     }                                   
                                 }
@@ -608,7 +608,7 @@ namespace DL40
                 {
                     if (player.GetHBAfterMov().Intersects(e.GetHB()))
                     {
-                        player.isOnLadder = true;
+                        player.collidesWLadder = true;
                     }
                 }
                 if (e.actived != null && e.GetHB().Intersects(player.GetHBAfterMov()) && e.isDead == false)
