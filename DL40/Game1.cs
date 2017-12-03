@@ -32,6 +32,7 @@ namespace DL40
         Tileset set;
         TextureDrawer fullheart, emptyheart;
         float lastInter;
+        string currentStr;
 
         public Game1()
         {
@@ -93,45 +94,52 @@ namespace DL40
 
             Texture2D src = Content.Load<Texture2D>("Original");
             Font f = new Font(new TextureDrawer[] {
-                new TextureDrawer(src,new Rectangle(0,27,9,9),Point.Zero,"a"),
-                new TextureDrawer(src,new Rectangle(9,27,9,9),Point.Zero,"b"),
-                new TextureDrawer(src,new Rectangle(18,27,9,9),Point.Zero,"c"),
-                new TextureDrawer(src,new Rectangle(27,27,9,9),Point.Zero,"d"),
-                new TextureDrawer(src,new Rectangle(36,27,9,9),Point.Zero,"e"),
-                new TextureDrawer(src,new Rectangle(45,27,9,9),Point.Zero,"f"),
-                new TextureDrawer(src,new Rectangle(54,27,9,9),Point.Zero,"g"),
-                new TextureDrawer(src,new Rectangle(63,27,9,9),Point.Zero,"h"),
-                new TextureDrawer(src,new Rectangle(72,27,9,9),Point.Zero,"i"),
-                new TextureDrawer(src,new Rectangle(81,27,9,9),Point.Zero,"j"),
-                new TextureDrawer(src,new Rectangle(90,27,9,9),Point.Zero,"k"),
-                new TextureDrawer(src,new Rectangle(99,27,9,9),Point.Zero,"l"),
-                new TextureDrawer(src,new Rectangle(108,27,9,9),Point.Zero,"m"),
+                new TextureDrawer(src,new Rectangle(0,0,16,16),Point.Zero,"a"),
+                new TextureDrawer(src,new Rectangle(16,0,16,16),Point.Zero,"b"),
+                new TextureDrawer(src,new Rectangle(32,0,16,16),Point.Zero,"c"),
+                new TextureDrawer(src,new Rectangle(48,0,16,16),Point.Zero,"d"),
+                new TextureDrawer(src,new Rectangle(64,0,16,16),Point.Zero,"e"),
+                new TextureDrawer(src,new Rectangle(80,0,16,16),Point.Zero,"f"),
+                new TextureDrawer(src,new Rectangle(96,0,16,16),Point.Zero,"g"),
+                new TextureDrawer(src,new Rectangle(112,0,16,16),Point.Zero,"h"),
+                new TextureDrawer(src,new Rectangle(128,0,16,16),Point.Zero,"i"),
+                new TextureDrawer(src,new Rectangle(144,0,16,16),Point.Zero,"j"),
+                new TextureDrawer(src,new Rectangle(160,0,16,16),Point.Zero,"k"),
+                new TextureDrawer(src,new Rectangle(176,0,16,16),Point.Zero,"l"),
+                new TextureDrawer(src,new Rectangle(192,0,16,16),Point.Zero,"m"),
+                new TextureDrawer(src,new Rectangle(208,0,16,16),Point.Zero,"n"),
+                new TextureDrawer(src,new Rectangle(224,0,16,16),Point.Zero,"o"),
+                new TextureDrawer(src,new Rectangle(240,0,16,16),Point.Zero,"p"),
+                new TextureDrawer(src,new Rectangle(256,0,16,16),Point.Zero,"q"),
+                new TextureDrawer(src,new Rectangle(272,0,16,16),Point.Zero,"r"),
+                new TextureDrawer(src,new Rectangle(288,0,16,16),Point.Zero,"s"),
+                new TextureDrawer(src,new Rectangle(304,0,16,16),Point.Zero,"t"),
 
-                new TextureDrawer(src,new Rectangle(0,36,9,9),Point.Zero,"n"),
-                new TextureDrawer(src,new Rectangle(9,36,9,9),Point.Zero,"o"),
-                new TextureDrawer(src,new Rectangle(18,36,9,9),Point.Zero,"p"),
-                new TextureDrawer(src,new Rectangle(27,36,9,9),Point.Zero,"q"),
-                new TextureDrawer(src,new Rectangle(36,36,9,9),Point.Zero,"r"),
-                new TextureDrawer(src,new Rectangle(45,36,9,9),Point.Zero,"s"),
-                new TextureDrawer(src,new Rectangle(54,36,9,9),Point.Zero,"t"),
-                new TextureDrawer(src,new Rectangle(63,36,9,9),Point.Zero,"u"),
-                new TextureDrawer(src,new Rectangle(72,36,9,9),Point.Zero,"v"),
-                new TextureDrawer(src,new Rectangle(81,36,9,9),Point.Zero,"w"),
-                new TextureDrawer(src,new Rectangle(90,36,9,9),Point.Zero,"x"),
-                new TextureDrawer(src,new Rectangle(99,36,9,9),Point.Zero,"y"),
-                new TextureDrawer(src,new Rectangle(108,36,9,9),Point.Zero,"z"),
+                new TextureDrawer(src,new Rectangle(0,16,16,16),Point.Zero,"u"),
+                new TextureDrawer(src,new Rectangle(16,16,16,16),Point.Zero,"v"),
+                new TextureDrawer(src,new Rectangle(32,16,16,16),Point.Zero,"w"),
+                new TextureDrawer(src,new Rectangle(48,16,16,16),Point.Zero,"x"),
+                new TextureDrawer(src,new Rectangle(64,16,16,16),Point.Zero,"y"),
+                new TextureDrawer(src,new Rectangle(80,16,16,16),Point.Zero,"z"),
 
-                new TextureDrawer(src,new Rectangle(0,9,8,9),Point.Zero,"0"),
-                new TextureDrawer(src,new Rectangle(8,9,8,9),Point.Zero,"1"),
-                new TextureDrawer(src,new Rectangle(16,9,8,9),Point.Zero,"2"),
-                new TextureDrawer(src,new Rectangle(24,9,8,9),Point.Zero,"3"),
-                new TextureDrawer(src,new Rectangle(32,9,8,9),Point.Zero,"4"),
-                new TextureDrawer(src,new Rectangle(40,9,8,9),Point.Zero,"5"),
-                new TextureDrawer(src,new Rectangle(48,9,8,9),Point.Zero,"6"),
-                new TextureDrawer(src,new Rectangle(56,9,8,9),Point.Zero,"7"),
-                new TextureDrawer(src,new Rectangle(64,9,8,9),Point.Zero,"8"),
-                new TextureDrawer(src,new Rectangle(72,9,8,9),Point.Zero,"9"),
-                new TextureDrawer(src,new Rectangle(80,9,8,9),Point.Zero," "),
+                new TextureDrawer(src,new Rectangle(0,32,16,16),Point.Zero,"1"),
+                new TextureDrawer(src,new Rectangle(16,32,16,16),Point.Zero,"2"),
+                new TextureDrawer(src,new Rectangle(32,32,16,16),Point.Zero,"3"),
+                new TextureDrawer(src,new Rectangle(48,32,16,16),Point.Zero,"4"),
+                new TextureDrawer(src,new Rectangle(64,32,16,16),Point.Zero,"5"),
+                new TextureDrawer(src,new Rectangle(80,32,16,16),Point.Zero,"6"),
+                new TextureDrawer(src,new Rectangle(96,32,16,16),Point.Zero,"7"),
+                new TextureDrawer(src,new Rectangle(112,32,16,16),Point.Zero,"8"),
+                new TextureDrawer(src,new Rectangle(128,32,16,16),Point.Zero,"9"),
+                new TextureDrawer(src,new Rectangle(144,32,16,16),Point.Zero,"0"),
+
+                new TextureDrawer(src,new Rectangle(160,32,8,16),Point.Zero,","),
+                new TextureDrawer(src,new Rectangle(168,32,8,16),Point.Zero,"-"),
+                new TextureDrawer(src,new Rectangle(176,32,8,16),Point.Zero,"!"),
+                new TextureDrawer(src,new Rectangle(184,32,8,16),Point.Zero,"?"),
+
+                new TextureDrawer(src,new Rectangle(160,48,8,16),Point.Zero," "),
+
                 },
                 "font");
             fd.fonts.Add(f);
@@ -263,7 +271,7 @@ namespace DL40
             bool[] slimeball = new bool[count];
             string[] facing = new string[count];
             bool[] arrow = new bool[count];
-
+            bool[] ladder = new bool[count];
             List<TextureDrawer>[] texes = new List<TextureDrawer>[count];
 
             for (int i = 0; i < count; i++)
@@ -315,9 +323,13 @@ namespace DL40
                     {
                         texes[int.Parse(tile.Attribute("id").Value)].Add(getTDXML(prop.Attribute("value").Value));
                     }
+                    if (prop.Attribute("name").Value == "ladder")
+                    {
+                        ladder[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
+                    }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow,ladder);
         }
         //UPDATE
         TextureDrawer getTDXML(string name)
@@ -396,8 +408,7 @@ namespace DL40
         }
         void UpdateGame(float es_)
         {
-           
-
+            zoom = map.GetBounds().Width / 640;
             Vector2 mover = Vector2.Zero;
             Vector2 input = Vector2.Zero;
             if (ipp.Pressed("left"))
@@ -438,7 +449,7 @@ namespace DL40
                 while (copy.Y > 320)
                 {
                     searchPos.Y += 1;
-                    copy.X -= 320;
+                    copy.Y -= 320;
                 }
                 while (copy.Y < 0)
                 {
@@ -545,7 +556,8 @@ namespace DL40
         {
             player.onground = false;
             player.isOnWall = false;
-            foreach(Entity b in map.bouncies)
+            player.isOnLadder = false;
+            foreach (Entity b in map.bouncies)
             {
                 b.onground = false;
                 b.isOnWall = false;
@@ -580,26 +592,44 @@ namespace DL40
                         }
                     //}
                 }
-            }                   
-            if (ipp.JustPressed("space"))
+            }
+            currentStr = "";
+            
+            foreach (Tile e in map.tiles)
             {
-                foreach (Tile e in map.tiles)
+                if (e.isLaddery)
                 {
-                    if (e.actived != null && e.GetHB().Intersects(player.GetHBAfterMov()) && e.isDead == false)
+                    if (player.GetHBAfterMov().Intersects(e.GetHB()))
+                    {
+                        player.isOnLadder = true;
+                    }
+                }
+                if (e.actived != null && e.GetHB().Intersects(player.GetHBAfterMov()) && e.isDead == false)
+                {
+                    if (e.actived == "doublejump")
+                    {
+                        currentStr = "wow, shiny! pretty sure carrying this would prevent me from mid-air jumping though";
+                    }
+
+                    if (ipp.JustPressed("space"))
                     {
                         //debuff
                         int id = e.activID;
                         e.isDead = true;
-                        foreach (Tilemap mapp in maps)
+                        if (e.actived == "doublejump")
                         {
-                            foreach(Tile t in mapp.tiles)
+                            player.isDJumpDeactived = true;
+                        }
+                            foreach (Tilemap mapp in maps)
+                        {
+                            foreach (Tile t in mapp.tiles)
                             {
-                                if (!t.isDead && t.activID == id ) { t.Activate(); }
+                                if (!t.isDead && t.activID == id) { t.Activate(); }
                             }
                         }
-                    }
+                    }                    
                 }
-            }
+            }           
         }
         //DRAW
         protected override void Draw(GameTime gameTime)
@@ -617,8 +647,9 @@ namespace DL40
             spriteBatch.Begin();
             
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
-            else { fd.DrawText("font", lastInter.ToString(), new Rectangle(0, 0, 640, 320), spriteBatch);
-                for(int x = 0; x < 5; x++)
+            else { fd.DrawText("font", currentStr, new Rectangle(0, 272, 640, 320), spriteBatch);
+                fd.DrawText("font", player.isOnLadder.ToString(), new Rectangle(0, 272, 640, 320), spriteBatch);
+                for (int x = 0; x < 5; x++)
                 {
                     if (x < player.hp) { fullheart.Draw(spriteBatch, new Vector2(16 * x, 0)); }
                     if (x >= player.hp) { emptyheart.Draw(spriteBatch, new Vector2(16 * x, 0)); }

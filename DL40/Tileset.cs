@@ -20,6 +20,7 @@ namespace DL40
         bool[] hurtsmyass;
         bool[] slips;
         bool[] door;
+        bool[] ladder;
         int[] pool;
         bool[] slimeball;
         string[] actived;
@@ -29,8 +30,9 @@ namespace DL40
         int columns;
 
         public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_, bool[] slips_, bool[] door_,
-            int[] pool_,string[] actived_,bool[] slimeball_, List<TextureDrawer>[] addTex_, string[] facing_, bool[] arrow_)
+            int[] pool_,string[] actived_,bool[] slimeball_, List<TextureDrawer>[] addTex_, string[] facing_, bool[] arrow_,bool[] ladder_)
         {
+            ladder = ladder_;
             facing = facing_;
             arrow = arrow_;
             addTex = addTex_;
@@ -56,7 +58,7 @@ namespace DL40
             {
                 ts.Add(t);
             }
-            return new Tile(ts.ToArray(), pos_, solid[id], hurtsmyass[id],slips[id],door[id],pool[id],facing[id], arrow[id], actived[id]);
+            return new Tile(ts.ToArray(), pos_, solid[id], hurtsmyass[id],slips[id],door[id],pool[id],facing[id], arrow[id],ladder[id], actived[id]);
         }
         public Entity GetEntity(int id,Vector2 pos_)
         {
