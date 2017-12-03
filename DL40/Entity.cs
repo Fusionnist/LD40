@@ -67,7 +67,7 @@ namespace DL40
             return new Rectangle((int)(pos.X - currentTex.c_center.X + mov.X), (int)(pos.Y - currentTex.c_center.Y + mov.Y), currentTex.c_sourceRect.Width, currentTex.c_sourceRect.Height);
         }
 
-        public void SelectTex(string name_)
+        public  void SelectTex(string name_)
         {
             foreach(TextureDrawer td in texes)
             {
@@ -99,7 +99,7 @@ namespace DL40
                 }
             }         
         }
-        void SelectTexWow()
+        protected virtual void SelectTexWow()
         {
             if (prevmov.X < 0)
             { facesLeft = true; }

@@ -23,10 +23,12 @@ namespace DL40
         int[] pool;
         bool[] slimeball;
         string[] actived;
+        List<TextureDrawer>[] addTex;
         int columns;
 
-        public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_, bool[] slips_, bool[] door_,int[] pool_,string[] actived_,bool[] slimeball_)
+        public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_, bool[] slips_, bool[] door_,int[] pool_,string[] actived_,bool[] slimeball_, List<TextureDrawer>[] addTex_)
         {
+            addTex = addTex_;
             slimeball = slimeball_;
             actived = actived_;
             pool = pool_;
@@ -43,13 +45,25 @@ namespace DL40
         public Tile getTile(int id,Vector2 pos_)
         {
             TextureDrawer td = new TextureDrawer(src,new Rectangle((id%columns)*tileDims.X,(id/columns)*tileDims.Y,tileDims.X,tileDims.Y),Point.Zero,"imatile");
-            return new Tile(new TextureDrawer[] { td }, pos_, solid[id], hurtsmyass[id],slips[id],door[id],pool[id],actived[id]);
+            List<TextureDrawer> ts = new List<TextureDrawer>();
+            ts.Add(td);
+            foreach(TextureDrawer t in addTex[id])
+            {
+                ts.Add(t);
+            }
+            return new Tile(ts.ToArray(), pos_, solid[id], hurtsmyass[id],slips[id],door[id],pool[id],actived[id]);
         }
         public Entity GetEntity(int id,Vector2 pos_)
         {
             TextureDrawer td = new TextureDrawer(src, new Rectangle((id % columns) * tileDims.X, (id / columns) * tileDims.Y, tileDims.X, tileDims.Y), Point.Zero, "imatile");
+            List<TextureDrawer> ts = new List<TextureDrawer>();
+            ts.Add(td);
+            foreach (TextureDrawer t in addTex[id])
+            {
+                ts.Add(t);
+            }
             if (slimeball[id])
-                return new Bouncie(new TextureDrawer[] { td }, pos_, 100);
+                return new Bouncie(ts.ToArray(), pos_, 100);
             else
                 return null;
         }

@@ -32,9 +32,16 @@ namespace DL40
             if (isDoory)
             {
                 isSolid = !isSolid;
+                activated = true;
             }
         }
-
+        protected override void SelectTexWow()
+        {
+            { SelectTex("idle"); }
+            base.SelectTexWow();
+            if (activated)
+            { SelectTex("openTrapdoor"); }
+        }
         public override void Draw(SpriteBatch sb_)
         {          
             if (actived != null)

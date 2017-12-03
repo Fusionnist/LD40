@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Textures>
+  <Texture name="openTrapdoor" source="otd" truename="openTrapdoor"></Texture>
+  <Texture name="lavaanim" source="lavaanim" truename="idle" fc="4" ft="1" anim="true">
+    <Center x="0" y="0"></Center>
+    <Center x="0" y="0"></Center>
+    <Center x="0" y="0"></Center>
+    <Center x="0" y="0"></Center>
+
+    <Dim x="0" y="0" w="32" h="32"></Dim>
+    <Dim x="32" y="0" w="32" h="32"></Dim>
+    <Dim x="64" y="0" w="32" h="32"></Dim>
+    <Dim x="96" y="0" w="32" h="32"></Dim>
+  </Texture>
+</Textures>

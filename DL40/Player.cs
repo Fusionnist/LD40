@@ -157,5 +157,30 @@ namespace DL40
             }
             dashTimer -= es_;
         }
+
+        protected override void SelectTexWow()
+        {
+            if (prevInput.X < 0)
+            { facesLeft = true; }
+            if (prevInput.X > 0)
+            { facesLeft = false; }
+
+            if (prevmov.Y < 0)
+            { SelectTex("jump"); }
+            else if (isOnWall)
+            {
+                SelectTex("wallclimb");
+            }
+            else
+            { SelectTex("fall"); }
+
+            if (onground)
+            {
+                SelectTex("ground");
+                if (prevmov.X != 0) { SelectTex("walk"); }
+            }
+
+            if (isDead) { SelectTex("dead"); }
+        }
     }
 }

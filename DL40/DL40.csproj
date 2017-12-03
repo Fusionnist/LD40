@@ -126,13 +126,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\emptyheart.png" />
+    <Content Include="Content\fullheart.png" />
+    <Content Include="Content\fullheart2.png" />
+    <Content Include="Content\lavaanim.png" />
     <Content Include="Content\Menu.png" />
     <Content Include="Content\Original.png" />
+    <Content Include="Content\otd.png" />
     <Content Include="Content\sheet.png" />
+    <Content Include="Content\Textures.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\tiletest.png" />
     <Content Include="Content\tiletest.tsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\walk.png" />
     <Content Include="Content\zozodiac.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

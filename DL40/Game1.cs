@@ -44,8 +44,8 @@ namespace DL40
         {
             virtualDims = new Point(640, 320);
 
-            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1.5);
-            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1.5);
+            graphics.PreferredBackBufferHeight = 320;//(int)(GraphicsDevice.DisplayMode.Height / 1);
+            graphics.PreferredBackBufferWidth = 640;//(int)(GraphicsDevice.DisplayMode.Width / 1);
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -84,7 +84,9 @@ namespace DL40
             menu = new TextureDrawer(Content.Load<Texture2D>("Menu"));
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
+            emptyheart = new TextureDrawer(Content.Load<Texture2D>("emptyheart"));
+            fullheart = new TextureDrawer(Content.Load<Texture2D>("fullheart2"));
 
             Texture2D src = Content.Load<Texture2D>("Original");
             Font f = new Font(new TextureDrawer[] {
@@ -130,8 +132,6 @@ namespace DL40
                 },
                 "font");
             fd.fonts.Add(f);
-
-           
         }
         protected override void UnloadContent()
         {
@@ -145,42 +145,54 @@ namespace DL40
             maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-1,0)));
             map = maps[0];
 
-            TextureDrawer walk = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+            TextureDrawer walk = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
-                    new Rectangle(16,0,32,32), },
-                new Point[] { new Point(16, 16), new Point(16, 16), },
-                0.1f, 2, true, "walk");
-            TextureDrawer jump = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                    new Rectangle(32,0,32,32),
+                    new Rectangle(64,0,32,32),
+                    new Rectangle(96,0,32,32),},
+                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+                0.1f, 4, true, "walk");
+            TextureDrawer jump = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
-                    new Rectangle(32,0,32,32), },
-                new Point[] { new Point(16, 16), new Point(16, 16), },
-                0.1f, 2, true, "jump");
-            TextureDrawer fall = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                    new Rectangle(32,0,32,32),
+                    new Rectangle(64,0,32,32),
+                    new Rectangle(96,0,32,32),},
+                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+                0.3f, 4, true, "jump");
+            TextureDrawer fall = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
-                    new Rectangle(48,0,32,32), },
-                new Point[] { new Point(16, 16), new Point(16, 16), },
-                0.1f, 2, true, "fall");
-            TextureDrawer wallclimb = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                    new Rectangle(32,0,32,32),
+                    new Rectangle(64,0,32,32),
+                    new Rectangle(96,0,32,32),},
+                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+                0.3f, 4, true, "fall");
+            TextureDrawer wallclimb = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
-                    new Rectangle(0,16,32,32), },
-                new Point[] { new Point(16, 16), new Point(16, 16), },
-                0.1f, 2, true, "wallclimb");
-            TextureDrawer ground = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                    new Rectangle(32,0,32,32),
+                    new Rectangle(64,0,32,32),
+                    new Rectangle(96,0,32,32),},
+                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+                0.3f, 4, true, "wallclimb");
+            TextureDrawer ground = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
-                    new Rectangle(0,32,32,32), },
-                new Point[] { new Point(16, 16), new Point(16, 16), },
-                0.1f, 2, true, "ground");
-            TextureDrawer dead = new TextureDrawer(Content.Load<Texture2D>("zozodiac"),
+                    new Rectangle(32,0,32,32),
+                    new Rectangle(64,0,32,32),
+                    new Rectangle(96,0,32,32),},
+                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+                0.3f, 4, true, "ground");
+            TextureDrawer dead = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
-                    new Rectangle(16,0,32,32),
-                    new Rectangle(16,0,32,32), },
-                new Point[] { new Point(16, 16), new Point(16, 16), },
-                0.1f, 2, true, "dead");
+                    new Rectangle(0,0,32,32),
+                    new Rectangle(32,0,32,32),
+                    new Rectangle(64,0,32,32),
+                    new Rectangle(96,0,32,32),},
+                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+                0.3f, 4, true, "dead");
 
             player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150));
             mapPos = map.vpos;
@@ -238,8 +250,16 @@ namespace DL40
             int[] pool = new int[count];
             string[] actived = new string[count];
             bool[] slimeball = new bool[count];
+            
+            List<TextureDrawer>[] texes = new List<TextureDrawer>[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                texes[i] = new List<TextureDrawer>();
+            }
             foreach (XElement tile in doc_.Element("tileset").Elements("tile"))//PROPERTIES!
             {
+                
                 foreach (XElement prop in tile.Element("objectgroup").Element("properties").Elements("property"))//PROPERTIES!
                 {
                     if (prop.Attribute("name").Value == "solid")
@@ -270,11 +290,65 @@ namespace DL40
                     {
                         slimeball[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "texture")
+                    {
+                        texes[int.Parse(tile.Attribute("id").Value)].Add(getTDXML(prop.Attribute("value").Value));
+                    }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes);
         }
         //UPDATE
+        TextureDrawer getTDXML(string name)
+        {
+            XDocument texes = XDocument.Load("Content/Textures.xml");
+            foreach(XElement tex in texes.Element("Textures").Elements("Texture"))
+            {
+                if (tex.Attribute("name").Value == name)
+                {
+                    if (tex.Element("Center") == null)
+                    {
+                        return new TextureDrawer(Content.Load<Texture2D>(tex.Attribute("source").Value),tex.Attribute("truename").Value);
+                    }
+                    else if (tex.Element("Anim") == null)
+                    {
+                        int fc = int.Parse(tex.Attribute("fc").Value);
+                        List<Rectangle> rs = new List<Rectangle>();
+                        foreach (XElement r in tex.Elements("Dim"))
+                        {
+                            rs.Add(new Rectangle(
+                                int.Parse(r.Attribute("x").Value),
+                                int.Parse(r.Attribute("y").Value),
+                                int.Parse(r.Attribute("w").Value),
+                                int.Parse(r.Attribute("h").Value)
+                                ));
+                        }
+
+                        List<Point> cs = new List<Point>();
+                        foreach (XElement r in tex.Elements("Center"))
+                        {
+                            cs.Add(new Point(
+                                int.Parse(r.Attribute("x").Value),
+                                int.Parse(r.Attribute("y").Value)
+                                ));
+                        }
+                        return new TextureDrawer(Content.Load<Texture2D>(tex.Attribute("source").Value),
+                            rs.ToArray(),
+                            cs.ToArray(),
+                            float.Parse(tex.Attribute("ft").Value),
+                            fc,
+                            true,
+                            tex.Attribute("truename").Value
+                            );
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+            }
+            return null;
+        }
         protected override void Update(GameTime gameTime)
         {
             //LOGIC
@@ -322,18 +396,20 @@ namespace DL40
             player.Update(es_);
             map.Update(es_);
 
-            if (!player.GetHBAfterMov().Intersects(map.GetBounds()))
+            if (!map.GetBounds().Contains(player.pos))
             {
                 //switch maps
                 Point currentpos = map.vpos;
                 Point searchPos = map.vpos;
                 if(player.GetHBAfterMov().X < map.GetBounds().X)
                 {
-                    searchPos.X -= 1;                   
+                    searchPos.X -= 1;
+                    player.pos.Y -= 3;
                 }
                 else if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
                 {
-                    searchPos.X += 1;                    
+                    searchPos.X += 1;
+                    player.pos.Y -= 3;
                 }
                 else if (player.GetHBAfterMov().Y < map.GetBounds().Y)
                 {
@@ -467,14 +543,20 @@ namespace DL40
             spriteBatch.Begin();
             
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
-            else { fd.DrawText("font", lastInter.ToString(), new Rectangle(0, 0, 640, 320), spriteBatch); }
+            else { fd.DrawText("font", lastInter.ToString(), new Rectangle(0, 0, 640, 320), spriteBatch);
+                for(int x = 0; x < 5; x++)
+                {
+                    if (x < player.hp) { fullheart.Draw(spriteBatch, new Vector2(16 * x, 0)); }
+                    if (x >= player.hp) { emptyheart.Draw(spriteBatch, new Vector2(16 * x, 0)); }
+                }
+            }
             spriteBatch.End();
 
             //GAME DRAW
             Matrix translation = Matrix.CreateTranslation(new Vector3(-mapPos.X * 640,- mapPos.Y * 320, 0));
             GraphicsDevice.SetRenderTarget(gameTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(transformMatrix:translation);
+            spriteBatch.Begin(transformMatrix:translation, samplerState: SamplerState.PointWrap, sortMode: SpriteSortMode.Immediate);
             if (gp == GamePhase.Game) { DrawGameElements(); }
             spriteBatch.End();
 
