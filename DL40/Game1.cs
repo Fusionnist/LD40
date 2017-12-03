@@ -635,7 +635,7 @@ namespace DL40
                         }
                         if (e.actived == "ladder")
                         {
-                            player.canClimbLadders = true;
+                            player.isLadderDeactived = true;
                         }
                         if (e.actived == "dash")
                         {
