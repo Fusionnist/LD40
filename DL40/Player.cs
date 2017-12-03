@@ -40,7 +40,7 @@ namespace DL40
         {
             Vector2 vinput = (Vector2)input;
             prevInput = vinput;
-            Yvel += 5;
+            Yvel += 15f;
             if (!isDead)
             {
                 if (dashTimer <= 0)
@@ -53,13 +53,13 @@ namespace DL40
                         mov.X = -750;
                 }
                 if (vinput.Y == -1 && onground)
-                    Yvel = -250;
+                    Yvel = -375;
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
                 else if (vinput.Y == -1 && isOnWall && releasedUp)
-                    Yvel = -250;
+                    Yvel = -375;
                 else if (vinput.Y == -1 && canDJump && releasedUp && !isDJumpDeactived)
-                { Yvel = -250; canDJump = false; }
+                { Yvel = -375; canDJump = false; }
                 if (vinput.Y == -1)
                     releasedUp = false;
                 else
