@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DL40
 {
-    class Arrow : Entity
+    public class Arrow : Entity
     {
         public Vector2 dir;
 
