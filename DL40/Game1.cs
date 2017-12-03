@@ -29,6 +29,7 @@ namespace DL40
         Player player;
         TextureDrawer menu;
         List<Tilemap> maps;
+        Tileset set;
         TextureDrawer fullheart, emptyheart;
         float lastInter;
 
@@ -63,6 +64,7 @@ namespace DL40
         }
         protected override void Initialize()
         {
+            zoom = 1;
             InitGraphics();
             soundManager = new SoundManager();
             fd = new FontDrawer();
@@ -78,6 +80,7 @@ namespace DL40
             ipp = new InputProfile(kms);
             base.Initialize();
 
+            set = getTileset(XDocument.Load("Content/tiletest.tsx"));
         }
         protected override void LoadContent()
         {
@@ -139,10 +142,15 @@ namespace DL40
         }
         void GoToNewGame()
         {
+            
             gp = GamePhase.Game;
             maps = new List<Tilemap>();
             maps.Add(getTilemap(XDocument.Load("Content/TestTilemap.tmx"), Point.Zero));
             maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-1,0)));
+            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-2, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-3, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-4, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/BigMap.tmx"), new Point(-6, -1)));
             map = maps[0];
 
             TextureDrawer walk = new TextureDrawer(Content.Load<Texture2D>("walk"),
@@ -196,6 +204,8 @@ namespace DL40
 
             player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150));
             mapPos = map.vpos;
+
+           
         }
         //UTILS
         Tilemap getTilemap(XDocument doc_, Point vpos_)
@@ -205,7 +215,7 @@ namespace DL40
             int count = dims.X * dims.Y;
             List<Tile> tiles = new List<Tile>();
             List<Entity> ents = new List<Entity>();
-            Tileset ts = getTileset(XDocument.Load("Content/" + doc_.Element("map").Element("tileset").Attribute("source").Value));
+            Tileset ts = set;
 
             foreach(XElement layer in doc_.Element("map").Elements("layer"))
             {
@@ -250,7 +260,9 @@ namespace DL40
             int[] pool = new int[count];
             string[] actived = new string[count];
             bool[] slimeball = new bool[count];
-            
+            string[] facing = new string[count];
+            bool[] arrow = new bool[count];
+
             List<TextureDrawer>[] texes = new List<TextureDrawer>[count];
 
             for (int i = 0; i < count; i++)
@@ -290,13 +302,21 @@ namespace DL40
                     {
                         slimeball[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "facing")
+                    {
+                        facing[int.Parse(tile.Attribute("id").Value)] = (prop.Attribute("value").Value);
+                    }
+                    if (prop.Attribute("name").Value == "arrow")
+                    {
+                        arrow[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
+                    }
                     if (prop.Attribute("name").Value == "texture")
                     {
                         texes[int.Parse(tile.Attribute("id").Value)].Add(getTDXML(prop.Attribute("value").Value));
                     }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow);
         }
         //UPDATE
         TextureDrawer getTDXML(string name)
@@ -375,6 +395,8 @@ namespace DL40
         }
         void UpdateGame(float es_)
         {
+           
+
             Vector2 mover = Vector2.Zero;
             Vector2 input = Vector2.Zero;
             if (ipp.Pressed("left"))
@@ -400,31 +422,60 @@ namespace DL40
             {
                 //switch maps
                 Point currentpos = map.vpos;
-                Point searchPos = map.vpos;
-                if(player.GetHBAfterMov().X < map.GetBounds().X)
+                Point searchPos = Point.Zero;
+                Vector2 copy = player.pos;
+                while(copy.X > 640)
+                {
+                    searchPos.X += 1;
+                    copy.X -= 640;
+                }
+                while (copy.X < 0)
                 {
                     searchPos.X -= 1;
+                    copy.X += 640;
+                }
+                while (copy.Y > 320)
+                {
+                    searchPos.Y += 1;
+                    copy.X -= 320;
+                }
+                while (copy.Y < 0)
+                {
+                    searchPos.Y -= 1;
+                    copy.Y += 320;
+                }
+
+                if(player.GetHBAfterMov().X < map.GetBounds().X)
+                {
+                    //searchPos.X -= map.GetBounds().Width/640;
                     player.pos.Y -= 3;
                 }
                 else if (player.GetHBAfterMov().X > map.GetBounds().X+map.GetBounds().Width)
                 {
-                    searchPos.X += 1;
+                    //searchPos.X += map.GetBounds().Width / 640;
                     player.pos.Y -= 3;
                 }
                 else if (player.GetHBAfterMov().Y < map.GetBounds().Y)
                 {
-                    searchPos.Y -= 1;                   
+                    //searchPos.Y -= map.GetBounds().Height / 320;                   
                 }
                 else if (player.GetHBAfterMov().Y > map.GetBounds().Y+map.GetBounds().Height)
                 {
-                    searchPos.Y += 1;                    
+                    //searchPos.Y += map.GetBounds().Height / 320;                    
                 }
 
                 foreach(Tilemap tm in maps)
                 {
-                    if(tm.vpos == searchPos)
-                    { map = tm; mapPos = tm.vpos; }
+                    for(int x = 0; x < tm.GetBounds().Width / 640; x++)
+                    {
+                        for (int y = 0; y < tm.GetBounds().Height / 320; y++)
+                        {
+                            if (tm.vpos + new Point(x,y) == searchPos)
+                            { map = tm; mapPos = tm.vpos; }
+                        }
+                    }                   
                 }
+                zoom = map.GetBounds().Width / 640;
             }
             if (ipp.JustPressed("restart")) { GoToNewGame(); }
         }
@@ -506,6 +557,28 @@ namespace DL40
                     if (e.GetHBAfterMov().Intersects(player.GetHBAfterMov())) { player.TakeDamage(1); }
                 }
                 Collide(player, t);
+
+                //ARROW
+                if (t.arrow)
+                {
+                    //if (t.activated)
+                    //{
+                        if (t.facing == "left")
+                        {
+                            if (player.pos.X < t.pos.X)
+                            {
+                                if (player.pos.Y - 20 < t.pos.Y && player.pos.Y + 20 > t.pos.Y)
+                                {
+                                    if (t.activated) {
+                                    map.bouncies.Add(set.GetEntity(83, t.pos - new Vector2(32, 0)));
+                                    t.activated = false;
+                                    }                                   
+                                }
+                                else { t.activated = true; }
+                            }
+                        }
+                    //}
+                }
             }                   
             if (ipp.JustPressed("space"))
             {
@@ -553,7 +626,7 @@ namespace DL40
             spriteBatch.End();
 
             //GAME DRAW
-            Matrix translation = Matrix.CreateTranslation(new Vector3(-mapPos.X * 640,- mapPos.Y * 320, 0));
+            Matrix translation = Matrix.CreateTranslation(new Vector3(-mapPos.X * 640,- mapPos.Y * 320, 0))*Matrix.CreateScale(1f/zoom);
             GraphicsDevice.SetRenderTarget(gameTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(transformMatrix:translation, samplerState: SamplerState.PointWrap, sortMode: SpriteSortMode.Immediate);

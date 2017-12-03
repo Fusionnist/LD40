@@ -29,6 +29,11 @@ namespace DL40
                 t.pos.X += vpos.X * 640;
                 t.pos.Y += vpos.Y * 320;
             }
+            foreach (Entity t in bouncies)
+            {
+                t.pos.X += vpos.X * 640;
+                t.pos.Y += vpos.Y * 320;
+            }
         }
 
         public void Draw(SpriteBatch sb_)
@@ -68,7 +73,7 @@ namespace DL40
 
         public Rectangle GetBounds()
         {
-            return new Rectangle(640 * vpos.X, 320 * vpos.Y, 640, 320);
+            return new Rectangle(640 * vpos.X, 320 * vpos.Y, 32*dims.X, 32*dims.Y);
         }
     }
 }
