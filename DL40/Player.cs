@@ -12,9 +12,9 @@ namespace DL40
 {
     public class Player : Entity
     {
+        public int wealth;
         public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, isLadderDeactived, isOnLadder, collidesWLadder;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
-        public SoundManager sm;
         float dashttimer;
         public Player(TextureDrawer[] texes_, Vector2 pos_, SoundManager seffects): base(texes_, pos_)
         {
@@ -48,7 +48,12 @@ namespace DL40
             Vector2 vinput = (Vector2)input;
             prevInput = vinput;
             if (!isOnLadder)
-                Yvel += 15f;
+            {
+                if(!isOnWall || Yvel < 0)
+                    Yvel += 15f;
+                else { Yvel += 5f; }
+            }
+
             if (!isDead)
             {
                 if (dashTimer <= 0)
@@ -73,13 +78,20 @@ namespace DL40
                 else if (vinput.Y == 1 && isOnLadder)
                     mov.Y += 200;
                 else if (vinput.Y == -1 && onground)
+                {
+                    if (dashTimer <= 0 && Yvel >= 0) { sm.PlayEffect("jump"); }
                     Yvel = -350;
+                }
                 else if (vinput.Y == 1 && Yvel < 0)
                     Yvel = 0;
                 else if (vinput.Y == -1 && isOnWall && releasedUp && !isWJumpDeactived)
+                {
+                    if (dashTimer <= 0 && Yvel >= 0) { sm.PlayEffect("jump"); }
                     Yvel = -300;
+                }
                 else if (vinput.Y == -1 && canDJump && releasedUp && !isDJumpDeactived)
-                { Yvel = -300; canDJump = false; }
+                { if (dashTimer <= 0 && Yvel >= 0) { sm.PlayEffect("jump"); } 
+                Yvel = -300; canDJump = false; }
                 if (vinput.Y == -1)
                     releasedUp = false;
                 else
@@ -87,13 +99,13 @@ namespace DL40
                 if (vinput.X == -1)
                 {
                     if (releasedL && dashInputTimer > 0 && !dashRight && !isDashDeactived && touchedGroundForDash)
-                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; dashttimer = 0.2f; }
+                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; dashttimer = 0.2f; sm.PlayEffect("dash"); }
                     releasedL = false;
                 }
                 else if (vinput.X == 1)
                 {
                     if (releasedR && dashInputTimer > 0 && dashRight && !isDashDeactived && touchedGroundForDash)
-                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; dashttimer = 0.2f; }
+                    { dashTimer = dashTime; dashInputTimer = 0; touchedGroundForDash = false; dashttimer = 0.2f; sm.PlayEffect("dash"); }
                     releasedR = false;
                 }
                 else
@@ -112,8 +124,9 @@ namespace DL40
 
         public override void TakeDamage(int dmg_)
         {
-            if (!isInvin)
+            if (!isInvin && !isDead)
             {
+                sm.PlayEffect("hurty");
                 base.TakeDamage(dmg_);
                 isInvin = true;
             }
@@ -121,36 +134,48 @@ namespace DL40
 
         public override Rectangle GetHB()
         {
-            return new Rectangle((int)pos.X - 16, (int)pos.Y - 16, 32, 32);
+            return new Rectangle((int)pos.X - 10, (int)pos.Y - 4, 20, 20);
         }
 
         public override Rectangle GetHBAfterMov()
         {
-            return new Rectangle((int)(pos.X - 16 + mov.X), (int)(pos.Y - 16 + mov.Y), 32, 32);
+            return new Rectangle((int)(pos.X - 10 + mov.X), (int)(pos.Y - 4 + mov.Y), 20, 20);
         }
 
         public override Rectangle GetHBafterX()
         {
-            return new Rectangle((int)(pos.X - 16 + mov.X), (int)pos.Y - 16, 32, 32);
+            return new Rectangle((int)(pos.X - 10 + mov.X), (int)pos.Y - 4, 20, 20);
         }
 
         public override Rectangle GetHBafterY()
         {
-            return new Rectangle((int)pos.X - 16, (int)(pos.Y - 16 + mov.Y), 32, 32);
+            return new Rectangle((int)pos.X - 10, (int)(pos.Y - 4 + mov.Y), 20, 20);
         }
 
         public override void Draw(SpriteBatch sb_)
         {
             if (!isDead)
-            {
+            {            
                 if ((invinTimer * 10) % 2 < 1)
+                {
+                    if(wealth == 100)
+                        getTex("bag1").Draw(sb_, pos, facesLeft);
+                    if (wealth == 200)
+                        getTex("bag2").Draw(sb_, pos, facesLeft);
+                    if (wealth == 300)
+                        getTex("bag3").Draw(sb_, pos, facesLeft);
+                    if (wealth >= 400)
+                        getTex("bag4").Draw(sb_, pos, facesLeft);
                     base.Draw(sb_);
+                }
+                    
             }
             else { base.Draw(sb_); }
         }
 
         public override void Update(float es_)
         {
+            prevMov = mov;
             if (slipping)
             {
                 Xvel += mov.X / 15 ;
@@ -203,11 +228,13 @@ namespace DL40
                 SelectTex("ground");
                 if (prevmov.X != 0) { SelectTex("walk"); }
             }
+            if (slipping) { SelectTex("slip"); }
             if (isOnLadder)
             {
                 SelectTex("ladder");
+                if(prevMov == Vector2.Zero) { SelectTex("ladderstill"); }
             }
-            if (slipping) { SelectTex("slip"); }
+            
             if (dashttimer > 0) { SelectTex("dash"); }
             if (isDead) { SelectTex("dead"); }
         }

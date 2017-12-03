@@ -120,17 +120,39 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
-    <None Include="Content\00.tmx" />
-    <None Include="Content\10.tmx" />
-    <None Include="Content\20.tmx" />
-    <None Include="Content\21.tmx" />
-    <None Include="Content\22.tmx" />
-    <None Include="Content\23.tmx" />
-    <None Include="Content\24.tmx" />
-    <None Include="Content\25.tmx" />
-    <None Include="Content\33.tmx" />
-    <None Include="Content\43.tmx" />
-    <None Include="Content\53.tmx" />
+    <None Include="Content\00.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\10.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\20.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\21.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\22.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\23.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\24.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\25.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\33.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\43.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\53.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\BigMap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -148,28 +170,43 @@
     <Content Include="Content\arrow.png" />
     <Content Include="Content\arrowd.png" />
     <Content Include="Content\arrowu.png" />
+    <Content Include="Content\bag1.png" />
+    <Content Include="Content\bag2.png" />
+    <Content Include="Content\bag3.png" />
+    <Content Include="Content\bag4.png" />
+    <Content Include="Content\climb.png" />
+    <Content Include="Content\coin.wav" />
     <Content Include="Content\dash.png" />
+    <Content Include="Content\dashsf.wav" />
     <Content Include="Content\emptyheart.png" />
     <Content Include="Content\fullheart.png" />
     <Content Include="Content\fullheart2.png" />
+    <Content Include="Content\ground.png" />
     <Content Include="Content\hurty.wav" />
     <Content Include="Content\jump.png" />
     <Content Include="Content\jumpsf.wav" />
+    <Content Include="Content\jumpsf2.wav" />
     <Content Include="Content\lavaanim.png" />
     <Content Include="Content\Menu.png" />
+    <Content Include="Content\open1.png" />
+    <Content Include="Content\open2.png" />
     <Content Include="Content\Original.png" />
     <Content Include="Content\otd.png" />
     <Content Include="Content\particle.png" />
     <Content Include="Content\sheet.png" />
+    <Content Include="Content\shhot.wav" />
     <Content Include="Content\slip.png" />
     <Content Include="Content\Textures.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\thump.wav" />
     <Content Include="Content\tiletest.png" />
     <Content Include="Content\tiletest.tsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\walk.png" />
+    <Content Include="Content\walljump.png" />
     <Content Include="Content\zozodiac.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

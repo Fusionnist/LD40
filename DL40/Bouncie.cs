@@ -12,7 +12,7 @@ namespace DL40
     public class Bouncie : Entity
     {
         bool left;
-        public Bouncie(TextureDrawer[] texes_, Vector2 pos_, float baseXvel): base(texes_, pos_, false)
+        public Bouncie(TextureDrawer[] texes_, Vector2 pos_, float baseXvel, SoundManager sm_): base(texes_, pos_,sm_, false)
         {
             Xvel = baseXvel;
             isHurty = true;
@@ -21,7 +21,10 @@ namespace DL40
         public override void Move(Vector2? input = default(Vector2?), Vector2? extmov = default(Vector2?))
         {
             if (onground)
+            {
                 Yvel = -140;
+                sm.PlayEffect("jump2");
+            }
             else
                 Yvel += 4;
 
@@ -33,6 +36,17 @@ namespace DL40
             else
                 mov.X += Xvel;
             mov.Y += Yvel;
+        }
+
+        public override void Draw(SpriteBatch sb_)
+        {
+            base.Draw(sb_);
+        }
+
+        protected override void SelectTexWow()
+        {
+            base.SelectTexWow();
+            facesLeft = false;
         }
     }
 }

@@ -84,8 +84,10 @@ namespace DL40
         public void Draw(SpriteBatch sb_, Vector2 pos_, bool flip = false)
         {
             SpriteEffects se = SpriteEffects.None;
-            if (flip) { se = SpriteEffects.FlipHorizontally; }
-            sb_.Draw(src,position: pos_.ToPoint().ToVector2() - c_center.ToVector2(),sourceRectangle: c_sourceRect, effects: se);
+            Point newCenter = c_center;
+            if (flip) { se = SpriteEffects.FlipHorizontally; newCenter.X =c_sourceRect.Width- c_center.X; }
+            
+            sb_.Draw(src,position: pos_.ToPoint().ToVector2() - newCenter.ToVector2(),sourceRectangle: c_sourceRect, effects: se);
         }
 
         public bool Ended()

@@ -59,7 +59,7 @@ namespace DL40
             for (int i = 0; i < effectNames.Count; i++)
             {
                 if (effectNames[i] == name_)
-                { effects[i].Play(); }
+                { effects[i].Play();}
             }
         }
     }

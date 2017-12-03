@@ -16,12 +16,14 @@ namespace DL40
         public bool isSolid, onground, isDead, slipping, isOnWall, isHurty;
         public float Yvel, Xvel, speed;
         public int hp;
+        public SoundManager sm;
         public bool facesLeft;
 
         protected Vector2 prevmov, prevInput;
 
-        public Entity(TextureDrawer[] texes_, Vector2 pos_, bool isSolid_ = false)
+        public Entity(TextureDrawer[] texes_, Vector2 pos_,SoundManager sm_ =  null, bool isSolid_ = false)
         {
+            sm = sm_;
             isSolid = isSolid_;
             pos = pos_;
             texes = texes_;
@@ -133,7 +135,17 @@ namespace DL40
             SelectTexWow();
             currentTex.Draw(sb_,pos,facesLeft);
         }
-
+        public TextureDrawer getTex(string name_)
+        {
+            foreach (TextureDrawer td in texes)
+            {
+                if (td.name == name_)
+                {
+                    return td;
+                }
+            }
+            return currentTex;
+        }
         public virtual void TakeDamage(int dmg_)
         {
             hp -= dmg_;

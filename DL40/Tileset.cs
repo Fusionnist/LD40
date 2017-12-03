@@ -13,6 +13,7 @@ namespace DL40
 {
     public class Tileset
     {
+        SoundManager sm;
         Point tileDims;
         Texture2D src;
         int count;
@@ -32,8 +33,9 @@ namespace DL40
         int columns;
 
         public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_, bool[] slips_, bool[] door_,
-            int[] pool_,string[] actived_,bool[] slimeball_, List<TextureDrawer>[] addTex_, string[] facing_, bool[] arrow_,bool[] ladder_,bool[]flame_,bool[]hp_)
+            int[] pool_,string[] actived_,bool[] slimeball_, List<TextureDrawer>[] addTex_, string[] facing_, bool[] arrow_,bool[] ladder_,bool[]flame_,bool[]hp_,SoundManager sm_)
         {
+            sm = sm_;
             hp = hp_;
             flame = flame_;
             ladder = ladder_;
@@ -74,7 +76,7 @@ namespace DL40
                 ts.Add(t);
             }
             if (slimeball[id])
-                return new Bouncie(ts.ToArray(), pos_, 100);
+                return new Bouncie(ts.ToArray(), pos_, 100,sm);
             else
                 return null;
         }

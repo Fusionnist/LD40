@@ -9,9 +9,10 @@ using System.Xml;
 using System.Xml.Linq;
 namespace DL40
 {
-    enum GamePhase { Menu, Game }
+    enum GamePhase { Menu, Game, End }
     public class Game1 : Game
     {
+        int wealth;
         Particles pars;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -33,6 +34,7 @@ namespace DL40
         Tileset set;
         TextureDrawer fullheart, emptyheart;
         float lastInter;
+        TextureDrawer endscr;
         string currentStr;
         Random r;
 
@@ -55,7 +57,7 @@ namespace DL40
 
             float xscale = (float)GraphicsDevice.Viewport.Width / virtualDims.X;
             float yscale = (float)GraphicsDevice.Viewport.Height / virtualDims.Y;
-            scale = (float)Math.Round(Math.Min(xscale, yscale), 1);
+            scale = (float)Math.Round(Math.Min(xscale, yscale), 1)-0.1f;
             if (scale < 1) { scale = 1; }
             targetPos = new Point(
                 (GraphicsDevice.Viewport.Width - (int)(virtualDims.X * scale)) / 2,
@@ -90,6 +92,12 @@ namespace DL40
         {
             soundManager.AddEffect(Content.Load<SoundEffect>("hurty"), "hurty");
             soundManager.AddEffect(Content.Load<SoundEffect>("jumpsf"), "jump");
+
+            soundManager.AddEffect(Content.Load<SoundEffect>("jumpsf2"), "jump2");
+            soundManager.AddEffect(Content.Load<SoundEffect>("dashsf"), "dash");
+            soundManager.AddEffect(Content.Load<SoundEffect>("thump"), "thump");
+            soundManager.AddEffect(Content.Load<SoundEffect>("shhot"), "shoot");
+            soundManager.AddEffect(Content.Load<SoundEffect>("coin"), "coin");
 
             menu = new TextureDrawer(Content.Load<Texture2D>("Menu"));
             
@@ -143,6 +151,7 @@ namespace DL40
                 new TextureDrawer(src,new Rectangle(168,32,8,16),Point.Zero,"-"),
                 new TextureDrawer(src,new Rectangle(176,32,8,16),Point.Zero,"!"),
                 new TextureDrawer(src,new Rectangle(184,32,8,16),Point.Zero,"?"),
+                new TextureDrawer(src,new Rectangle(192,32,8,16),Point.Zero,":"),
 
                 new TextureDrawer(src,new Rectangle(160,48,8,16),Point.Zero," "),
 
@@ -156,16 +165,21 @@ namespace DL40
         }
         void GoToNewGame()
         {
+            wealth = 0;
             pars = new Particles(getTDXML("particle"));
             gp = GamePhase.Game;
             maps = new List<Tilemap>();
-            maps.Add(getTilemap(XDocument.Load("Content/TestTilemap.tmx"), Point.Zero));
-            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-1,0)));
-            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-2, 0)));
-            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-3, 0)));
-            maps.Add(getTilemap(XDocument.Load("Content/Tilemap2.tmx"), new Point(-4, 0)));
-            maps.Add(getTilemap(XDocument.Load("Content/BigMap.tmx"), new Point(-6, -1)));
-            maps.Add(getTilemap(XDocument.Load("Content/TopMap.tmx"), new Point(-1, -2)));
+            maps.Add(getTilemap(XDocument.Load("Content/00.tmx"), Point.Zero));
+            maps.Add(getTilemap(XDocument.Load("Content/10.tmx"), new Point(1,0)));
+            maps.Add(getTilemap(XDocument.Load("Content/20.tmx"), new Point(2, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/21.tmx"), new Point(2, -1)));
+            maps.Add(getTilemap(XDocument.Load("Content/22.tmx"), new Point(2, -2)));
+            maps.Add(getTilemap(XDocument.Load("Content/23.tmx"), new Point(2, -3)));
+            maps.Add(getTilemap(XDocument.Load("Content/24.tmx"), new Point(2, -4)));
+            maps.Add(getTilemap(XDocument.Load("Content/25.tmx"), new Point(2, -5)));
+            maps.Add(getTilemap(XDocument.Load("Content/33.tmx"), new Point(3, -3)));
+            maps.Add(getTilemap(XDocument.Load("Content/43.tmx"), new Point(4, -3)));
+            maps.Add(getTilemap(XDocument.Load("Content/53.tmx"), new Point(5, -3)));
             map = maps[0];
 
             TextureDrawer walk = new TextureDrawer(Content.Load<Texture2D>("walk"),
@@ -196,7 +210,7 @@ namespace DL40
                    new Rectangle(32, 0, 32, 32),
                 new Point(16, 16),
                 "dash");
-            TextureDrawer wallclimb = new TextureDrawer(Content.Load<Texture2D>("walk"),
+            TextureDrawer wallclimb = new TextureDrawer(Content.Load<Texture2D>("walljump"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
                     new Rectangle(32,0,32,32),
@@ -204,14 +218,12 @@ namespace DL40
                     new Rectangle(96,0,32,32),},
                 new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
                 0.3f, 4, true, "wallclimb");
-            TextureDrawer ground = new TextureDrawer(Content.Load<Texture2D>("walk"),
-                new Rectangle[] {
-                    new Rectangle(0,0,32,32),
-                    new Rectangle(32,0,32,32),
-                    new Rectangle(64,0,32,32),
-                    new Rectangle(96,0,32,32),},
-                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
-                0.3f, 4, true, "ground");
+            TextureDrawer ground = new TextureDrawer(Content.Load<Texture2D>("ground"),new Rectangle(0,0,32,32),new Point(16,16), "ground");
+            TextureDrawer bag1 = new TextureDrawer(Content.Load<Texture2D>("bag1"), new Rectangle(0, 0, 32, 32), new Point(32, 8), "bag1");
+            TextureDrawer bag2 = new TextureDrawer(Content.Load<Texture2D>("bag2"), new Rectangle(0, 0, 32, 32), new Point(32, 10), "bag2");
+            TextureDrawer bag3 = new TextureDrawer(Content.Load<Texture2D>("bag3"), new Rectangle(0, 0, 32, 32), new Point(31, 12), "bag3");
+            TextureDrawer bag4 = new TextureDrawer(Content.Load<Texture2D>("bag4"), new Rectangle(0, 0, 32, 32), new Point(30, 15), "bag4");
+            TextureDrawer ladderstill = new TextureDrawer(Content.Load<Texture2D>("climb"), new Rectangle(0, 0, 32, 32), new Point(16, 16), "ladderstill");
             TextureDrawer dead = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
@@ -220,8 +232,16 @@ namespace DL40
                     new Rectangle(96,0,32,32),},
                 new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
                 0.3f, 4, true, "dead");
+            TextureDrawer ladder = new TextureDrawer(Content.Load<Texture2D>("climb"),
+                new Rectangle[] {
+                    new Rectangle(0,0,32,32),
+                    new Rectangle(32,0,32,32),
+                    new Rectangle(64,0,32,32),
+                    new Rectangle(96,0,32,32),},
+                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+                0.1f, 4, true, "ladder");
 
-            player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall,dash,slip }, new Vector2(100, 150),soundManager);
+            player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall,dash,slip,ladder,bag1,bag2,bag3,bag4,ladderstill }, new Vector2(100, 150),soundManager);
             mapPos = map.vpos;
         }
         //UTILS
@@ -237,7 +257,10 @@ namespace DL40
             { dir = new Vector2(0, -1); name = "arrowu"; }
             if (facing == "down")
             { dir = new Vector2(0,1); name = "arrowd"; }
-            return new Arrow(new TextureDrawer[] { getTDXML(name) }, pos, dir);
+
+            TextureDrawer tdd = getTDXML(name);
+            tdd.c_center = new Point(tdd.c_sourceRect.Width / 2, tdd.c_sourceRect.Height / 2);
+            return new Arrow(new TextureDrawer[] { tdd }, pos, dir);
         }
         Tilemap getTilemap(XDocument doc_, Point vpos_)
         {
@@ -361,7 +384,7 @@ namespace DL40
                     }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow,ladder,flame,hp);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow,ladder,flame,hp,soundManager);
         }
         //UPDATE
         TextureDrawer getTDXML(string name)
@@ -428,6 +451,10 @@ namespace DL40
             if (gp == GamePhase.Game)
             {
                 UpdateGame(es);
+            }
+            if(gp == GamePhase.End)
+            {
+                UpdateEnd();
             }
             base.Update(gameTime);
         }
@@ -523,6 +550,12 @@ namespace DL40
                 zoom = map.GetBounds().Width / 640;
             }
             if (ipp.JustPressed("restart")&&player.isDead) { GoToNewGame(); }
+
+            if(mapPos==new Point(10, 0))
+            {
+                gp = GamePhase.End;
+                SetupEnd();
+            }
         }
         void Collide(Entity ent, Tile t)
         {
@@ -619,7 +652,8 @@ namespace DL40
                             {
                                 if (t.activated)
                                 {
-                                    map.bouncies.Add(GetArrow(t.facing, t.pos - new Vector2(32, 0)));
+                                    soundManager.PlayEffect("shoot");
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos - new Vector2(8, -r.Next(8,24))));
                                     t.activated = false;
                                 }
                             }
@@ -634,7 +668,8 @@ namespace DL40
                             {
                                 if (t.activated)
                                 {
-                                    map.bouncies.Add(GetArrow(t.facing, t.pos + new Vector2(32, 0)));
+                                    soundManager.PlayEffect("shoot");
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos + new Vector2(40, r.Next(8,24))));
                                     t.activated = false;
                                 }
                             }
@@ -649,7 +684,8 @@ namespace DL40
                             {
                                 if (t.activated)
                                 {
-                                    map.bouncies.Add(GetArrow(t.facing, t.pos - new Vector2(0, 32)));
+                                    soundManager.PlayEffect("shoot");
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos - new Vector2(-r.Next(8,24), 8)));
                                     t.activated = false;
                                 }
                             }
@@ -664,7 +700,8 @@ namespace DL40
                             {
                                 if (t.activated)
                                 {
-                                    map.bouncies.Add(GetArrow(t.facing, t.pos + new Vector2(0, 32)));
+                                    soundManager.PlayEffect("shoot");
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos + new Vector2(r.Next(8,24), 40)));
                                     t.activated = false;
                                 }
                             }
@@ -672,6 +709,7 @@ namespace DL40
                         }
                     }
                     //}
+                    
                 }
                 if (t.isFlameTrappy)
                 {
@@ -683,6 +721,7 @@ namespace DL40
                             {
                                 if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
                                 {
+                                    //soundManager.PlayEffect("thump");
                                     pars.AddPar(t.pos + new Vector2(-8, 16), new Vector2(-50*(float)r.NextDouble(),10*(float)r.NextDouble()*r.Next(-2,2)));
                                 }
                             }
@@ -693,6 +732,7 @@ namespace DL40
                             {
                                 if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
                                 {
+                                    //soundManager.PlayEffect("thump");
                                     pars.AddPar(t.pos + new Vector2(32, 16), new Vector2(50 * (float)r.NextDouble(), 10 * (float)r.NextDouble() * r.Next(-2, 2)));
                                 }
                             }
@@ -703,6 +743,7 @@ namespace DL40
                             {
                                 if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
                                 {
+                                    //soundManager.PlayEffect("thump");
                                     pars.AddPar(t.pos + new Vector2(16, -8), new Vector2( 10 * (float)r.NextDouble() * r.Next(-2, 2), -50 * (float)r.NextDouble()));
                                 }
                             }
@@ -713,6 +754,7 @@ namespace DL40
                             {
                                 if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
                                 {
+                                    //soundManager.PlayEffect("thump");
                                     pars.AddPar(t.pos + new Vector2(16, 32), new Vector2( 10 * (float)r.NextDouble() * r.Next(-2, 2), 50 * (float)r.NextDouble()));
                                 }
                             }
@@ -733,6 +775,7 @@ namespace DL40
                 }
                 if (e.actived != null && e.GetHB().Intersects(player.GetHBAfterMov()) && e.isDead == false)
                 {
+                    
                     if (e.actived == "doublejump")
                     {
                         currentStr = "wow, shiny! pretty sure carrying this would prevent me from mid-air jumping though";
@@ -749,9 +792,16 @@ namespace DL40
                     {
                         currentStr = "wow, shiny! pretty sure carrying this would prevent me from jumping from walls";
                     }
+                    if(e.actived == "none")
+                    {
+                        currentStr = "ooh, something shiny! probably not a trap?";
+                    }
 
                     if (ipp.JustPressed("space"))
                     {
+                        soundManager.PlayEffect("coin");
+                        wealth += 100;
+                        player.wealth = wealth;
                         //debuff
                         int id = e.activID;
                         e.isDead = true;
@@ -782,6 +832,18 @@ namespace DL40
                 }
             }           
         }
+        void UpdateEnd()
+        {
+            if (ipp.JustPressed("restart")) { GoToNewGame(); }
+        }
+        void SetupEnd()
+        {
+            endscr = new TextureDrawer(Content.Load<Texture2D>("menu"));
+        }
+        void DrawEndElements()
+        {
+            endscr.Draw(spriteBatch,Vector2.Zero);
+        }
         //DRAW
         protected override void Draw(GameTime gameTime)
         {
@@ -799,12 +861,19 @@ namespace DL40
             spriteBatch.Begin(transformMatrix:scaler, samplerState: SamplerState.PointWrap, sortMode: SpriteSortMode.Immediate);
             
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
-            else { fd.DrawText("font", currentStr, new Rectangle(0, 272, 640, 320), spriteBatch);
+            else if(gp == GamePhase.End){ DrawEndElements(); }
+            else {
+                fd.DrawText("font", currentStr, new Rectangle(0, 272, 640, 320), spriteBatch);
+                fd.DrawText("font", "wealth:"+wealth, new Rectangle(464, 16, 160, 320), spriteBatch);
                 //fd.DrawText("font", player.isOnLadder.ToString(), new Rectangle(0, 272, 640, 320), spriteBatch);
                 for (int x = 0; x < 5; x++)
                 {
-                    if (x < player.hp) { fullheart.Draw(spriteBatch, new Vector2(16 * x, 0)); }
-                    if (x >= player.hp) { emptyheart.Draw(spriteBatch, new Vector2(16 * x, 0)); }
+                    if (x < player.hp) { fullheart.Draw(spriteBatch, new Vector2(16+ 16 * x, 16)); }
+                    if (x >= player.hp) { emptyheart.Draw(spriteBatch, new Vector2(16+16 * x, 16)); }
+                }
+                if (player.isDead)
+                {
+                    fd.DrawText("font", "oh no! you got caught! press r to restart!", new Rectangle(64, 64, 512, 192), spriteBatch);
                 }
             }
             spriteBatch.End();
