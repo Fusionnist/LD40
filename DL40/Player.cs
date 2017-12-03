@@ -44,7 +44,8 @@ namespace DL40
         {
             Vector2 vinput = (Vector2)input;
             prevInput = vinput;
-            Yvel += 15f;
+            if (!isOnLadder)
+                Yvel += 15f;
             if (!isDead)
             {
                 if (dashTimer <= 0)
