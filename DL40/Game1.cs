@@ -213,8 +213,6 @@ namespace DL40
 
             player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150),soundManager);
             mapPos = map.vpos;
-
-           
         }
         //UTILS
         Tilemap getTilemap(XDocument doc_, Point vpos_)
