@@ -582,7 +582,7 @@ namespace DL40
                 foreach (Entity e in map.bouncies)
                 {
                     Collide(e, t);
-                    if (e.GetHBAfterMov().Intersects(player.GetHBAfterMov())) { player.TakeDamage(1); }
+                    if (e.GetHBAfterMov().Intersects(player.GetHBAfterMov()) && !e.isDead) { player.TakeDamage(1); }
                 }
                 Collide(player, t);
 
