@@ -178,4 +178,38 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="241">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="ladder" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="280">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="dash"/>
+    <property name="pool" type="int" value="2"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="281">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="walljump"/>
+    <property name="pool" type="int" value="3"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="282">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="ladder"/>
+    <property name="pool" type="int" value="4"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
 </tileset>

@@ -38,7 +38,7 @@ namespace DL40
                         if (pos.X + width > bounds.Width)
                         {
                             pos.X = 0;
-                            pos.Y += f.GetCharacter(' ').c_sourceRect.Width;
+                            pos.Y += f.GetCharacter(' ').c_sourceRect.Height;
                         }
                         foreach (TextureDrawer td in words)
                         {

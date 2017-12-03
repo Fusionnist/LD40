@@ -14,10 +14,11 @@ namespace DL40
     {
         public bool isInvin, canDJump, releasedUp, releasedL, releasedR, dashRight, isDJumpDeactived, isDashDeactived, touchedGroundForDash, isWJumpDeactived, canClimbLadders, isOnLadder, collidesWLadder;
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
-        public SoundEffect[] seffects;
+        public SoundManager sm;
 
-        public Player(TextureDrawer[] texes_, Vector2 pos_, SoundEffect[] seffects_): base(texes_, pos_)
+        public Player(TextureDrawer[] texes_, Vector2 pos_, SoundManager seffects): base(texes_, pos_)
         {
+            sm = seffects;
             hp = 5;
             isInvin = false;
             invinTime = 3;
@@ -40,7 +41,6 @@ namespace DL40
             dashTime = 0.12f;
             dashTimer = 0;
             speed = 150;
-            seffects = seffects_;
         }
 
         public override void Move(Vector2? input = null, Vector2? extmov = null)
