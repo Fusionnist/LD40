@@ -16,7 +16,7 @@ namespace DL40
         public float invinTime, invinTimer, dashInputTime, dashInputTimer, dashTime, dashTimer;
         public SoundEffect[] seffects;
 
-        public Player(TextureDrawer[] texes_, Vector2 pos_, SoundEffect[] seffects): base(texes_, pos_)
+        public Player(TextureDrawer[] texes_, Vector2 pos_, SoundEffect[] seffects_): base(texes_, pos_)
         {
             hp = 5;
             isInvin = false;
@@ -40,6 +40,7 @@ namespace DL40
             dashTime = 0.12f;
             dashTimer = 0;
             speed = 150;
+            seffects = seffects_;
         }
 
         public override void Move(Vector2? input = null, Vector2? extmov = null)
