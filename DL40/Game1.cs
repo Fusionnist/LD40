@@ -46,10 +46,10 @@ namespace DL40
         //LOAD+INIT
         void InitGraphics()
         {
-            virtualDims = new Point(640, 320);
+            virtualDims = new Point(1280, 640);
 
-            graphics.PreferredBackBufferHeight = 320;//(int)(GraphicsDevice.DisplayMode.Height / 1);
-            graphics.PreferredBackBufferWidth = 640;//(int)(GraphicsDevice.DisplayMode.Width / 1);
+            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1);
+            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1);
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -89,7 +89,7 @@ namespace DL40
         protected override void LoadContent()
         {
             soundManager.AddEffect(Content.Load<SoundEffect>("hurty"), "hurty");
-            soundManager.AddEffect(Content.Load<SoundEffect>("jump"), "jump");
+            soundManager.AddEffect(Content.Load<SoundEffect>("jumpsf"), "jump");
 
             menu = new TextureDrawer(Content.Load<Texture2D>("Menu"));
             
@@ -176,22 +176,26 @@ namespace DL40
                     new Rectangle(96,0,32,32),},
                 new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
                 0.1f, 4, true, "walk");
-            TextureDrawer jump = new TextureDrawer(Content.Load<Texture2D>("walk"),
-                new Rectangle[] {
+            TextureDrawer slip = new TextureDrawer(Content.Load<Texture2D>("slip"),
+               new Rectangle[] {
                     new Rectangle(0,0,32,32),
                     new Rectangle(32,0,32,32),
                     new Rectangle(64,0,32,32),
                     new Rectangle(96,0,32,32),},
-                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
-                0.3f, 4, true, "jump");
-            TextureDrawer fall = new TextureDrawer(Content.Load<Texture2D>("walk"),
-                new Rectangle[] {
-                    new Rectangle(0,0,32,32),
-                    new Rectangle(32,0,32,32),
-                    new Rectangle(64,0,32,32),
-                    new Rectangle(96,0,32,32),},
-                new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
-                0.3f, 4, true, "fall");
+               new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
+               0.1f, 4, true, "slip");
+            TextureDrawer jump = new TextureDrawer(Content.Load<Texture2D>("jump"),               
+                    new Rectangle(0,0,32,32), 
+                 new Point(16, 16) ,
+                 "jump");
+            TextureDrawer fall = new TextureDrawer(Content.Load<Texture2D>("jump"),
+                    new Rectangle(32, 0, 32, 32),
+                 new Point(16, 16),
+                 "fall");
+            TextureDrawer dash = new TextureDrawer(Content.Load<Texture2D>("dash"),
+                   new Rectangle(32, 0, 32, 32),
+                new Point(16, 16),
+                "dash");
             TextureDrawer wallclimb = new TextureDrawer(Content.Load<Texture2D>("walk"),
                 new Rectangle[] {
                     new Rectangle(0,0,32,32),
@@ -217,7 +221,7 @@ namespace DL40
                 new Point[] { new Point(16, 16), new Point(16, 16), new Point(16, 16), new Point(16, 16), },
                 0.3f, 4, true, "dead");
 
-            player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150),soundManager);
+            player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall,dash,slip }, new Vector2(100, 150),soundManager);
             mapPos = map.vpos;
         }
         //UTILS
@@ -782,6 +786,7 @@ namespace DL40
         protected override void Draw(GameTime gameTime)
         {
             //TEXT DRAW
+            Matrix scaler = Matrix.CreateScale(2f / zoom);
             GraphicsDevice.SetRenderTarget(textTarget);
             GraphicsDevice.Clear(Color.TransparentBlack);
             spriteBatch.Begin();
@@ -791,11 +796,11 @@ namespace DL40
             //OVERLAY DRAW
             GraphicsDevice.SetRenderTarget(overlayTarget);
             GraphicsDevice.Clear(Color.TransparentBlack);
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix:scaler, samplerState: SamplerState.PointWrap, sortMode: SpriteSortMode.Immediate);
             
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
             else { fd.DrawText("font", currentStr, new Rectangle(0, 272, 640, 320), spriteBatch);
-                fd.DrawText("font", player.isOnLadder.ToString(), new Rectangle(0, 272, 640, 320), spriteBatch);
+                //fd.DrawText("font", player.isOnLadder.ToString(), new Rectangle(0, 272, 640, 320), spriteBatch);
                 for (int x = 0; x < 5; x++)
                 {
                     if (x < player.hp) { fullheart.Draw(spriteBatch, new Vector2(16 * x, 0)); }
@@ -805,7 +810,7 @@ namespace DL40
             spriteBatch.End();
 
             //GAME DRAW
-            Matrix translation = Matrix.CreateTranslation(new Vector3(-mapPos.X * 640,- mapPos.Y * 320, 0))*Matrix.CreateScale(1f/zoom);
+            Matrix translation = Matrix.CreateTranslation(new Vector3(-mapPos.X * 640,- mapPos.Y * 320, 0))*scaler;
             GraphicsDevice.SetRenderTarget(gameTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(transformMatrix:translation, samplerState: SamplerState.PointWrap, sortMode: SpriteSortMode.Immediate);
@@ -813,7 +818,6 @@ namespace DL40
             spriteBatch.End();
 
             //DEFINITIVE DRAW
-            Matrix scaleMatrix = Matrix.CreateScale(scale);
             GraphicsDevice.SetRenderTarget(null);
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, sortMode: SpriteSortMode.Immediate);
             Rectangle dest = new Rectangle(targetPos.X, targetPos.Y, (int)(virtualDims.X * scale), (int)(virtualDims.Y * scale));
