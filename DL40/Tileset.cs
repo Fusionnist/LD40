@@ -26,13 +26,15 @@ namespace DL40
         bool[] flame;
         string[] actived;
         bool[] arrow;
+        bool[] hp;
         string[] facing;
         List<TextureDrawer>[] addTex;
         int columns;
 
         public Tileset(Point tileDims_,Texture2D src_,int columns_,int count_,bool[] solid_,bool[] hurtsmyass_, bool[] slips_, bool[] door_,
-            int[] pool_,string[] actived_,bool[] slimeball_, List<TextureDrawer>[] addTex_, string[] facing_, bool[] arrow_,bool[] ladder_,bool[]flame_)
+            int[] pool_,string[] actived_,bool[] slimeball_, List<TextureDrawer>[] addTex_, string[] facing_, bool[] arrow_,bool[] ladder_,bool[]flame_,bool[]hp_)
         {
+            hp = hp_;
             flame = flame_;
             ladder = ladder_;
             facing = facing_;
@@ -60,7 +62,7 @@ namespace DL40
             {
                 ts.Add(t);
             }
-            return new Tile(ts.ToArray(), pos_, solid[id], hurtsmyass[id],slips[id],door[id],pool[id],facing[id], arrow[id],ladder[id], flame[id], actived[id]);
+            return new Tile(ts.ToArray(), pos_, solid[id], hurtsmyass[id],slips[id],door[id],pool[id],facing[id], arrow[id],ladder[id], flame[id], hp[id], actived[id]);
         }
         public Entity GetEntity(int id,Vector2 pos_)
         {

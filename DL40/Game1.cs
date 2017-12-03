@@ -291,6 +291,7 @@ namespace DL40
             bool[] arrow = new bool[count];
             bool[] ladder = new bool[count];
             bool[] flame = new bool[count];
+            bool[] hp = new bool[count];
             List<TextureDrawer>[] texes = new List<TextureDrawer>[count];
 
             for (int i = 0; i < count; i++)
@@ -350,9 +351,13 @@ namespace DL40
                     {
                         flame[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
                     }
+                    if (prop.Attribute("name").Value == "hp")
+                    {
+                        hp[int.Parse(tile.Attribute("id").Value)] = bool.Parse(prop.Attribute("value").Value);
+                    }
                 }
             }
-            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow,ladder,flame);
+            return new Tileset(dims, src, columns, count, solid, hurtsmyass,slips,door,pool,actived,slimeball,texes,facing,arrow,ladder,flame,hp);
         }
         //UPDATE
         TextureDrawer getTDXML(string name)
@@ -513,7 +518,7 @@ namespace DL40
                 }
                 zoom = map.GetBounds().Width / 640;
             }
-            if (ipp.JustPressed("restart")) { GoToNewGame(); }
+            if (ipp.JustPressed("restart")&&player.isDead) { GoToNewGame(); }
         }
         void Collide(Entity ent, Tile t)
         {
@@ -674,7 +679,7 @@ namespace DL40
                             {
                                 if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(-8, 16), new Vector2(-50*(float)r.NextDouble(),10*(float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(-8, 16), new Vector2(-50*(float)r.NextDouble(),10*(float)r.NextDouble()*r.Next(-2,2)));
                                 }
                             }
                         }
@@ -684,7 +689,7 @@ namespace DL40
                             {
                                 if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(32, 16), new Vector2(50 * (float)r.NextDouble(), 10 * (float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(32, 16), new Vector2(50 * (float)r.NextDouble(), 10 * (float)r.NextDouble() * r.Next(-2, 2)));
                                 }
                             }
                         }
@@ -694,7 +699,7 @@ namespace DL40
                             {
                                 if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(16, -8), new Vector2( 10 * (float)r.NextDouble(), -50 * (float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(16, -8), new Vector2( 10 * (float)r.NextDouble() * r.Next(-2, 2), -50 * (float)r.NextDouble()));
                                 }
                             }
                         }
@@ -704,7 +709,7 @@ namespace DL40
                             {
                                 if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(16, 32), new Vector2( 10 * (float)r.NextDouble(), 50 * (float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(16, 32), new Vector2( 10 * (float)r.NextDouble() * r.Next(-2, 2), 50 * (float)r.NextDouble()));
                                 }
                             }
                         }

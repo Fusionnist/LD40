@@ -33,6 +33,7 @@ namespace DL40
 
         public void Update(float es_)
         {
+            particle.Update(es_);
             for(int i = times.Count-1; i >= 0; i--)
             {
                 times[i] -= es_;
