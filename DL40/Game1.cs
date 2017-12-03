@@ -518,7 +518,7 @@ namespace DL40
                 }
                 zoom = map.GetBounds().Width / 640;
             }
-            if (ipp.JustPressed("restart")) { GoToNewGame(); }
+            if (ipp.JustPressed("restart")&&player.isDead) { GoToNewGame(); }
         }
         void Collide(Entity ent, Tile t)
         {
@@ -679,7 +679,7 @@ namespace DL40
                             {
                                 if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(-8, 16), new Vector2(-50*(float)r.NextDouble(),10*(float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(-8, 16), new Vector2(-50*(float)r.NextDouble(),10*(float)r.NextDouble()*r.Next(-2,2)));
                                 }
                             }
                         }
@@ -689,7 +689,7 @@ namespace DL40
                             {
                                 if (player.pos.Y + 10 > t.pos.Y && player.pos.Y - 10 < t.pos.Y)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(32, 16), new Vector2(50 * (float)r.NextDouble(), 10 * (float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(32, 16), new Vector2(50 * (float)r.NextDouble(), 10 * (float)r.NextDouble() * r.Next(-2, 2)));
                                 }
                             }
                         }
@@ -699,7 +699,7 @@ namespace DL40
                             {
                                 if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(16, -8), new Vector2( 10 * (float)r.NextDouble(), -50 * (float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(16, -8), new Vector2( 10 * (float)r.NextDouble() * r.Next(-2, 2), -50 * (float)r.NextDouble()));
                                 }
                             }
                         }
@@ -709,7 +709,7 @@ namespace DL40
                             {
                                 if (player.pos.X + 10 > t.pos.X && player.pos.X - 10 < t.pos.X)
                                 {
-                                    pars.AddPar(t.pos + new Vector2(16, 32), new Vector2( 10 * (float)r.NextDouble(), 50 * (float)r.NextDouble()));
+                                    pars.AddPar(t.pos + new Vector2(16, 32), new Vector2( 10 * (float)r.NextDouble() * r.Next(-2, 2), 50 * (float)r.NextDouble()));
                                 }
                             }
                         }
