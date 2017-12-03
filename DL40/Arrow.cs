@@ -13,7 +13,7 @@ namespace DL40
         public Arrow(TextureDrawer[] texes_, Vector2 pos_, Vector2 dir_): base(texes_, pos_)
         {
             dir = dir_;
-            speed = 100;
+            speed = 200;
         }
 
         public override void Move(Vector2? input = default(Vector2?), Vector2? extmov = default(Vector2?))
@@ -25,7 +25,12 @@ namespace DL40
         public override void Update(float es_)
         {
             if (isOnWall)
+            {
                 isDead = true;
+                dir = new Vector2(0, 1);
+                speed = 100;
+            }
+                
             base.Update(es_);
         }
     }

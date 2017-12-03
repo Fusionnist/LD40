@@ -55,6 +55,15 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="17">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="arrow" type="bool" value="true"/>
+    <property name="facing" value="right"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
  <tile id="51">
   <objectgroup draworder="index">
    <properties>
@@ -79,6 +88,24 @@
  <tile id="55">
   <objectgroup draworder="index">
    <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="56">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="arrow" type="bool" value="true"/>
+    <property name="facing" value="up"/>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="57">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="arrow" type="bool" value="true"/>
+    <property name="facing" value="down"/>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </objectgroup>

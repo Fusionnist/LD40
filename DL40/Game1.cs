@@ -217,13 +217,21 @@ namespace DL40
             player = new Player(new TextureDrawer[] { walk,dead,wallclimb,ground,jump,fall }, new Vector2(100, 150),soundManager);
             mapPos = map.vpos;
         }
-        public Arrow GetArrow(string facing,Vector2 pos)
+        //UTILS
+        public Arrow GetArrow(string facing, Vector2 pos)
         {
             Vector2 dir = Vector2.Zero;
-            if(facing == "left") { dir = new Vector2(-1, 0); }
-            return new Arrow(new TextureDrawer[] { getTDXML("arrow") },pos,dir);
+            string name = "arrow";
+            if (facing == "left")
+            { dir = new Vector2(-1, 0); }
+            if (facing == "right")
+            { dir = new Vector2(1, 0); }
+            if (facing == "up")
+            { dir = new Vector2(0, -1); name = "arrowu"; }
+            if (facing == "down")
+            { dir = new Vector2(0,1); name = "arrowd"; }
+            return new Arrow(new TextureDrawer[] { getTDXML(name) }, pos, dir);
         }
-        //UTILS
         Tilemap getTilemap(XDocument doc_, Point vpos_)
         {
             Point dims = new Point(int.Parse(doc_.Element("map").Attribute("width").Value), int.Parse(doc_.Element("map").Attribute("height").Value));
@@ -583,20 +591,66 @@ namespace DL40
                 {
                     //if (t.activated)
                     //{
-                        if (t.facing == "left")
+                    if (t.facing == "left")
+                    {
+                        if (player.pos.X < t.pos.X)
                         {
-                            if (player.pos.X < t.pos.X)
+                            if (player.pos.Y - 20 < t.pos.Y && player.pos.Y + 20 > t.pos.Y)
                             {
-                                if (player.pos.Y - 20 < t.pos.Y && player.pos.Y + 20 > t.pos.Y)
+                                if (t.activated)
                                 {
-                                    if (t.activated) {
-                                    map.bouncies.Add(GetArrow(t.facing,t.pos - new Vector2(-32,0)));
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos - new Vector2(32, 0)));
                                     t.activated = false;
-                                    }                                   
                                 }
-                                else { t.activated = true; }
                             }
+                            else { t.activated = true; }
                         }
+                    }
+                    if (t.facing == "right")
+                    {
+                        if (player.pos.X > t.pos.X)
+                        {
+                            if (player.pos.Y - 20 < t.pos.Y && player.pos.Y + 20 > t.pos.Y)
+                            {
+                                if (t.activated)
+                                {
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos + new Vector2(32, 0)));
+                                    t.activated = false;
+                                }
+                            }
+                            else { t.activated = true; }
+                        }
+                    }
+                    if (t.facing == "up")
+                    {
+                        if (player.pos.Y < t.pos.Y)
+                        {
+                            if (player.pos.X - 20 < t.pos.X && player.pos.X + 20 > t.pos.X)
+                            {
+                                if (t.activated)
+                                {
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos - new Vector2(0, 32)));
+                                    t.activated = false;
+                                }
+                            }
+                            else { t.activated = true; }
+                        }
+                    }
+                    if (t.facing == "down")
+                    {
+                        if (player.pos.Y > t.pos.Y)
+                        {
+                            if (player.pos.X - 20 < t.pos.X && player.pos.X + 20 > t.pos.X)
+                            {
+                                if (t.activated)
+                                {
+                                    map.bouncies.Add(GetArrow(t.facing, t.pos + new Vector2(0, 32)));
+                                    t.activated = false;
+                                }
+                            }
+                            else { t.activated = true; }
+                        }
+                    }
                     //}
                 }
             }
