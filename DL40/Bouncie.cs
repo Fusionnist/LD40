@@ -23,7 +23,7 @@ namespace DL40
         {
             if (onground)
             {
-                Yvel = -Yvel;
+                Yvel = -160;
                 sm.PlayEffect("jump2");
             }
             else
