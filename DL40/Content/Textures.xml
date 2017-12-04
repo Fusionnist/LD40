@@ -1,8 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Textures>
   <Texture name="openTrapdoor" source="otd" truename="openTrapdoor"></Texture>
+  <Texture name="otd2" source="otd2" truename="openTrapdoor"></Texture>
+  <Texture name="otd3" source="otd3" truename="openTrapdoor"></Texture>
+  <Texture name="otd4" source="otd4" truename="openTrapdoor"></Texture>
+  
   <Texture name="open1" source="open1" truename="openTrapdoor"></Texture>
   <Texture name="open2" source="open2" truename="openTrapdoor"></Texture>
+  <Texture name="open4" source="open4" truename="openTrapdoor"></Texture>
+  <Texture name="open6" source="open6" truename="openTrapdoor"></Texture>
+  <Texture name="open8" source="open8" truename="openTrapdoor"></Texture>
+  <Texture name="open10" source="open10" truename="openTrapdoor"></Texture>
+  <Texture name="open12" source="open12" truename="openTrapdoor"></Texture>
+  <Texture name="open14" source="open14" truename="openTrapdoor"></Texture>
+  <Texture name="open16" source="open16" truename="openTrapdoor"></Texture>
+  
   <Texture name="arrow" source="arrow" truename="idle"></Texture>
   <Texture name="arrowu" source="arrowu" truename="idle"></Texture>
   <Texture name="arrowd" source="arrowd" truename="idle"></Texture>

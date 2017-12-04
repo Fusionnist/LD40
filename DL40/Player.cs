@@ -216,12 +216,13 @@ namespace DL40
 
             if (prevmov.Y < 0)
             { SelectTex("jump"); }
-            else if (isOnWall)
+            else
+            { SelectTex("fall"); }
+            if (isOnWall)
             {
                 SelectTex("wallclimb");
             }
-            else
-            { SelectTex("fall"); }
+            
 
             if (onground)
             {
