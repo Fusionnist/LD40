@@ -11,12 +11,11 @@ namespace DL40
 {
     public class Bouncie : Entity
     {
-        bool left, hitGround;
+        bool left;
         public Bouncie(TextureDrawer[] texes_, Vector2 pos_, float baseXvel, SoundManager sm_): base(texes_, pos_,sm_, false)
         {
             Xvel = baseXvel;
             isHurty = true;
-            hitGround = false;
         }
 
         public override void Move(Vector2? input = default(Vector2?), Vector2? extmov = default(Vector2?))
