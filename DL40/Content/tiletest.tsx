@@ -249,6 +249,15 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="171">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="lava"/>
+    <property name="pool" type="int" value="9"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
  <tile id="176">
   <objectgroup draworder="index">
    <properties>
@@ -294,6 +303,9 @@
  <tile id="254">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="1"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="openTrapdoor"/>
    </properties>
   </objectgroup>
@@ -301,6 +313,9 @@
  <tile id="255">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="2"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="otd2"/>
    </properties>
   </objectgroup>
@@ -308,6 +323,9 @@
  <tile id="256">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="3"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="otd3"/>
    </properties>
   </objectgroup>
@@ -315,6 +333,49 @@
  <tile id="257">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="4"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="otd4"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="258">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="5"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="openTrapdoor"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="259">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="6"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="otd2"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="260">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="7"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="otd3"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="261">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="8"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="otd4"/>
    </properties>
   </objectgroup>
@@ -349,6 +410,9 @@
  <tile id="294">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="1"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="open1"/>
    </properties>
   </objectgroup>
@@ -356,21 +420,70 @@
  <tile id="295">
   <objectgroup draworder="index">
    <properties>
-    <property name="texture" value="open3"/>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="2"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open1"/>
    </properties>
   </objectgroup>
  </tile>
  <tile id="296">
   <objectgroup draworder="index">
    <properties>
-    <property name="texture" value="open5"/>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="3"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open1"/>
    </properties>
   </objectgroup>
  </tile>
  <tile id="297">
   <objectgroup draworder="index">
    <properties>
-    <property name="texture" value="open7"/>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="4"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open1"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="298">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="5"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open1"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="299">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="6"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open1"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="300">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="7"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open1"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="301">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="8"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open1"/>
    </properties>
   </objectgroup>
  </tile>
@@ -384,6 +497,9 @@
  <tile id="334">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="1"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="open2"/>
    </properties>
   </objectgroup>
@@ -391,6 +507,9 @@
  <tile id="335">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="2"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="open4"/>
    </properties>
   </objectgroup>
@@ -398,6 +517,9 @@
  <tile id="336">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="3"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="open6"/>
    </properties>
   </objectgroup>
@@ -405,7 +527,50 @@
  <tile id="337">
   <objectgroup draworder="index">
    <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="4"/>
+    <property name="solid" type="bool" value="true"/>
     <property name="texture" value="open8"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="338">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="5"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open10"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="339">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="6"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open12"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="340">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="7"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open14"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="341">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="door" type="bool" value="true"/>
+    <property name="pool" type="int" value="8"/>
+    <property name="solid" type="bool" value="true"/>
+    <property name="texture" value="open16"/>
    </properties>
   </objectgroup>
  </tile>
@@ -413,6 +578,85 @@
   <objectgroup draworder="index">
    <properties>
     <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="374">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="none"/>
+    <property name="pool" type="int" value="1"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="375">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="none"/>
+    <property name="pool" type="int" value="2"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="376">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="none"/>
+    <property name="pool" type="int" value="3"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="377">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="none"/>
+    <property name="pool" type="int" value="4"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="378">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="dash"/>
+    <property name="pool" type="int" value="5"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="379">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="doublejump"/>
+    <property name="pool" type="int" value="6"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="380">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="walljump"/>
+    <property name="pool" type="int" value="7"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="381">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="ladder"/>
+    <property name="pool" type="int" value="8"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="419">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="doublejump"/>
    </properties>
   </objectgroup>
  </tile>
@@ -430,12 +674,70 @@
    </properties>
   </objectgroup>
  </tile>
+ <tile id="483">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="debuff" value="soap"/>
+    <property name="pool" type="int" value="9"/>
+    <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
  <tile id="521">
   <objectgroup draworder="index">
    <properties>
     <property name="debuff" value="none"/>
-    <property name="pool" type="int" value="1"/>
+    <property name="pool" type="int" value="9"/>
     <property name="treasure" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="531">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="532">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="533">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="571">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="572">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="573">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </objectgroup>
+ </tile>
+ <tile id="612">
+  <objectgroup draworder="index">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
    </properties>
   </objectgroup>
  </tile>

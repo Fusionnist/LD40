@@ -126,6 +126,9 @@
     <None Include="Content\10.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Content\11.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\20.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -144,18 +147,83 @@
     <None Include="Content\25.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Content\30.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\31.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\32.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\33.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\34.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\40.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\41.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\42.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Content\43.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Content\50.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\51.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\52.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\53.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\60.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\62.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\63.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\70.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\73.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\7m1.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\80.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\82.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\83.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\84.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\93.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Content\BigMap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Content\mapmap.tmx" />
+    <None Include="Content\temp.tmx" />
     <None Include="Content\TestTilemap.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -167,6 +235,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\%27.png" />
     <Content Include="Content\arrow.png" />
     <Content Include="Content\arrowd.png" />
     <Content Include="Content\arrowu.png" />
@@ -189,9 +258,19 @@
     <Content Include="Content\lavaanim.png" />
     <Content Include="Content\Menu.png" />
     <Content Include="Content\open1.png" />
+    <Content Include="Content\open10.png" />
+    <Content Include="Content\open12.png" />
+    <Content Include="Content\open14.png" />
+    <Content Include="Content\open16.png" />
     <Content Include="Content\open2.png" />
+    <Content Include="Content\open4.png" />
+    <Content Include="Content\open6.png" />
+    <Content Include="Content\open8.png" />
     <Content Include="Content\Original.png" />
     <Content Include="Content\otd.png" />
+    <Content Include="Content\otd2.png" />
+    <Content Include="Content\otd3.png" />
+    <Content Include="Content\otd4.png" />
     <Content Include="Content\particle.png" />
     <Content Include="Content\sheet.png" />
     <Content Include="Content\shhot.wav" />

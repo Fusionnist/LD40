@@ -169,17 +169,51 @@ namespace DL40
             pars = new Particles(getTDXML("particle"));
             gp = GamePhase.Game;
             maps = new List<Tilemap>();
+            //0
+            maps.Add(getTilemap(XDocument.Load("Content/00.tmx"), new Point(-1,0)));
             maps.Add(getTilemap(XDocument.Load("Content/00.tmx"), Point.Zero));
+            //1
             maps.Add(getTilemap(XDocument.Load("Content/10.tmx"), new Point(1,0)));
+            maps.Add(getTilemap(XDocument.Load("Content/11.tmx"), new Point(1, -1)));
+            //2
             maps.Add(getTilemap(XDocument.Load("Content/20.tmx"), new Point(2, 0)));
             maps.Add(getTilemap(XDocument.Load("Content/21.tmx"), new Point(2, -1)));
             maps.Add(getTilemap(XDocument.Load("Content/22.tmx"), new Point(2, -2)));
             maps.Add(getTilemap(XDocument.Load("Content/23.tmx"), new Point(2, -3)));
             maps.Add(getTilemap(XDocument.Load("Content/24.tmx"), new Point(2, -4)));
             maps.Add(getTilemap(XDocument.Load("Content/25.tmx"), new Point(2, -5)));
+            //3
+            maps.Add(getTilemap(XDocument.Load("Content/30.tmx"), new Point(3, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/31.tmx"), new Point(3, -1)));
+            maps.Add(getTilemap(XDocument.Load("Content/32.tmx"), new Point(3, -2)));
             maps.Add(getTilemap(XDocument.Load("Content/33.tmx"), new Point(3, -3)));
+            maps.Add(getTilemap(XDocument.Load("Content/34.tmx"), new Point(3, -4)));
+            //4
+            maps.Add(getTilemap(XDocument.Load("Content/40.tmx"), new Point(4, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/41.tmx"), new Point(4, -1)));
+            maps.Add(getTilemap(XDocument.Load("Content/42.tmx"), new Point(4, -2)));
             maps.Add(getTilemap(XDocument.Load("Content/43.tmx"), new Point(4, -3)));
+            //5
+            maps.Add(getTilemap(XDocument.Load("Content/50.tmx"), new Point(5, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/51.tmx"), new Point(5, -1)));
+            maps.Add(getTilemap(XDocument.Load("Content/52.tmx"), new Point(5, -2)));
             maps.Add(getTilemap(XDocument.Load("Content/53.tmx"), new Point(5, -3)));
+            //6
+            maps.Add(getTilemap(XDocument.Load("Content/60.tmx"), new Point(6, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/62.tmx"), new Point(6, -2)));
+            maps.Add(getTilemap(XDocument.Load("Content/63.tmx"), new Point(6, -3)));
+            //7
+            maps.Add(getTilemap(XDocument.Load("Content/70.tmx"), new Point(7, 0)));
+            maps.Add(getTilemap(XDocument.Load("Content/73.tmx"), new Point(7, -3)));
+            maps.Add(getTilemap(XDocument.Load("Content/7m1.tmx"), new Point(7, 1)));
+            //8
+            maps.Add(getTilemap(XDocument.Load("Content/80.tmx"), new Point(8, -0)));
+            maps.Add(getTilemap(XDocument.Load("Content/82.tmx"), new Point(8, -2)));
+            maps.Add(getTilemap(XDocument.Load("Content/83.tmx"), new Point(8, -3)));
+            maps.Add(getTilemap(XDocument.Load("Content/84.tmx"), new Point(8, -4)));
+            //9
+            maps.Add(getTilemap(XDocument.Load("Content/93.tmx"), new Point(9, -3)));
+
             map = maps[0];
 
             TextureDrawer walk = new TextureDrawer(Content.Load<Texture2D>("walk"),
@@ -551,7 +585,7 @@ namespace DL40
             }
             if (ipp.JustPressed("restart")&&player.isDead) { GoToNewGame(); }
 
-            if(mapPos==new Point(10, 0))
+            if(mapPos==new Point(-1, 0))
             {
                 gp = GamePhase.End;
                 SetupEnd();
@@ -796,6 +830,14 @@ namespace DL40
                     {
                         currentStr = "ooh, something shiny! probably not a trap?";
                     }
+                    if (e.actived == "soap")
+                    {
+                        currentStr = "a bar of soap with asian-looking eyes, thanks pat";
+                    }
+                    if (e.actived == "lava")
+                    {
+                        currentStr = "a warm, conic lamp";
+                    }
 
                     if (ipp.JustPressed("space"))
                     {
@@ -863,7 +905,7 @@ namespace DL40
             if (gp == GamePhase.Menu) { DrawMenuElements(); }
             else if(gp == GamePhase.End){ DrawEndElements(); }
             else {
-                fd.DrawText("font", currentStr, new Rectangle(0, 272, 640, 320), spriteBatch);
+                fd.DrawText("font", currentStr, new Rectangle(0, 272 + (int)(zoom-1)*320, 640, 320), spriteBatch);
                 fd.DrawText("font", "wealth:"+wealth, new Rectangle(464, 16, 160, 320), spriteBatch);
                 //fd.DrawText("font", player.isOnLadder.ToString(), new Rectangle(0, 272, 640, 320), spriteBatch);
                 for (int x = 0; x < 5; x++)
