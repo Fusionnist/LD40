@@ -50,8 +50,8 @@ namespace DL40
         {
             virtualDims = new Point(1280, 640);
 
-            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1);
-            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1);
+            graphics.PreferredBackBufferHeight = (int)(GraphicsDevice.DisplayMode.Height / 1.1);
+            graphics.PreferredBackBufferWidth = (int)(GraphicsDevice.DisplayMode.Width / 1.1);
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
